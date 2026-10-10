@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Becchino di Giuleppe</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0c12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jacquard+24&family=Pixelify+Sans:wght@400;500;600;700&family=VT323&display=swap">
+<style>
+/* Pannello del becchino: una colonna di schede, una per lapide, comandi grandi e leggibili al telefono */
+:root{
+  --fondo:#0b0c12;
+  --pannello:#161822;
+  --pannello-2:#1e2130;
+  --bordo:#05060a;
+  --luce:#2d3145;
+  --osso:#ece5cb;
+  --osso-2:#a9a38d;
+  --legno:#82512d;
+  --legno-scuro:#3b2112;
+  --rosso:#c4483e;
+  --blu:#5b78c9;
+  --verde:#6f9a4a;
+  --f-titolo:"Jacquard 24","Pixelify Sans",serif;
+  --f-pixel:"Pixelify Sans",ui-monospace,monospace;
+  --f-testo:"VT323",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--fondo)}
+body{margin:0;min-height:100%;background:var(--fondo);color:var(--osso);font-family:var(--f-pixel);font-size:16px;line-height:1.35;
+  background-image:radial-gradient(#ffffff08 1px,transparent 1px);background-size:6px 6px}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:calc(env(safe-area-inset-top,0px) + 18px) calc(env(safe-area-inset-bottom,0px) + 80px)}
+h1{margin:0;font-family:var(--f-titolo);font-weight:400;font-size:clamp(38px,9vw,58px);line-height:.9;color:var(--osso);text-shadow:0 3px 0 #000}
+.sotto{margin:6px 0 0;color:var(--osso-2);font-size:15px}
+.px-box{background:var(--pannello);box-shadow:inset 0 3px 0 var(--luce),inset 0 -3px 0 #0e0f16,0 0 0 3px var(--bordo)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 14px;border:0;cursor:pointer;
+  font-family:var(--f-pixel);font-weight:600;font-size:15px;letter-spacing:.03em;color:var(--osso);background:var(--pannello-2);
+  box-shadow:inset 0 3px 0 #383d55,inset 0 -3px 0 #0e0f16,0 0 0 3px var(--bordo)}
+.btn:active{box-shadow:inset 0 -3px 0 #383d55,inset 0 3px 0 #0e0f16,0 0 0 3px var(--bordo)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible,.seg input:focus-visible+span{outline:3px dashed var(--osso);outline-offset:3px}
+.btn.primario{background:#5a3519;box-shadow:inset 0 3px 0 #9a6638,inset 0 -3px 0 #2a1609,0 0 0 3px var(--bordo)}
+.btn.pericolo{background:#4a1a18;box-shadow:inset 0 3px 0 #7a2e29,inset 0 -3px 0 #250b0a,0 0 0 3px var(--bordo)}
+.btn.pericolo.conferma{background:var(--rosso);color:#fff}
+.btn.piccolo{min-height:38px;padding:6px 10px;font-size:14px}
+.btn svg{width:18px;height:18px;shape-rendering:crispEdges}
+
+/* login */
+.login{margin-top:12vh;display:grid;gap:18px;padding:22px}
+.login label{display:grid;gap:8px;font-weight:600}
+.login input{min-height:48px;padding:8px 12px;background:#0b0c12;border:0;box-shadow:inset 0 3px 0 #000,0 0 0 3px var(--bordo);font-family:var(--f-testo);font-size:24px}
+.errore{color:#ff9c8c;margin:0;min-height:1.3em}
+
+/* barra */
+.testa{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.azioni{display:flex;flex-wrap:wrap;gap:12px}
+.conteggio{font-family:var(--f-testo);font-size:20px;color:var(--osso-2);margin:0 0 14px}
+
+/* schede */
+#elenco{display:grid;gap:22px}
+.scheda{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;padding:16px}
+.scheda.nuova{box-shadow:inset 0 3px 0 #9a6638,inset 0 -3px 0 #0e0f16,0 0 0 3px var(--bordo)}
+.scheda.sporca .salva{background:var(--verde);box-shadow:inset 0 3px 0 #9cc56f,inset 0 -3px 0 #2f4a1c,0 0 0 3px var(--bordo)}
+.colfoto{display:flex;flex-direction:column;align-items:center;gap:10px;width:112px}
+.cornice{padding:4px;background:linear-gradient(135deg,#d6b86c,#9d8443 50%,#6a5428);clip-path:ellipse(50% 50% at 50% 50%)}
+.ovale{width:100px;height:120px;background:#0b0c12;clip-path:ellipse(50% 50% at 50% 50%);display:grid;place-items:center;overflow:hidden}
+.ovale img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.45) sepia(.25)}
+.ovale img.pix{image-rendering:pixelated}
+.ovale .vuota{font-family:var(--f-testo);font-size:44px;color:#3a3f58}
+.colfoto .btn{width:100%}
+.campi{display:grid;gap:12px;min-width:0}
+.riga2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.campo{display:grid;gap:6px;min-width:0}
+.campo>span{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--osso-2)}
+.campo input[type=text],.campo input[type=date],.campo textarea{width:100%;min-height:44px;padding:8px 10px;border:0;background:#0b0c12;
+  box-shadow:inset 0 3px 0 #000,0 0 0 3px var(--bordo);font-family:var(--f-testo);font-size:21px;line-height:1.05}
+.campo textarea{min-height:110px;resize:vertical}
+.campo input,.campo textarea{min-width:0;max-width:100%}
+.campo input[type=date]{font-size:19px}
+.contatore{justify-self:end;font-family:var(--f-testo);font-size:17px;color:var(--osso-2)}
+.contatore.troppo{color:#ff9c8c}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px;background:#0b0c12;box-shadow:0 0 0 3px var(--bordo);font-size:14px;font-weight:600}
+.seg input:checked+span{background:var(--pannello-2);box-shadow:inset 0 3px 0 #4a5070,0 0 0 3px var(--osso)}
+.seg .impiccato input:checked+span{background:#4a1a18;box-shadow:inset 0 3px 0 #7a2e29,0 0 0 3px var(--osso)}
+.seg .suicidato input:checked+span{background:#1c2846;box-shadow:inset 0 3px 0 #33467a,0 0 0 3px var(--osso)}
+.seg small{font-weight:400;color:var(--osso-2)}
+.motivo-testa{display:flex;align-items:end;justify-content:space-between;gap:10px}
+.piede{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:4px}
+.piede .spazio{flex:1}
+.nota{font-family:var(--f-testo);font-size:18px;color:var(--osso-2);margin:0}
+@media (max-width:540px){
+  .riga2{grid-template-columns:minmax(0,1fr)}
+  .scheda{grid-template-columns:minmax(0,1fr)}
+  .colfoto{width:100%;flex-direction:row;justify-content:flex-start;flex-wrap:wrap}
+  .colfoto .btn{width:auto;flex:1}
+  .ovale{width:80px;height:96px}
+}
+
+/* editor foto */
+#editor{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:16px;background:rgba(3,4,8,.86);overflow:auto}
+.ed{width:min(100%,420px);padding:18px;display:grid;gap:14px}
+.ed h2{margin:0;font-size:20px}
+.ed-area{position:relative;width:100%;aspect-ratio:5/6;max-width:100%;background:#000;touch-action:none;cursor:grab;overflow:hidden;box-shadow:0 0 0 3px var(--bordo)}
+.ed-area canvas{position:absolute;inset:0;width:100%;height:100%}
+.ed-area .guida{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 50% at 50% 50%,transparent 98%,rgba(0,0,0,.6) 100%);box-shadow:inset 0 0 0 2px #9d844380}
+.ed-riga{display:flex;align-items:center;gap:12px}
+.ed-riga input[type=range]{flex:1;accent-color:#9d8443;min-height:36px}
+.ed-anteprime{display:flex;align-items:center;gap:16px}
+.ed-anteprime canvas{width:66px;height:80px;image-rendering:pixelated;clip-path:ellipse(50% 50% at 50% 50%);background:#0b0c12}
+.check{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
+.check input{width:22px;height:22px;accent-color:#9d8443}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);z-index:30;max-width:calc(100vw - 32px);
+  padding:10px 16px;background:#1f2a18;color:#d9f0c0;box-shadow:inset 0 3px 0 #3d5530,0 0 0 3px var(--bordo);font-weight:600;transition:opacity .3s steps(3);opacity:0;pointer-events:none}
+#toast.on{opacity:1}
+#toast.male{background:#3a1512;color:#ffd2ca;box-shadow:inset 0 3px 0 #6a2a24,0 0 0 3px var(--bordo)}
+a{color:var(--osso)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="vista-login" hidden>
+    <h1>Becchino di Giuleppe</h1>
+    <p class="sotto">Pannello per seppellire, modificare e riesumare.</p>
+    <form id="form-login" class="login px-box">
+      <label>Password del becchino
+        <input id="pw" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="errore" id="err-login" role="alert"></p>
+      <button class="btn primario" type="submit">Entra nel cimitero</button>
+    </form>
+  </section>
+
+  <section id="vista-pannello" hidden>
+    <div class="testa">
+      <div>
+        <h1>Becchino di Giuleppe</h1>
+        <p class="sotto">Ogni scheda è una lapide. Le modifiche si vedono subito nel cimitero.</p>
+      </div>
+      <div class="azioni">
+        <button class="btn primario" id="nuova" type="button">
+          <svg viewBox="0 0 10 10" aria-hidden="true"><path fill="currentColor" d="M4 1h2v3h3v2H6v3H4V6H1V4h3z"/></svg>Nuova lapide</button>
+        <a class="btn" href="/" target="_blank" rel="noopener">Apri il cimitero</a>
+      </div>
+    </div>
+    <p class="conteggio" id="conteggio"></p>
+    <div class="azioni" style="margin-bottom:22px">
+      <button class="btn piccolo" id="ordina" type="button">Ordina per data di uscita</button>
+      <button class="btn piccolo" id="esci" type="button">Esci</button>
+    </div>
+    <div id="elenco"></div>
+  </section>
+</div>
+
+<div id="editor" hidden>
+  <div class="ed px-box" role="dialog" aria-modal="true" aria-labelledby="ed-titolo">
+    <h2 id="ed-titolo">Sistema la foto</h2>
+    <div class="ed-area" id="ed-area"><canvas id="ed-cv" width="500" height="600"></canvas><div class="guida"></div></div>
+    <div class="ed-riga"><span>Zoom</span><input id="ed-zoom" type="range" min="1" max="4" step="0.01" value="1" aria-label="Zoom"></div>
+    <p class="nota">Trascina la foto per centrare la faccia nell'ovale.</p>
+    <label class="check"><input id="ed-pixel" type="checkbox" checked> Trasforma in pixel art</label>
+    <div class="ed-anteprime"><canvas id="ed-prev" width="30" height="36"></canvas><span class="nota">Così apparirà sulla lapide.</span></div>
+    <div class="ed-riga" style="justify-content:flex-end;flex-wrap:wrap">
+      <button class="btn" id="ed-annulla" type="button">Annulla</button>
+      <button class="btn primario" id="ed-salva" type="button">Usa questa foto</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<template id="tpl-scheda">
+  <article class="scheda px-box">
+    <div class="colfoto">
+      <div class="cornice"><div class="ovale"></div></div>
+      <label class="btn piccolo carica"><input type="file" accept="image/*" hidden>Carica foto</label>
+      <button class="btn piccolo togli" type="button">Togli foto</button>
+    </div>
+    <div class="campi">
+      <label class="campo"><span>Nome sulla lapide</span><input type="text" name="nome" maxlength="40" autocomplete="off"></label>
+      <div class="campo"><span>Com'è morto</span>
+        <div class="seg seg-tipo">
+          <label class="suicidato"><input type="radio" value="suicidato"><span>Suicidato <small>uscito da solo</small></span></label>
+          <label class="impiccato"><input type="radio" value="impiccato"><span>Impiccato <small>rimosso</small></span></label>
+        </div>
+      </div>
+      <div class="campo"><span>Lui o lei</span>
+        <div class="seg seg-genere">
+          <label><input type="radio" value="m"><span>Lui</span></label>
+          <label><input type="radio" value="f"><span>Lei</span></label>
+        </div>
+      </div>
+      <div class="riga2">
+        <label class="campo"><span class="lbl-uscita">Data di uscita</span><input type="date" name="uscita"></label>
+        <label class="campo"><span>Data di ingresso (facoltativa)</span><input type="date" name="entrata"></label>
+      </div>
+      <label class="campo">
+        <span class="motivo-testa"><span>Motivo</span></span>
+        <textarea name="motivo" maxlength="300"></textarea>
+        <span class="contatore"></span>
+      </label>
+      <div class="piede">
+        <button class="btn piccolo inventa" type="button">Inventa un motivo</button>
+        <span class="spazio"></span>
+        <button class="btn piccolo su" type="button" aria-label="Sposta prima"><svg viewBox="0 0 10 10" aria-hidden="true"><path fill="currentColor" d="M4 1h2v1h1v1h1v1h1v2H6v3H4V6H1V4h1V3h1V2h1z"/></svg></button>
+        <button class="btn piccolo giu" type="button" aria-label="Sposta dopo"><svg viewBox="0 0 10 10" aria-hidden="true"><path fill="currentColor" d="M4 1h2v3h3v2H8v1H7v1H6v1H4V8H3V7H2V6H1V4h3z"/></svg></button>
+        <button class="btn piccolo pericolo elimina" type="button">Elimina</button>
+        <button class="btn salva" type="button">Salva</button>
+      </div>
+    </div>
+  </article>
+</template>
+
+<script>
+(()=>{
+'use strict';
+const $=s=>document.querySelector(s);
+const API='/api';
+let PW='';try{PW=sessionStorage.getItem('giuleppe-pw')||''}catch(e){}
+let LAPIDI=[];
+
+const MOTIVI={
+  suicidato:[
+    'Si è tolto la vita dopo l\'ennesimo sondaggio su dove andare a mangiare. Nessuna opzione lo convinceva.',
+    'Ha silenziato il gruppo per un anno intero. Poi ha capito che non bastava.',
+    'Dice di essere uscito per sbaglio. Nessuno gli crede.',
+    'Non ha retto l\'ennesimo "buongiornissimo" delle 6:40.',
+    'Ha lasciato il gruppo per "staccare un po\'". È ancora staccato.',
+    'Si è gettato dal 437° messaggio non letto.',
+    'Ha preferito la morte a un\'altra foto della cena di qualcun altro.',
+    'È uscito un attimo prima che gli chiedessero di organizzare il calcetto.',
+    'Ultime parole: "torno subito". Non è tornato.',
+    'Ha scelto la pace eterna e la batteria al 100%.',
+    'Se n\'è andato durante una discussione sul presepe. Tecnicamente ha vinto lui.',
+    'Ha lasciato il gruppo con dignità, poi ha riaperto WhatsApp per vedere se qualcuno se n\'era accorto.'
+  ],
+  impiccato:[
+    'Impiccato per aver mandato un vocale di 7 minuti per dire "ok".',
+    'Impiccato per aver messo il cuoricino al messaggio sbagliato.',
+    'Giustiziato per spoiler non dichiarato.',
+    'Impiccato per aver scritto "chi c\'è stasera?" senza poi presentarsi.',
+    'Appeso per aver inoltrato una catena di Sant\'Antonio. Ha portato sfortuna solo a lui.',
+    'Impiccato per aver chiesto la password del Wi-Fi in chat. Tre volte.',
+    'Condannato per aver usato lo sticker sbagliato nel momento sbagliato.',
+    'Impiccato per eccesso di "ahahahah" senza ridere davvero.',
+    'Giustiziato perché leggeva tutto e non rispondeva mai. Le spunte blu non mentono.',
+    'Impiccato per aver proposto di dividere il conto "in base a quello che ha mangiato ognuno".',
+    'Rimosso per aver chiamato il gruppo "Gli amici di Giuseppe". È successo una volta sola. È bastata.',
+    'Appeso in piazza per aver scritto "buonanotte a tutti" alle 21:30 di un sabato.'
+  ]
+};
+const adattaGenere=(t,g)=>g!=='f'?t:t.replace(/\bImpiccato\b/g,'Impiccata').replace(/\bAppeso\b/g,'Appesa').replace(/\bGiustiziato\b/g,'Giustiziata').replace(/\bCondannato\b/g,'Condannata').replace(/\bRimosso\b/g,'Rimossa').replace(/\bè uscito\b/g,'è uscita').replace(/\bÈ uscito\b/g,'È uscita').replace(/\bDice di essere uscito\b/,'Dice di essere uscita').replace(/\bè tornato\b/g,'è tornata').replace(/\bstaccato\b/g,'staccata').replace(/\bgli crede\b/,'le crede').replace(/\bgli chiedessero\b/,'le chiedessero').replace(/\blo convinceva\b/,'la convinceva').replace(/\bha vinto lui\b/,'ha vinto lei').replace(/\bpresentarsi\b/,'presentarsi').replace(/\bsolo a lui\b/,'solo a lei');
+
+/* ---------- rete ---------- */
+async function api(path,opt={}){
+  const h=Object.assign({},opt.headers||{});if(PW)h['x-password']=encodeURIComponent(PW);
+  if(opt.json!==undefined){h['content-type']='application/json';opt.body=JSON.stringify(opt.json)}
+  let r;try{r=await fetch(API+path,{method:opt.method||'GET',headers:h,body:opt.body,cache:'no-store'})}catch(e){throw new Error('Connessione assente. Riprova tra poco.')}
+  let j=null;try{j=await r.json()}catch(e){}
+  if(r.status===401){if(!$('#vista-pannello').hidden)esci(true);throw new Error('Password sbagliata.')}
+  if(!r.ok)throw new Error((j&&j.errore)||`Errore ${r.status}.`);
+  return j;
+}
+let tt;function toast(msg,male){const t=$('#toast');t.textContent=msg;t.classList.toggle('male',!!male);t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),male?4200:2200)}
+
+/* ---------- login ---------- */
+$('#form-login').addEventListener('submit',async e=>{
+  e.preventDefault();const pw=$('#pw').value;$('#err-login').textContent='';
+  PW=pw;
+  try{await api('/login',{method:'POST'});try{sessionStorage.setItem('giuleppe-pw',pw)}catch(e){}apriPannello()}
+  catch(err){PW='';$('#err-login').textContent=err.message;$('#vista-login').hidden=false;$('#vista-pannello').hidden=true}
+});
+function esci(scaduta){PW='';try{sessionStorage.removeItem('giuleppe-pw')}catch(e){}$('#vista-pannello').hidden=true;$('#vista-login').hidden=false;if(scaduta)$('#err-login').textContent='Password sbagliata o scaduta.';$('#pw').value='';$('#pw').focus()}
+$('#esci').addEventListener('click',()=>esci(false));
+
+async function apriPannello(){
+  $('#vista-login').hidden=true;$('#vista-pannello').hidden=false;
+  try{const j=await api('/lapidi');LAPIDI=j.lapidi;disegna()}catch(e){toast(e.message,true)}
+}
+
+/* ---------- schede ---------- */
+const nuove=new Set();
+function conteggio(){const s=LAPIDI.filter(l=>l.tipo==='suicidato').length;$('#conteggio').textContent=`${LAPIDI.length} lapidi · ${s} suicidi · ${LAPIDI.length-s} impiccagioni`}
+function disegna(){
+  const el=$('#elenco');el.replaceChildren();
+  LAPIDI.forEach((l,i)=>el.append(scheda(l,i)));
+  if(!LAPIDI.length){const p=document.createElement('p');p.className='nota';p.textContent='Il cimitero è vuoto. Tocca "Nuova lapide" per seppellire il primo.';el.append(p)}
+  conteggio();
+}
+function fotoOvale(box,l){
+  box.replaceChildren();
+  if(l.foto){const im=new Image();im.src=l.foto;im.alt='Foto di '+l.nome;if(l.fotoPixel)im.className='pix';box.append(im)}
+  else{const s=document.createElement('span');s.className='vuota';s.textContent='?';box.append(s)}
+}
+let uid=0;
+function scheda(l,i){
+  const n=$('#tpl-scheda').content.firstElementChild.cloneNode(true);const k=++uid;
+  const isNuova=!l.id;if(isNuova)n.classList.add('nuova');
+  const f={nome:n.querySelector('[name=nome]'),uscita:n.querySelector('[name=uscita]'),entrata:n.querySelector('[name=entrata]'),motivo:n.querySelector('[name=motivo]')};
+  n.querySelectorAll('.seg-tipo input').forEach(r=>{r.name='tipo'+k;r.checked=r.value===(l.tipo||'impiccato')});
+  n.querySelectorAll('.seg-genere input').forEach(r=>{r.name='genere'+k;r.checked=r.value===(l.genere||'m')});
+  f.nome.value=l.nome||'';f.uscita.value=l.uscita||'';f.entrata.value=l.entrata||'';f.motivo.value=l.motivo||'';
+  const id=k;for(const[key,inp]of Object.entries(f)){inp.id=key+id}
+  fotoOvale(n.querySelector('.ovale'),l);
+  const leggi=()=>({nome:f.nome.value.trim(),tipo:n.querySelector('.seg-tipo input:checked').value,genere:n.querySelector('.seg-genere input:checked').value,
+    uscita:f.uscita.value,entrata:f.entrata.value,motivo:f.motivo.value.trim()});
+  const cont=n.querySelector('.contatore');
+  const aggiorna=()=>{const d=leggi();const sporca=isNuova||['nome','tipo','genere','uscita','entrata','motivo'].some(x=>(d[x]||'')!==(l[x]||''));
+    n.classList.toggle('sporca',sporca);n.querySelector('.salva').disabled=!sporca;
+    const len=[...f.motivo.value].length;cont.textContent=`${len} / 300`;cont.classList.toggle('troppo',len>260);
+    n.querySelector('.lbl-uscita').textContent=d.tipo==='impiccato'?'Data di rimozione':'Data di uscita'};
+  n.addEventListener('input',aggiorna);n.addEventListener('change',aggiorna);aggiorna();
+
+  n.querySelector('.inventa').addEventListener('click',()=>{const d=leggi();const lista=MOTIVI[d.tipo];let t;let g=0;do{t=lista[Math.floor(Math.random()*lista.length)];g++}while(t===f.motivo.value&&g<5);f.motivo.value=adattaGenere(t,d.genere);aggiorna()});
+
+  n.querySelector('.salva').addEventListener('click',async e=>{
+    const d=leggi();if(!d.nome){toast('Serve un nome per la lapide.',true);f.nome.focus();return}
+    const b=e.currentTarget;b.disabled=true;b.textContent='Salvo…';
+    try{
+      if(isNuova){const j=await api('/lapidi',{method:'POST',json:d});LAPIDI.splice(LAPIDI.indexOf(l),1,j.lapide);toast(`${j.lapide.nome}: sepoltura completata.`)}
+      else{const j=await api('/lapidi/'+encodeURIComponent(l.id),{method:'PUT',json:d});LAPIDI[LAPIDI.indexOf(l)]=j.lapide;toast('Lapide aggiornata.')}
+      disegna();
+    }catch(err){toast(err.message,true);b.disabled=false;b.textContent='Salva'}
+  });
+
+  const el=n.querySelector('.elimina');let armata=null;
+  el.addEventListener('click',async()=>{
+    if(isNuova){LAPIDI.splice(LAPIDI.indexOf(l),1);disegna();return}
+    if(!armata){el.classList.add('conferma');el.textContent='Tocca ancora per eliminare';armata=setTimeout(()=>{armata=null;el.classList.remove('conferma');el.textContent='Elimina'},4000);return}
+    clearTimeout(armata);el.disabled=true;el.textContent='Elimino…';
+    try{await api('/lapidi/'+encodeURIComponent(l.id),{method:'DELETE'});LAPIDI.splice(LAPIDI.indexOf(l),1);disegna();toast(`Lapide di ${l.nome} eliminata.`)}
+    catch(err){toast(err.message,true);el.disabled=false;el.textContent='Elimina';el.classList.remove('conferma');armata=null}
+  });
+
+  const su=n.querySelector('.su'),giu=n.querySelector('.giu');su.disabled=i===0||isNuova;giu.disabled=i===LAPIDI.length-1||isNuova||!LAPIDI[i+1]||!LAPIDI[i+1].id;
+  su.addEventListener('click',()=>scambia(i,i-1));giu.addEventListener('click',()=>scambia(i,i+1));
+
+  const inFile=n.querySelector('.carica input'),togli=n.querySelector('.togli');
+  if(isNuova){n.querySelector('.carica').setAttribute('aria-disabled','true');n.querySelector('.carica').style.opacity=.4;inFile.disabled=true;togli.hidden=true;
+    const p=document.createElement('p');p.className='nota';p.textContent='Salva la lapide, poi aggiungi la foto.';n.querySelector('.colfoto').append(p)}
+  togli.hidden=!l.foto;
+  inFile.addEventListener('change',()=>{const file=inFile.files[0];inFile.value='';if(file)apriEditor(file,l)});
+  togli.addEventListener('click',async()=>{togli.disabled=true;try{const j=await api('/foto/'+encodeURIComponent(l.id),{method:'DELETE'});LAPIDI[LAPIDI.indexOf(l)]=j.lapide;disegna();toast('Foto tolta.')}catch(err){toast(err.message,true);togli.disabled=false}});
+  return n;
+}
+async function scambia(a,b){
+  if(b<0||b>=LAPIDI.length)return;[LAPIDI[a],LAPIDI[b]]=[LAPIDI[b],LAPIDI[a]];disegna();
+  try{await salvaOrdine()}catch(e){toast(e.message,true)}
+}
+const salvaOrdine=()=>api('/ordine',{method:'PUT',json:{ids:LAPIDI.filter(l=>l.id).map(l=>l.id)}});
+$('#ordina').addEventListener('click',async()=>{
+  LAPIDI.sort((x,y)=>(x.uscita||'9999').localeCompare(y.uscita||'9999'));disegna();
+  try{await salvaOrdine();toast('Ordinate dalla più vecchia alla più recente.')}catch(e){toast(e.message,true)}
+});
+$('#nuova').addEventListener('click',()=>{
+  if(LAPIDI.some(l=>!l.id)){toast('Finisci prima la lapide nuova che hai aperto.',true);return}
+  const oggi=new Date(),iso=new Date(oggi.getTime()-oggi.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+  LAPIDI.unshift({id:'',nome:'',tipo:'impiccato',genere:'m',uscita:iso,entrata:'',motivo:''});disegna();
+  const c=$('#elenco .scheda');c.scrollIntoView({behavior:'smooth',block:'start'});c.querySelector('[name=nome]').focus({preventScroll:true});
+});
+
+/* ---------- editor foto ---------- */
+const E={img:null,l:null,zoom:1,ox:0,oy:0};
+const cv=$('#ed-cv'),cg=cv.getContext('2d'),prev=$('#ed-prev'),pg=prev.getContext('2d');
+function caricaImmagine(file){return new Promise((ok,ko)=>{const u=URL.createObjectURL(file);const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ko(new Error('Questa immagine non si apre. Prova con un JPG o un PNG.'));im.src=u})}
+async function apriEditor(file,l){
+  try{E.img=await caricaImmagine(file)}catch(e){toast(e.message,true);return}
+  E.l=l;E.zoom=1;E.ox=0;E.oy=0;$('#ed-zoom').value=1;$('#editor').hidden=false;disegnaEditor();$('#ed-salva').focus();
+}
+function trasforma(W){const im=E.img,CW=cv.width,CH=cv.height,k=W/CW;const s=Math.max(CW/im.width,CH/im.height)*E.zoom;const w=im.width*s,h=im.height*s;
+  const maxX=(w-CW)/2,maxY=(h-CH)/2;E.ox=Math.max(-maxX,Math.min(maxX,E.ox));E.oy=Math.max(-maxY,Math.min(maxY,E.oy));
+  return{x:((CW-w)/2+E.ox)*k,y:((CH-h)/2+E.oy)*k,w:w*k,h:h*k}}
+function rendi(ctx,W,H){const t=trasforma(W);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.clearRect(0,0,W,H);ctx.drawImage(E.img,t.x,t.y,t.w,t.h)}
+function pixella(c){const g=c.getContext('2d');const d=g.getImageData(0,0,c.width,c.height),a=d.data;const lv=6;
+  for(let i=0;i<a.length;i+=4){for(let k=0;k<3;k++){let v=a[i+k]/255;v=Math.min(1,Math.max(0,(v-.5)*1.12+.5));a[i+k]=Math.round(Math.round(v*(lv-1))/(lv-1)*255)}a[i+3]=255}
+  g.putImageData(d,0,0)}
+function disegnaEditor(){rendi(cg,cv.width,cv.height);
+  if($('#ed-pixel').checked){prev.width=30;prev.height=36;rendi(pg,30,36);pixella(prev)}else{prev.width=150;prev.height=180;rendi(pg,150,180)}}
+$('#ed-zoom').addEventListener('input',e=>{E.zoom=+e.target.value;disegnaEditor()});
+$('#ed-pixel').addEventListener('change',disegnaEditor);
+let drag=null;const area=$('#ed-area');
+area.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,ox:E.ox,oy:E.oy};area.setPointerCapture(e.pointerId)});
+area.addEventListener('pointermove',e=>{if(!drag)return;const k=cv.width/area.clientWidth;E.ox=drag.ox+(e.clientX-drag.x)*k;E.oy=drag.oy+(e.clientY-drag.y)*k;disegnaEditor()});
+area.addEventListener('pointerup',()=>drag=null);area.addEventListener('pointercancel',()=>drag=null);
+area.addEventListener('wheel',e=>{e.preventDefault();E.zoom=Math.max(1,Math.min(4,E.zoom*(e.deltaY<0?1.06:.94)));$('#ed-zoom').value=E.zoom;disegnaEditor()},{passive:false});
+const chiudiEditor=()=>{$('#editor').hidden=true;if(E.img)URL.revokeObjectURL(E.img.src);E.img=null};
+$('#ed-annulla').addEventListener('click',chiudiEditor);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#editor').hidden)chiudiEditor()});
+$('#ed-salva').addEventListener('click',async e=>{
+  const b=e.currentTarget,pixel=$('#ed-pixel').checked,l=E.l;b.disabled=true;b.textContent='Carico…';
+  try{
+    const out=document.createElement('canvas');
+    if(pixel){out.width=30;out.height=36}else{out.width=400;out.height=480}
+    rendi(out.getContext('2d'),out.width,out.height);if(pixel)pixella(out);
+    const blob=await new Promise(ok=>out.toBlob(ok,pixel?'image/png':'image/jpeg',.86));
+    const j=await api('/foto/'+encodeURIComponent(l.id)+(pixel?'?pixel=1':''),{method:'PUT',headers:{'content-type':blob.type},body:blob});
+    LAPIDI[LAPIDI.indexOf(l)]=j.lapide;chiudiEditor();disegna();toast('Foto messa sulla lapide.');
+  }catch(err){toast(err.message,true)}
+  finally{b.disabled=false;b.textContent='Usa questa foto'}
+});
+
+/* ---------- avvio ---------- */
+if(PW){api('/login',{method:'POST'}).then(apriPannello).catch(()=>esci(false))}else{$('#vista-login').hidden=false;$('#pw').focus()}
+})();
+</script>
+</body>
+</html>
