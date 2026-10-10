@@ -73,6 +73,7 @@ async function autorizza(request, env) {
   if (!elenco.length) throw new Errore(500, 'Password admin non configurata: aggiungi la variabile ADMIN_PASSWORD.');
   let pw = request.headers.get('x-password') || '';
   try { pw = decodeURIComponent(pw); } catch { /* lascia com'è */ }
+  pw = pw.trim();
   const enc = new TextEncoder();
   const impronta = async (s) => new Uint8Array(await crypto.subtle.digest('SHA-256', enc.encode(s)));
   const mia = await impronta(pw);
