@@ -9,6 +9,11 @@
 //             PUT  /api/ordine            nuovo ordine { ids: [...] }
 //             PUT  /api/foto/:id?pixel=1  carica foto (corpo = immagine)
 //             DELETE /api/foto/:id        toglie la foto
+//             POST /api/fiori/:id         posa un fiore (pubblico, uno al giorno per persona)
+//             GET  /api/vecchietta        racconto programmato per oggi (pubblico)
+//             GET  /api/vecchietta/programmati   racconti programmati da oggi in poi
+//             PUT  /api/vecchietta/:data  programma un racconto { testo }
+//             DELETE /api/vecchietta/:data
 //
 // Binding richiesti: DB (database D1) e variabile ADMIN_PASSWORD
 // (una o più password separate da virgola).
@@ -29,6 +34,15 @@ const SEED = [
 ];
 
 const MAX_FOTO = 1_500_000; // byte
+const MAX_RACCONTO = 700; // caratteri
+
+const oggiRoma = () =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+
+async function impronta(testo) {
+  const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(testo));
+  return [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
 const TIPI_FOTO = ['image/jpeg', 'image/png', 'image/webp'];
 
 class Errore extends Error {
@@ -50,9 +64,25 @@ async function prepara(db) {
           id TEXT PRIMARY KEY, nome TEXT NOT NULL, tipo TEXT NOT NULL, genere TEXT NOT NULL DEFAULT 'm',
           entrata TEXT NOT NULL DEFAULT '', uscita TEXT NOT NULL DEFAULT '', motivo TEXT NOT NULL DEFAULT '',
           ordine INTEGER NOT NULL DEFAULT 0, foto BLOB, foto_tipo TEXT, foto_v INTEGER NOT NULL DEFAULT 0,
-          foto_pixel INTEGER NOT NULL DEFAULT 0, creata TEXT NOT NULL DEFAULT (datetime('now')))`),
+          foto_pixel INTEGER NOT NULL DEFAULT 0, fiori INTEGER NOT NULL DEFAULT 0,
+          creata TEXT NOT NULL DEFAULT (datetime('now')))`),
         db.prepare('CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT)'),
       ]);
+      // aggiornamento v2: fiori e racconti della vecchietta
+      const schema = await db.prepare("SELECT v FROM meta WHERE k = 'schema'").first();
+      if (!schema || Number(schema.v) < 2) {
+        try {
+          await db.prepare('ALTER TABLE lapidi ADD COLUMN fiori INTEGER NOT NULL DEFAULT 0').run();
+        } catch (e) {
+          if (!/duplicate column/i.test(String(e && e.message))) throw e;
+        }
+        await db.batch([
+          db.prepare(`CREATE TABLE IF NOT EXISTS fiori_log (lapide TEXT NOT NULL, chiave TEXT NOT NULL, giorno TEXT NOT NULL,
+            PRIMARY KEY (lapide, chiave, giorno))`),
+          db.prepare('CREATE TABLE IF NOT EXISTS racconti (data TEXT PRIMARY KEY, testo TEXT NOT NULL)'),
+          db.prepare("INSERT OR REPLACE INTO meta (k, v) VALUES ('schema', '2')"),
+        ]);
+      }
       const seminato = await db.prepare("SELECT v FROM meta WHERE k = 'seminato'").first();
       if (!seminato) {
         const ins = db.prepare(
@@ -115,6 +145,11 @@ function valida(body, nuova) {
       out[k] = v;
     }
   }
+  if ('fiori' in body) {
+    const f = Number(body.fiori);
+    if (!Number.isInteger(f) || f < 0 || f > 99999) throw new Errore(400, 'Numero di fiori non valido.');
+    out.fiori = f;
+  }
   if (nuova || 'motivo' in body) {
     const m = String(body.motivo ?? '').trim();
     if ([...m].length > 300) throw new Errore(400, 'Il motivo può avere al massimo 300 caratteri.');
@@ -130,8 +165,9 @@ const pubblica = (r) => ({
   id: r.id, nome: r.nome, tipo: r.tipo, genere: r.genere, entrata: r.entrata, uscita: r.uscita, motivo: r.motivo,
   foto: r.foto_v ? `/api/foto/${encodeURIComponent(r.id)}?v=${r.foto_v}` : null,
   fotoPixel: !!r.foto_pixel,
+  fiori: r.fiori || 0,
 });
-const CAMPI = 'id, nome, tipo, genere, entrata, uscita, motivo, ordine, foto_v, foto_pixel';
+const CAMPI = 'id, nome, tipo, genere, entrata, uscita, motivo, ordine, foto_v, foto_pixel, fiori';
 
 async function una(db, id) {
   const r = await db.prepare(`SELECT ${CAMPI} FROM lapidi WHERE id = ?`).bind(id).first();
@@ -198,6 +234,53 @@ export async function onRequest({ request, env, params }) {
       const st = db.prepare('UPDATE lapidi SET ordine = ? WHERE id = ?');
       if (body.ids.length) await db.batch(body.ids.map((x, i) => st.bind(i, String(x))));
       return json({ ok: true });
+    }
+
+    if (risorsa === 'fiori' && id && metodo === 'POST') {
+      await una(db, id);
+      const body = await request.json().catch(() => ({}));
+      const visitatore = String((body && body.v) || '').slice(0, 64);
+      const ip = request.headers.get('cf-connecting-ip') || '';
+      const giorno = oggiRoma();
+      const chiave = await impronta(`${ip}|${visitatore}|${env.ADMIN_PASSWORD || ''}`);
+      const ins = await db.prepare('INSERT OR IGNORE INTO fiori_log (lapide, chiave, giorno) VALUES (?, ?, ?)')
+        .bind(id, chiave, giorno).run();
+      const nuovo = ((ins && ins.meta && ins.meta.changes) || 0) > 0;
+      if (nuovo) {
+        await db.batch([
+          db.prepare('UPDATE lapidi SET fiori = fiori + 1 WHERE id = ?').bind(id),
+          db.prepare('DELETE FROM fiori_log WHERE giorno < ?').bind(giorno),
+        ]);
+      }
+      const r = await db.prepare('SELECT fiori FROM lapidi WHERE id = ?').bind(id).first();
+      return json({ fiori: (r && r.fiori) || 0, nuovo });
+    }
+
+    if (risorsa === 'vecchietta') {
+      const oggi = oggiRoma();
+      if (!id && metodo === 'GET') {
+        const r = await db.prepare('SELECT testo FROM racconti WHERE data = ?').bind(oggi).first();
+        return json({ oggi, racconto: r ? r.testo : null });
+      }
+      await autorizza(request, env);
+      if (id === 'programmati' && metodo === 'GET') {
+        const { results } = await db.prepare('SELECT data, testo FROM racconti WHERE data >= ? ORDER BY data').bind(oggi).all();
+        return json({ oggi, racconti: results });
+      }
+      if (id && /^\d{4}-\d{2}-\d{2}$/.test(id)) {
+        if (metodo === 'PUT') {
+          const body = await request.json().catch(() => null);
+          const testo = String((body && body.testo) || '').trim();
+          if (!testo) throw new Errore(400, 'Scrivi il racconto prima di salvarlo.');
+          if ([...testo].length > MAX_RACCONTO) throw new Errore(400, `Il racconto può avere al massimo ${MAX_RACCONTO} caratteri.`);
+          await db.prepare('INSERT OR REPLACE INTO racconti (data, testo) VALUES (?, ?)').bind(id, testo).run();
+          return json({ data: id, testo });
+        }
+        if (metodo === 'DELETE') {
+          await db.prepare('DELETE FROM racconti WHERE data = ?').bind(id).run();
+          return json({ ok: true });
+        }
+      }
     }
 
     if (risorsa === 'foto' && id) {

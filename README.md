@@ -7,12 +7,20 @@ Il cimitero pixel art degli ex membri del gruppo "Gli amici di Giuleppe".
 
 Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 
+## Fiori e Donna Carmela
+
+- **Posa un fiore**: dentro ogni lapide zoomata. Ognuno può posare un fiore al giorno per lapide; i fiori compaiono sul tumulo (fino a 15 visibili). Dal pannello si può correggere il numero.
+- **Donna Carmela**: la vecchietta col lumino. Una volta al giorno entra nel cimitero, racconta una notizia assurda e la collega sempre ad Afragola. Poi resta il suo ritratto in alto a sinistra per rileggerla.
+  - Le storie sono in `public/storie.js` (50, cambiano a mezzanotte, ora italiana). Per aggiungerne basta aggiungere righe all'elenco.
+  - Dal pannello, sezione "Donna Carmela", potete scrivere un racconto per un giorno preciso. `{nome}` diventa il nome di un morto a caso.
+
 ## Struttura
 
 ```
 public/                 il sito (Cloudflare lo pubblica così com'è)
   index.html            il cimitero
   admin/index.html      il pannello admin
+  storie.js             le storie di Donna Carmela
   og.png                anteprima per WhatsApp
   _headers              noindex e sicurezza
 functions/api/[[path]].js   le API (lapidi, foto, login)

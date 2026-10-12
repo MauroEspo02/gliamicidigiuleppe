@@ -119,6 +119,21 @@ h1{margin:0;font-family:var(--f-titolo);font-weight:400;font-size:clamp(38px,9vw
 .check{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
 .check input{width:22px;height:22px;accent-color:#9d8443}
 
+/* Donna Carmela */
+.nonna{display:grid;gap:14px;padding:16px;margin-bottom:26px}
+.nonna-testa{display:flex;align-items:center;gap:14px}
+.nonna-testa canvas{width:56px;height:56px;flex:none;image-rendering:pixelated;background:#2a2433;box-shadow:0 0 0 3px var(--bordo)}
+.nonna h2{margin:0;font-size:20px}
+.nonna .sotto{margin:2px 0 0}
+.oggi-nonna{padding:12px 14px;background:#efe6c8;color:#1d1a14;box-shadow:0 0 0 3px var(--bordo)}
+.oggi-nonna .lbl{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7a6542;margin-bottom:4px}
+.oggi-nonna p{margin:0;font-family:var(--f-testo);font-size:21px;line-height:1.05}
+.prog{display:grid;gap:10px}
+.prog h3{margin:6px 0 0;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--osso-2)}
+.prog-riga{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;background:#0f1018;box-shadow:0 0 0 3px var(--bordo)}
+.prog-riga b{display:block;font-size:14px}
+.prog-riga span{display:block;font-family:var(--f-testo);font-size:18px;color:var(--osso-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prog-riga .bottoni{display:flex;gap:8px}
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);z-index:30;max-width:calc(100vw - 32px);
   padding:10px 16px;background:#1f2a18;color:#d9f0c0;box-shadow:inset 0 3px 0 #3d5530,0 0 0 3px var(--bordo);font-weight:600;transition:opacity .3s steps(3);opacity:0;pointer-events:none}
 #toast.on{opacity:1}
@@ -158,6 +173,24 @@ a{color:var(--osso)}
       <button class="btn piccolo" id="ordina" type="button">Ordina per data di uscita</button>
       <button class="btn piccolo" id="esci" type="button">Esci</button>
     </div>
+    <section class="nonna px-box" aria-labelledby="nonna-titolo">
+      <div class="nonna-testa">
+        <canvas id="n-ritratto" width="16" height="16" aria-hidden="true"></canvas>
+        <div><h2 id="nonna-titolo">Donna Carmela</h2><p class="sotto">Ogni giorno racconta una storia dal suo mazzo di <span id="n-tot">50</span>. Potete scriverne una voi per un giorno preciso.</p></div>
+      </div>
+      <div class="oggi-nonna"><span class="lbl" id="n-oggi-lbl">Oggi racconta</span><p id="n-oggi">…</p></div>
+      <div class="riga2"><label class="campo"><span>Giorno</span><input type="date" id="n-data"></label></div>
+      <label class="campo"><span>Il racconto</span>
+        <textarea id="n-testo" maxlength="700" placeholder="Uè guagliù… Scrivi {nome} per mettere il nome di un morto a caso."></textarea>
+        <span class="contatore" id="n-cont">0 / 700</span>
+      </label>
+      <div class="piede">
+        <button class="btn piccolo" id="n-pesca" type="button">Prendi una storia dal mazzo</button>
+        <span class="spazio"></span>
+        <button class="btn primario" id="n-salva" type="button">Programma racconto</button>
+      </div>
+      <div class="prog" id="n-lista"></div>
+    </section>
     <div id="elenco"></div>
   </section>
 </div>
@@ -203,6 +236,7 @@ a{color:var(--osso)}
       <div class="riga2">
         <label class="campo"><span class="lbl-uscita">Data di uscita</span><input type="date" name="uscita"></label>
         <label class="campo"><span>Data di ingresso (facoltativa)</span><input type="date" name="entrata"></label>
+        <label class="campo"><span>Fiori posati</span><input type="number" name="fiori" min="0" max="99999" inputmode="numeric"></label>
       </div>
       <label class="campo">
         <span class="motivo-testa"><span>Motivo</span></span>
@@ -221,6 +255,7 @@ a{color:var(--osso)}
   </article>
 </template>
 
+<script src="/storie.js"></script>
 <script>
 (()=>{
 'use strict';
@@ -286,7 +321,62 @@ $('#esci').addEventListener('click',()=>esci(false));
 async function apriPannello(){
   $('#vista-login').hidden=true;$('#vista-pannello').hidden=false;
   try{const j=await api('/lapidi');LAPIDI=j.lapidi;disegna()}catch(e){toast(e.message,true)}
+  caricaNonna();
 }
+
+/* ---------- Donna Carmela ---------- */
+let ND={oggi:(window.NONNA?NONNA.oggiRoma():''),racconti:[]};
+const nomiMorti=()=>LAPIDI.filter(l=>l.id).map(l=>l.nome);
+async function caricaNonna(){
+  try{const j=await api('/vecchietta/programmati');ND={oggi:j.oggi,racconti:j.racconti||[]}}catch(e){toast(e.message,true)}
+  disegnaNonna();
+}
+function disegnaNonna(){
+  if(!window.NONNA)return;
+  const {oggi,racconti}=ND,mio=racconti.find(r=>r.data===oggi);
+  $('#n-tot').textContent=NONNA.storie.length+' storie';
+  $('#n-oggi-lbl').textContent=`Oggi, ${NONNA.dataBella(oggi)}, racconta ${mio?'la vostra storia':'dal mazzo'}`;
+  $('#n-oggi').textContent=mio?NONNA.riempi(mio.testo,oggi,nomiMorti()):NONNA.storiaDelGiorno(oggi,nomiMorti());
+  const d=$('#n-data');d.min=oggi;if(!d.value)d.value=oggi;
+  const L=$('#n-lista');L.replaceChildren();
+  if(racconti.length){const h=document.createElement('h3');h.textContent='Racconti programmati';L.append(h)}
+  for(const r of racconti){
+    const row=document.createElement('div');row.className='prog-riga';
+    const t=document.createElement('div');const b=document.createElement('b');b.textContent=NONNA.dataBella(r.data)+(r.data===oggi?' (oggi)':'');
+    const sp=document.createElement('span');sp.textContent=r.testo;t.append(b,sp);
+    const bt=document.createElement('div');bt.className='bottoni';
+    const mod=document.createElement('button');mod.className='btn piccolo';mod.type='button';mod.textContent='Modifica';
+    mod.onclick=()=>{d.value=r.data;$('#n-testo').value=r.testo;contaN();$('#n-testo').focus()};
+    const del=document.createElement('button');del.className='btn piccolo pericolo';del.type='button';del.textContent='Elimina';let arm=null;
+    del.onclick=async()=>{
+      if(!arm){del.classList.add('conferma');del.textContent='Sicuro?';arm=setTimeout(()=>{arm=null;del.classList.remove('conferma');del.textContent='Elimina'},4000);return}
+      clearTimeout(arm);del.disabled=true;
+      try{await api('/vecchietta/'+r.data,{method:'DELETE'});ND.racconti=ND.racconti.filter(x=>x.data!==r.data);disegnaNonna();toast('Racconto eliminato: quel giorno pesca dal mazzo.')}
+      catch(e){toast(e.message,true);del.disabled=false}
+    };
+    bt.append(mod,del);row.append(t,bt);L.append(row);
+  }
+}
+const contaN=()=>{const n=[...$('#n-testo').value].length,c=$('#n-cont');c.textContent=`${n} / 700`;c.classList.toggle('troppo',n>640)};
+$('#n-testo').addEventListener('input',contaN);
+$('#n-data').addEventListener('change',()=>{const r=ND.racconti.find(x=>x.data===$('#n-data').value);$('#n-testo').value=r?r.testo:'';contaN()});
+$('#n-pesca').addEventListener('click',()=>{const st=NONNA.storie;$('#n-testo').value=st[Math.floor(Math.random()*st.length)];contaN()});
+$('#n-salva').addEventListener('click',async e=>{
+  const data=$('#n-data').value,testo=$('#n-testo').value.trim();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(data)){toast('Scegli il giorno del racconto.',true);return}
+  if(!testo){toast('Scrivi il racconto prima di programmarlo.',true);$('#n-testo').focus();return}
+  const b=e.currentTarget;b.disabled=true;
+  try{await api('/vecchietta/'+data,{method:'PUT',json:{testo}});
+    ND.racconti=ND.racconti.filter(x=>x.data!==data).concat({data,testo}).sort((a,b)=>a.data.localeCompare(b.data));
+    disegnaNonna();toast(`Racconto programmato per ${NONNA.dataBella(data)}.`)}
+  catch(err){toast(err.message,true)}finally{b.disabled=false}
+});
+// ritratto pixel di Donna Carmela (stesso disegno del cimitero, versione ridotta)
+(()=>{const c=$('#n-ritratto'),g=c.getContext('2d');g.fillStyle='#2a2433';g.fillRect(0,0,16,16);
+  const px=(x,y,col)=>{g.fillStyle=col;g.fillRect(x,y,1,1)};
+  const rows=['................','....HHH.........','...HHHHHHHH.....','..HHHHHHHHHH....','..HHHHHHHHHHH...','...HHHHSGGGGS...','...HHHSSGEGGS...','...HHHSSSSSSSS..','...HHSOSSSRSS...','....KSSSMMSS....','.....KSSSSS.....','....AAAAAAAAA...','..AAAAAAAAAAAA..','..AAAAAAAAOAAA..','..AAAAAAAAAAAA..','..DDDDDDDDDDDD..'];
+  const C={H:'#bdb9b0',S:'#dfac8a',G:'#cfc6b4',E:'#1b1a22',O:'#e3c35a',R:'#e8998a',M:'#8a4a44',K:'#06060b',A:'#5c3755',D:'#24212b'};
+  rows.forEach((r,y)=>[...r].forEach((ch,x)=>{if(C[ch])px(x,y,C[ch])}));})();
 
 /* ---------- schede ---------- */
 const nuove=new Set();
@@ -306,16 +396,16 @@ let uid=0;
 function scheda(l,i){
   const n=$('#tpl-scheda').content.firstElementChild.cloneNode(true);const k=++uid;
   const isNuova=!l.id;if(isNuova)n.classList.add('nuova');
-  const f={nome:n.querySelector('[name=nome]'),uscita:n.querySelector('[name=uscita]'),entrata:n.querySelector('[name=entrata]'),motivo:n.querySelector('[name=motivo]')};
+  const f={nome:n.querySelector('[name=nome]'),uscita:n.querySelector('[name=uscita]'),entrata:n.querySelector('[name=entrata]'),motivo:n.querySelector('[name=motivo]'),fiori:n.querySelector('[name=fiori]')};
   n.querySelectorAll('.seg-tipo input').forEach(r=>{r.name='tipo'+k;r.checked=r.value===(l.tipo||'impiccato')});
   n.querySelectorAll('.seg-genere input').forEach(r=>{r.name='genere'+k;r.checked=r.value===(l.genere||'m')});
-  f.nome.value=l.nome||'';f.uscita.value=l.uscita||'';f.entrata.value=l.entrata||'';f.motivo.value=l.motivo||'';
+  f.nome.value=l.nome||'';f.uscita.value=l.uscita||'';f.entrata.value=l.entrata||'';f.motivo.value=l.motivo||'';f.fiori.value=l.fiori||0;
   const id=k;for(const[key,inp]of Object.entries(f)){inp.id=key+id}
   fotoOvale(n.querySelector('.ovale'),l);
   const leggi=()=>({nome:f.nome.value.trim(),tipo:n.querySelector('.seg-tipo input:checked').value,genere:n.querySelector('.seg-genere input:checked').value,
-    uscita:f.uscita.value,entrata:f.entrata.value,motivo:f.motivo.value.trim()});
+    uscita:f.uscita.value,entrata:f.entrata.value,motivo:f.motivo.value.trim(),fiori:Math.max(0,Math.round(Number(f.fiori.value)||0))});
   const cont=n.querySelector('.contatore');
-  const aggiorna=()=>{const d=leggi();const sporca=isNuova||['nome','tipo','genere','uscita','entrata','motivo'].some(x=>(d[x]||'')!==(l[x]||''));
+  const aggiorna=()=>{const d=leggi();const sporca=isNuova||['nome','tipo','genere','uscita','entrata','motivo','fiori'].some(x=>String(d[x]||'')!==String(l[x]||''));
     n.classList.toggle('sporca',sporca);n.querySelector('.salva').disabled=!sporca;
     const len=[...f.motivo.value].length;cont.textContent=`${len} / 300`;cont.classList.toggle('troppo',len>260);
     n.querySelector('.lbl-uscita').textContent=d.tipo==='impiccato'?'Data di rimozione':'Data di uscita'};
