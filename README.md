@@ -14,6 +14,13 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
   - Le storie sono in `public/storie.js` (50, cambiano a mezzanotte, ora italiana). Per aggiungerne basta aggiungere righe all'elenco.
   - Dal pannello, sezione "Donna Carmela", potete scrivere un racconto per un giorno preciso. `{nome}` diventa il nome di un morto a caso.
 
+## Gli altri personaggi
+
+- **Luiginov Marinovskij**, il custode: nell'intro arriva davanti al cancello, parla nel fumetto e al tocco del pulsante apre il cancello cigolando.
+- **Gigirish**: biondo, occhi rossi, sempre nascosto dietro una tomba a caso. Toccalo e ti fa "psst".
+- **Jediego**: a ogni visita piange, con la spada laser piantata per terra, vicino a un'altra tomba a caso. Toccalo per sentire cosa dice.
+- Le frasi di tutti sono in `public/storie.js` (`custode`, `gigirish`, `jediego`): si cambiano lì.
+
 ## Struttura
 
 ```

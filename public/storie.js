@@ -77,6 +77,45 @@
     "Mio marito diceva la stessa cosa. Poi è andato ad Afragola ed è tornato un altro uomo."
   ];
 
+  // Il custode dell'intro
+  const custode = {
+    nome: 'Luiginov Marinovskij',
+    saluto: "Privet, tovarišč! Io sono Luiginov Marinovskij, custode di cimitero. Porte io apro solo per te. Tu clicca pulsante… e poi veditela tu.",
+    apre: "Prego, tovarišč. Da qui in poi… veditela tu."
+  };
+
+  // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
+  const jediego = [
+    "Sniff… {nome} era il più forte di tutti noi.",
+    "Ho sentito un grande turbamento nel gruppo. Come se qualcuno fosse stato rimosso all'improvviso.",
+    "Che la forza sia con te, {nome}. Pure fuori dal gruppo.",
+    "Non sto piangendo. È la sabbia del deserto. Pure qua ce n'è tanta.",
+    "Avevo insegnato tutto a {nome}. Pure a non uscire dal gruppo. Niente.",
+    "{nome} era la persona prescelta. E ha scelto di andarsene.",
+    "Pure la mia spada laser sta piangendo. Guardate come trema.",
+    "Domani torno su Afragola-7. Qua il dolore è troppo.",
+    "Donna Carmela dice che pure questo è colpa di Afragola. Sniff.",
+    "Lasciatemi solo con {nome}. Due minuti. Poi vi raggiungo.",
+    "Aiutami, {nome}. Sei la mia unica speranza… e hai lasciato il gruppo.",
+    "Ogni volta che vengo, mi tocca una tomba diversa. Il dolore non finisce mai."
+  ];
+
+  // Gigirish, nascosto dietro una tomba a caso. {nome} = la tomba dove si nasconde.
+  const gigirish = [
+    "Psst… fra. Vuoi?",
+    "Roba buona, coltivata qua dietro. Il terreno è… nutriente.",
+    "Non ho visto niente. Non so niente. Sto solo qua.",
+    "La tomba di {nome}? È il mio ufficio. Affitto zero.",
+    "Il custode russo è cliente fisso. Dice che è per il freddo.",
+    "Jediego piange perché gli ho finito la scorta.",
+    "Shh! Se passa Donna Carmela, io sono di Afragola.",
+    "Ti faccio prezzo amico, perché sei ancora vivo.",
+    "Zio, hai visto un fantasma? No? Allora non hai preso niente.",
+    "Che ore sono? Che giorno è? In che cimitero stiamo?",
+    "Oh… le lapidi si muovono o sono io?",
+    "{nome} non si lamenta mai. Miglior socio che ho avuto."
+  ];
+
   // Generatore pseudo-casuale fisso: l'ordine delle storie è lo stesso per tutti.
   function mulberry(a) {
     return function () {
@@ -125,5 +164,5 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  window.NONNA = { storie, saluti, risposte, custode, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
