@@ -28,6 +28,12 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - In fondo a destra, dalla fossa del "Posto libero" esce una luce: se la tocchi ti chiede se vuoi entrare e scendi nel **Caffè dal Re dei Corvi**, ancora in costruzione.
 - I testi di Terry sono in `public/storie.js` (`terry`).
 
+## I risorti
+
+- Chi rientra nel gruppo si segna come **Risorto** dal pannello (casella nella sua scheda). Andrea Iannello viene segnato in automatico.
+- Al posto della lapide c'è la fossa vuota con la lapide rotta. Dopo che la Detective se n'è andata, quando scorri fino alla fossa scende una luce, arriva un angelo con l'omino che ha come testa la foto della lapide, lo lascia cadere e l'omino resta lì. Toccandolo parla.
+- L'animazione si vede una volta per telefono; dopo l'omino è già lì. Le frasi sono in `public/storie.js` (`angelo`, `risorto`).
+
 ## Struttura
 
 ```

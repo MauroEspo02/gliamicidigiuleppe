@@ -83,6 +83,18 @@ async function prepara(db) {
           db.prepare("INSERT OR REPLACE INTO meta (k, v) VALUES ('schema', '2')"),
         ]);
       }
+      // aggiornamento v3: i risorti (rientrati nel gruppo). Andrea Iannello è il primo.
+      if (!schema || Number(schema.v) < 3) {
+        try {
+          await db.prepare('ALTER TABLE lapidi ADD COLUMN risorto INTEGER NOT NULL DEFAULT 0').run();
+        } catch (e) {
+          if (!/duplicate column/i.test(String(e && e.message))) throw e;
+        }
+        await db.batch([
+          db.prepare("UPDATE lapidi SET risorto = 1 WHERE lower(nome) LIKE '%iannello%'"),
+          db.prepare("INSERT OR REPLACE INTO meta (k, v) VALUES ('schema', '3')"),
+        ]);
+      }
       const seminato = await db.prepare("SELECT v FROM meta WHERE k = 'seminato'").first();
       if (!seminato) {
         const ins = db.prepare(
@@ -145,6 +157,7 @@ function valida(body, nuova) {
       out[k] = v;
     }
   }
+  if ('risorto' in body) out.risorto = body.risorto ? 1 : 0;
   if ('fiori' in body) {
     const f = Number(body.fiori);
     if (!Number.isInteger(f) || f < 0 || f > 99999) throw new Errore(400, 'Numero di fiori non valido.');
@@ -166,8 +179,9 @@ const pubblica = (r) => ({
   foto: r.foto_v ? `/api/foto/${encodeURIComponent(r.id)}?v=${r.foto_v}` : null,
   fotoPixel: !!r.foto_pixel,
   fiori: r.fiori || 0,
+  risorto: !!r.risorto,
 });
-const CAMPI = 'id, nome, tipo, genere, entrata, uscita, motivo, ordine, foto_v, foto_pixel, fiori';
+const CAMPI = 'id, nome, tipo, genere, entrata, uscita, motivo, ordine, foto_v, foto_pixel, fiori, risorto';
 
 async function una(db, id) {
   const r = await db.prepare(`SELECT ${CAMPI} FROM lapidi WHERE id = ?`).bind(id).first();

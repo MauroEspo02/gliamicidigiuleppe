@@ -99,6 +99,23 @@
     saluto: "Ci rivedremo."
   };
 
+  // La resurrezione: l'angelo riporta giù chi è rientrato nel gruppo
+  const angelo = {
+    luce: "Una luce scende dal cielo sulla tomba di {nome}…",
+    dice: "L'angelo: \"Ve lo rimando giù. Lassù non lo sopportava nessuno.\""
+  };
+  const risorto = [
+    "Sono tornato! Mi siete mancati? …No? Vabbè.",
+    "Lassù non mi volevano. Dicono che mandavo troppi vocali.",
+    "L'angelo mi ha detto: torna giù e chiedi scusa al gruppo.",
+    "Morto, sepolto e rientrato nel gruppo. Mica da tutti.",
+    "Qualcuno ha visto il mio telefono? L'ho lasciato nella tomba.",
+    "La Detective mi ha chiesto l'alibi. Ero morto, che alibi vuoi?",
+    "Rimettetemi admin, almeno. Me lo merito.",
+    "Donna Carmela dice che in paradiso c'è un bar di Afragola. Confermo.",
+    "Non toccate la mia tomba. Non si sa mai."
+  ];
+
   // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
   const jediego = [
     "Sniff… {nome} era il più forte di tutti noi.",
@@ -179,5 +196,5 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();

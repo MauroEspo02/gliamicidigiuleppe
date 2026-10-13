@@ -117,6 +117,10 @@ h1{margin:0;font-family:var(--f-titolo);font-weight:400;font-size:clamp(38px,9vw
 .ed-anteprime{display:flex;align-items:center;gap:16px}
 .ed-anteprime canvas{width:66px;height:80px;image-rendering:pixelated;clip-path:ellipse(50% 50% at 50% 50%);background:#0b0c12}
 .check{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
+.check-risorto{display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:10px 12px;background:#0f1018;box-shadow:0 0 0 3px var(--bordo)}
+.check-risorto input{width:22px;height:22px;flex:none;accent-color:#e3c35a;margin:0}
+.check-risorto b{display:block;font-size:15px}
+.check-risorto small{display:block;font-family:var(--f-testo);font-size:17px;color:var(--osso-2);line-height:1.1}
 .check input{width:22px;height:22px;accent-color:#9d8443}
 
 /* Donna Carmela */
@@ -233,6 +237,7 @@ a{color:var(--osso)}
           <label><input type="radio" value="f"><span>Lei</span></label>
         </div>
       </div>
+      <label class="check-risorto"><input type="checkbox" name="risorto"><span><b>Risorto</b><small>È rientrato nel gruppo: al posto della lapide c'è la fossa vuota e arriva l'angelo con il suo omino.</small></span></label>
       <div class="riga2">
         <label class="campo"><span class="lbl-uscita">Data di uscita</span><input type="date" name="uscita"></label>
         <label class="campo"><span>Data di ingresso (facoltativa)</span><input type="date" name="entrata"></label>
@@ -396,16 +401,16 @@ let uid=0;
 function scheda(l,i){
   const n=$('#tpl-scheda').content.firstElementChild.cloneNode(true);const k=++uid;
   const isNuova=!l.id;if(isNuova)n.classList.add('nuova');
-  const f={nome:n.querySelector('[name=nome]'),uscita:n.querySelector('[name=uscita]'),entrata:n.querySelector('[name=entrata]'),motivo:n.querySelector('[name=motivo]'),fiori:n.querySelector('[name=fiori]')};
+  const f={nome:n.querySelector('[name=nome]'),uscita:n.querySelector('[name=uscita]'),entrata:n.querySelector('[name=entrata]'),motivo:n.querySelector('[name=motivo]'),fiori:n.querySelector('[name=fiori]'),risorto:n.querySelector('[name=risorto]')};
   n.querySelectorAll('.seg-tipo input').forEach(r=>{r.name='tipo'+k;r.checked=r.value===(l.tipo||'impiccato')});
   n.querySelectorAll('.seg-genere input').forEach(r=>{r.name='genere'+k;r.checked=r.value===(l.genere||'m')});
-  f.nome.value=l.nome||'';f.uscita.value=l.uscita||'';f.entrata.value=l.entrata||'';f.motivo.value=l.motivo||'';f.fiori.value=l.fiori||0;
+  f.nome.value=l.nome||'';f.uscita.value=l.uscita||'';f.entrata.value=l.entrata||'';f.motivo.value=l.motivo||'';f.fiori.value=l.fiori||0;f.risorto.checked=!!l.risorto;
   const id=k;for(const[key,inp]of Object.entries(f)){inp.id=key+id}
   fotoOvale(n.querySelector('.ovale'),l);
   const leggi=()=>({nome:f.nome.value.trim(),tipo:n.querySelector('.seg-tipo input:checked').value,genere:n.querySelector('.seg-genere input:checked').value,
-    uscita:f.uscita.value,entrata:f.entrata.value,motivo:f.motivo.value.trim(),fiori:Math.max(0,Math.round(Number(f.fiori.value)||0))});
+    uscita:f.uscita.value,entrata:f.entrata.value,motivo:f.motivo.value.trim(),fiori:Math.max(0,Math.round(Number(f.fiori.value)||0)),risorto:f.risorto.checked});
   const cont=n.querySelector('.contatore');
-  const aggiorna=()=>{const d=leggi();const sporca=isNuova||['nome','tipo','genere','uscita','entrata','motivo','fiori'].some(x=>String(d[x]||'')!==String(l[x]||''));
+  const aggiorna=()=>{const d=leggi();const sporca=isNuova||['nome','tipo','genere','uscita','entrata','motivo','fiori','risorto'].some(x=>String(d[x]||'')!==String(l[x]||''));
     n.classList.toggle('sporca',sporca);n.querySelector('.salva').disabled=!sporca;
     const len=[...f.motivo.value].length;cont.textContent=`${len} / 300`;cont.classList.toggle('troppo',len>260);
     n.querySelector('.lbl-uscita').textContent=d.tipo==='impiccato'?'Data di rimozione':'Data di uscita'};
