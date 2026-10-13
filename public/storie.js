@@ -116,6 +116,14 @@
     "Non toccate la mia tomba. Non si sa mai."
   ];
 
+  // Il chiosco degli hot dog carditesi di Prof Narciso: una volta su 10 te lo dà
+  const narciso = {
+    pulsante: "Piglt stu hot dog, mannacc e can canciell",
+    no: "No, mi dispiace. Non te lo do perché mi scoccio.",
+    si: "Va bene, piglia. Ma nun t'abituà.",
+    probabilita: 0.1
+  };
+
   // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
   const jediego = [
     "Sniff… {nome} era il più forte di tutti noi.",
@@ -196,5 +204,5 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();

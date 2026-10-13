@@ -34,6 +34,11 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - Al posto della lapide c'è la fossa vuota con la lapide rotta. Dopo che la Detective se n'è andata, quando scorri fino alla fossa scende una luce, arriva un angelo con l'omino che ha come testa la foto della lapide, lo lascia cadere e l'omino resta lì. Toccandolo parla.
 - L'animazione si vede una volta per telefono; dopo l'omino è già lì. Le frasi sono in `public/storie.js` (`angelo`, `risorto`).
 
+## Il chiosco degli hot dog carditesi
+
+- Tra la seconda e la terza tomba c'è il carretto di **Prof Narciso**. Il cartello "Piglt stu hot dog, mannacc e can canciell" è il pulsante: una volta su 10 ti dà l'hot dog, le altre ti dice "No, mi dispiace. Non te lo do perché mi scoccio."
+- Frasi e probabilità sono in `public/storie.js` (`narciso`, `probabilita: 0.1`).
+
 ## Struttura
 
 ```
