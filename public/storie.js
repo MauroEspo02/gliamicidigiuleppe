@@ -81,7 +81,22 @@
   const custode = {
     nome: 'Luiginov Marinovskij',
     saluto: "Privet, tovarišč! Io sono Luiginov Marinovskij, custode di cimitero. Porte io apro solo per te. Tu clicca pulsante… e poi veditela tu.",
-    apre: "Prego, tovarišč. Da qui in poi… veditela tu."
+    apre: "Prego, tovarišč. Da qui in poi… vedi—"
+  };
+
+  // Detective Terry: ti interroga appena entri, dopo lo sparo al custode
+  const terry = {
+    arrivo: "Un momento. Polizia.",
+    domanda: "Detective Terry, Omicidi. Hanno appena sparato al custode, proprio mentre lei entrava. Coincidenza? Mi dica: ha visto qualcosa di strano in questi giorni?",
+    risposte: [
+      ["Una vecchietta che collega tutto ad Afragola.", "Donna Carmela. La conosco. Ha un alibi di ferro: era ad Afragola. Come sempre."],
+      ["Un biondo che si nasconde dietro le tombe.", "Gigirish. Sta già nel mio taccuino. Pagina tre, quattro e cinque."],
+      ["Uno incappucciato che piange con una spada laser.", "Jediego. Piange da settimane. Sospetto, ma troppo triste per sparare a qualcuno."],
+      ["No, niente di strano.", "Niente di strano. In un cimitero dove la gente muore uscendo da un gruppo WhatsApp. Certo, come no."]
+    ],
+    chiusura: "Un'ultima cosa. Se sente parlare del Re dei Corvi, mi chiami. E non lasci la città.",
+    congedo: "Posso andare?",
+    saluto: "Ci rivedremo."
   };
 
   // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
@@ -164,5 +179,5 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, custode, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  window.NONNA = { storie, saluti, risposte, custode, terry, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();

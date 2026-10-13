@@ -21,6 +21,13 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - **Jediego**: a ogni visita piange, con la spada laser piantata per terra, vicino a un'altra tomba a caso. Toccalo per sentire cosa dice.
 - Le frasi di tutti sono in `public/storie.js` (`custode`, `gigirish`, `jediego`): si cambiano lì.
 
+## La storia
+
+- Nell'intro, mentre Luiginov apre il cancello, qualcuno gli spara. BANG, cade, il colbacco vola via.
+- Appena entri arriva la **Detective Terry** (Squadra Omicidi) e ti interroga: scegli la risposta, lei commenta e se ne va. Poi arriva Donna Carmela.
+- In fondo a destra, dalla fossa del "Posto libero" esce una luce: se la tocchi ti chiede se vuoi entrare e scendi nel **Caffè dal Re dei Corvi**, ancora in costruzione.
+- I testi di Terry sono in `public/storie.js` (`terry`).
+
 ## Struttura
 
 ```
