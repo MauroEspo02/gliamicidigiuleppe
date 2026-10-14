@@ -39,6 +39,12 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - Tra la seconda e la terza tomba c'è il carretto di **Prof Narciso**. Il cartello "Piglt stu hot dog, mannacc e can canciell" è il pulsante: una volta su 10 ti dà l'hot dog, le altre ti dice "No, mi dispiace. Non te lo do perché mi scoccio."
 - Frasi e probabilità sono in `public/storie.js` (`narciso`, `probabilita: 0.1`).
 
+## Il teatro e il video
+
+- Dopo la quinta tomba c'è il **teatro comunale** (mattoni, colonne bianche, insegna "Maestro Giuleppe", porte accese). Toccalo: dalle porte spunta **L'Ombra**, un personaggio incappucciato che dice "stai attento a chi è... e a cosa balla". Se scegli "Entro" ti ritrovi nella **sala cinema** (poltrone rosse, pubblico in ombra, un corvo, schermo) e parte il video. Il tasto freccia in alto a sinistra (o Esc) riporta fuori.
+- Il video è `public/video/indizio.mp4` (con `indizio.webm` di riserva e `indizio.jpg` come locandina). Per **cambiarlo** sostituisci questi file tenendo lo stesso nome: meglio mp4 H.264 sotto i 24 MB (limite di Cloudflare Pages: 25 MB a file). Per ridurlo: `ffmpeg -i originale.mov -c:v libx264 -crf 26 -vf scale=720:-2 -pix_fmt yuv420p -movflags +faststart indizio.mp4`.
+- Le frasi dell'Ombra e le scritte sono in `public/storie.js` (`teatro`).
+
 ## Struttura
 
 ```
@@ -46,6 +52,7 @@ public/                 il sito (Cloudflare lo pubblica così com'è)
   index.html            il cimitero
   admin/index.html      il pannello admin
   storie.js             le storie di Donna Carmela
+  video/                il video del teatro (mp4, webm, locandina)
   og.png                anteprima per WhatsApp
   _headers              noindex e sicurezza
 functions/api/[[path]].js   le API (lapidi, foto, login)

@@ -51,7 +51,7 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 #cimitero::-webkit-scrollbar{display:none}
 #cimitero.trascina{cursor:grabbing}
 #cimitero.trascina .lapide{pointer-events:none}
-@media (pointer:coarse){#cimitero{scroll-snap-type:x proximity}.lapide,.posto-libero,.chiosco{scroll-snap-align:center}}
+@media (pointer:coarse){#cimitero{scroll-snap-type:x proximity}.lapide,.posto-libero,.chiosco,.teatro{scroll-snap-align:center}}
 #fila{position:relative;display:flex;align-items:flex-end;height:100%;width:max-content;min-width:100%;
   padding-left:calc(50vw - var(--px)*28);padding-right:calc(50vw - var(--px)*28);
   padding-bottom:calc(var(--px)*(var(--suolo) - 5))}
@@ -291,8 +291,8 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 #chiama{left:14px;top:calc(env(safe-area-inset-top,0px) + 14px)}
 #chiama canvas{width:32px;height:32px;image-rendering:pixelated}
 #chiama .punto{position:absolute;right:-6px;top:-6px;width:12px;height:12px;background:#d8423a;box-shadow:0 0 0 3px #04050a;animation:lampeggia 1.2s steps(2) infinite}
-#racconto,#interrogatorio,#chiedi{position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 18px)}
-#racconto .velo-r,#interrogatorio .velo-r,#chiedi .velo-r{position:absolute;inset:0;background:rgba(3,4,9,.55)}
+#racconto,#interrogatorio,#chiedi,#ombra-dlg{position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 18px)}
+#racconto .velo-r,#interrogatorio .velo-r,#chiedi .velo-r,#ombra-dlg .velo-r{position:absolute;inset:0;background:rgba(3,4,9,.55)}
 .box-r{position:relative;width:min(600px,100%);display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;padding:14px;background:#efe6c8;color:#1d1a14;
   box-shadow:inset 0 0 0 3px #cdbd92,0 0 0 3px #06060b,0 0 0 7px #6b4a2a,0 0 0 10px #06060b}
 .r-ritratto{width:72px;height:72px;image-rendering:pixelated;background:#2a2433;box-shadow:0 0 0 3px #06060b}
@@ -311,6 +311,27 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 @media (max-width:440px){.box-r{gap:10px;padding:12px}.r-ritratto{width:52px;height:52px}.r-testo{font-size:21px}}
 .z-info{transition:opacity .25s steps(3)}
 .cambia .z-info{opacity:0}
+
+/* ---------- il teatro comunale e la sala ---------- */
+.teatro{position:relative;flex:none;width:calc(var(--px)*112);height:calc(var(--px)*92);margin-inline:calc(var(--px)*16) calc(var(--px)*10);z-index:1;cursor:pointer}
+.teatro>canvas.fac{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+.teatro .luce-teatro{position:absolute;left:calc(var(--px)*24);top:calc(var(--px)*46);width:calc(var(--px)*68);height:calc(var(--px)*62);border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 55%,rgba(255,200,110,.42),rgba(255,170,70,.12) 52%,transparent 72%);animation:fiamma 2.4s steps(1) infinite}
+.teatro:hover .luce-teatro,.teatro:focus-visible .luce-teatro{filter:brightness(1.35)}
+.teatro:focus-visible{outline:3px dashed var(--osso);outline-offset:4px}
+.teatro .ombra{position:absolute;left:calc(var(--px)*45);bottom:calc(var(--px)*4);width:calc(var(--px)*22);height:calc(var(--px)*34);image-rendering:pixelated;visibility:hidden;z-index:2;pointer-events:none}
+.teatro.ombra-su .ombra{visibility:visible;animation:spunta .5s steps(5) both}
+@keyframes spunta{0%{transform:translateY(30%) scale(.7,.5);opacity:0}60%{transform:translateY(-6%) scale(1.05,1.1);opacity:1}100%{transform:none;opacity:1}}
+#ombra-dlg .box-r{background:#1a1a26;color:#e8e6f0;box-shadow:inset 0 0 0 3px #3a3f66,0 0 0 3px #06060b,0 0 0 7px #2a2d4a,0 0 0 10px #06060b}
+#ombra-dlg .r-ritratto{background:#14131c}
+#ombra-dlg .r-data{color:#9aa0d0}
+#ombra-dlg .r-btn{color:#e8e6f0;background:#2a2d44;box-shadow:inset 0 3px 0 #4a4f78,inset 0 -3px 0 #14152a,0 0 0 3px #06060b}
+#ombra-dlg .r-btn.primario{background:#7a1522;box-shadow:inset 0 3px 0 #b02a3a,inset 0 -3px 0 #3d0910,0 0 0 3px #06060b}
+#ombra-dlg .r-btn:focus-visible{outline-color:#e8e6f0}
+#sala{position:fixed;inset:0;z-index:25;background:#0a0508;overflow:hidden}
+#sala canvas#sala-cv{position:absolute;left:0;top:0;image-rendering:pixelated}
+#film{position:absolute;display:block;background:#000;object-fit:contain;box-shadow:0 0 0 calc(var(--cp,4px)*1) #050508,0 0 calc(var(--cp,4px)*9) rgba(190,205,255,.35)}
+#esci-sala{left:14px;top:calc(env(safe-area-inset-top,0px) + 14px)}
 
 /* ---------- intro ---------- */
 #intro{position:fixed;inset:0;z-index:20;background:#000;display:flex;flex-direction:column;align-items:center;cursor:pointer}
@@ -345,7 +366,7 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 #nero.on{opacity:1}
 
 @media (prefers-reduced-motion:reduce){
-  #hint,#entra,.prop .alone,#nonna .alone-lumino,#chiama .punto,.alone-lanterna,#jediego .alone-laser,#jediego.appare,.fumo i,.luce-fossa::before,.ic-2,.raggio-cielo,.vapore i,.luce-chiosco{animation:none}
+  #hint,#entra,.prop .alone,#nonna .alone-lumino,#chiama .punto,.alone-lanterna,#jediego .alone-laser,#jediego.appare,.fumo i,.luce-fossa::before,.ic-2,.raggio-cielo,.vapore i,.luce-chiosco,.luce-teatro,.teatro.ombra-su .ombra{animation:none}
   #insegna.cala{animation:none}
   .riga.on{animation:none;opacity:.92}
 }
@@ -472,6 +493,23 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
   <div class="insegna-caffe" role="img" aria-label="Insegna: Caffè dal Re dei Corvi"><canvas id="corvo-re" width="12" height="12" aria-hidden="true"></canvas><span class="ic-1">Caffè dal</span><span class="ic-2">Re dei Corvi</span></div>
   <div class="cartello-lavori">Lavori in corso</div>
   <button id="risali" class="btn-px" type="button" aria-label="Risali nel cimitero"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1h1v1h1v1h1v2H8V6H7v4H5V6H4v1H2V5h1V4h1V3h1z"/></svg></button>
+</div>
+<div id="ombra-dlg" hidden>
+  <div class="velo-r"></div>
+  <section class="box-r" role="dialog" aria-modal="true" aria-labelledby="o-nome">
+    <canvas class="r-ritratto" id="o-ritratto" width="16" height="16" aria-hidden="true"></canvas>
+    <div class="r-corpo">
+      <header class="r-testa"><h2 id="o-nome"></h2><span class="r-data" id="o-ruolo"></span></header>
+      <p class="r-testo" id="o-testo" aria-hidden="true"></p>
+      <p class="sr" id="o-sr" aria-live="polite"></p>
+      <div class="r-azioni t-risposte" id="o-risposte"></div>
+    </div>
+  </section>
+</div>
+<div id="sala" hidden>
+  <canvas id="sala-cv" aria-hidden="true"></canvas>
+  <video id="film" playsinline controls preload="none" poster="/video/indizio.jpg" aria-label="Il video dell'indizio"><source src="/video/indizio.mp4" type="video/mp4"><source src="/video/indizio.webm" type="video/webm"></video>
+  <button id="esci-sala" class="btn-px" type="button" aria-label="Esci dal teatro"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1H6v2h5v2H6v2h1v1H5V9H4V8H3V7H2V5h1V4h1V3h1z"/></svg></button>
 </div>
 <div id="avviso" role="status" aria-live="polite"></div>
 <div id="nero"></div>
@@ -978,6 +1016,7 @@ const Audio={ctx:null,on:false,
     const b=$('#audio');b.setAttribute('aria-pressed',String(v));b.setAttribute('aria-label',v?'Spegni pioggia e tuoni':'Attiva pioggia e tuoni');b.querySelector('.onde').style.display=v?'':'none';b.querySelector('.muto').style.display=v?'none':'';
     if(v){this.init();if(!this.ctx)return;this.ctx.resume();const t=this.ctx.currentTime;this.master.gain.cancelScheduledValues(t);this.master.gain.setValueAtTime(this.master.gain.value,t);this.master.gain.linearRampToValueAtTime(.9,t+1.2)}
     else if(this.ctx){const t=this.ctx.currentTime;this.master.gain.cancelScheduledValues(t);this.master.gain.setValueAtTime(this.master.gain.value,t);this.master.gain.linearRampToValueAtTime(0,t+.3)}},
+  attutisci(si){if(!this.ctx||!this.on)return;const t=this.ctx.currentTime;this.master.gain.cancelScheduledValues(t);this.master.gain.setValueAtTime(this.master.gain.value,t);this.master.gain.linearRampToValueAtTime(si?.15:.9,t+.8)},
   blip(k=1){if(!this.on||!this.ctx)return;const c=this.ctx,t=c.currentTime,o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.value=(380+Math.random()*160)*k;
     g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+.06);o.connect(g).connect(this.master);o.start(t);o.stop(t+.07)},
   cigolio(){if(!this.on||!this.ctx)return;const c=this.ctx,t=c.currentTime,o=c.createOscillator(),bp=c.createBiquadFilter(),g=c.createGain(),l=c.createOscillator(),lg=c.createGain();
@@ -1046,11 +1085,12 @@ function creaLapide(l,i){
 function adatta(el,min){let fs=parseFloat(getComputedStyle(el).fontSize);el.style.fontSize='';fs=parseFloat(getComputedStyle(el).fontSize);let k=0;while((el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1)&&fs>min&&k<30){fs*=.92;el.style.fontSize=fs+'px';k++}}
 function adattaNomi(){document.querySelectorAll('.lapide .nome,.lapide .data,.lapide .morte').forEach(n=>adatta(n,S.px*2.4))}
 function mostraLapidi(){
-  fila.querySelectorAll('.lapide,.prop,.posto-libero,.vuoto,.risorto,.chiosco').forEach(e=>e.remove());
+  fila.querySelectorAll('.lapide,.prop,.posto-libero,.vuoto,.risorto,.chiosco,.teatro').forEach(e=>e.remove());
   let i=0;
-  TUTTE.forEach((l,k)=>{if(k===2)fila.append(Chiosco.crea());if(k>0)fila.append(creaProp(k,hash(l.id)+1));if(l.risorto)fila.append(Risurrezione.crea(l));else{fila.append(creaLapide(l,i));i++}});
+  TUTTE.forEach((l,k)=>{if(k===2)fila.append(Chiosco.crea());if(k===5)fila.append(Teatro.crea());if(k>0)fila.append(creaProp(k,hash(l.id)+1));if(l.risorto)fila.append(Risurrezione.crea(l));else{fila.append(creaLapide(l,i));i++}});
   if(TUTTE.length)fila.append(creaProp(TUTTE.length,77));
   if(TUTTE.length<=2)fila.append(Chiosco.crea());
+  if(TUTTE.length<=5)fila.append(Teatro.crea());
   fila.append(postoLibero());
   aggiornaConta();
   adattaNomi();aggiornaFrecce();
@@ -1089,6 +1129,8 @@ cim.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)
 addEventListener('pointermove',e=>{if(!presa)return;const d=e.clientX-presa.x;if(Math.abs(d)>6){trascinato=true;cim.classList.add('trascina')}if(trascinato)cim.scrollLeft=presa.s-d});
 addEventListener('pointerup',()=>{presa=null;cim.classList.remove('trascina');setTimeout(()=>{trascinato=false},0)});
 addEventListener('keydown',e=>{
+  if(!$('#sala').hidden){if(e.key==='Escape')Sala.esci();return}
+  if(!$('#ombra-dlg').hidden){if(e.key==='Escape')Teatro.chiudi(false);return}
   if(!$('#caffe').hidden){if(e.key==='Escape')Caffe.esci();return}
   if(!$('#chiedi').hidden){if(e.key==='Escape')$('#chiedi').hidden=true;return}
   if(!$('#interrogatorio').hidden){if(e.key==='Escape')Terry.chiudi();return}
@@ -1612,6 +1654,209 @@ const Risurrezione={
   }
 };
 
+/* ---------- il teatro comunale, l'Ombra e la sala cinema ---------- */
+function spriteTeatro(){
+  const W=112,H=92,p=Pix(W,H),T=NONNA.teatro;
+  const lin=(x0,y0,x1,y1,c)=>{const n=Math.max(Math.abs(x1-x0),Math.abs(y1-y0),1);for(let i=0;i<=n;i++)p.set(Math.round(x0+(x1-x0)*i/n),Math.round(y0+(y1-y0)*i/n),c)};
+  // palma dietro il teatro
+  for(let y=22;y<36;y++){p.set(97,y,'#1c1710');p.set(98,y,'#0e0b08')}
+  for(const[dx,dy]of[[-8,3],[-6,-3],[-2,-6],[3,-6],[7,-2],[9,4],[-4,5],[5,5]]){lin(97,22,97+dx,22+dy,'#142014');lin(98,22,98+dx,23+dy,'#25402a')}
+  // blocco di mattoni, scuro in alto e chiaro verso le porte accese
+  const MAT=['#8a4328','#7a3a23','#94502f','#6e3320','#85402a'];
+  for(let y=0;y<45;y++)for(let x=2;x<72;x++){
+    const riga=Math.floor(y/3),off=(riga%2)*4,bx=Math.floor((x+off)/8),malta=(y%3===2)||((x+off)%8===7);
+    let c=malta?'#3a1d12':MAT[h2(bx,riga,5)%5];
+    if(!malta&&y%3===0&&bayer(x,y)>.55)c='#a35a38';
+    if(bayer(x,y)<(1-y/45)*.34)c=malta?'#22110a':'#4e2416';
+    p.set(x,y,c)}
+  for(let x=2;x<72;x++){p.set(x,0,'#06060b');p.set(x,1,'#b36a44')}
+  for(let y=0;y<45;y++){p.set(1,y,'#06060b');p.set(72,y,'#2a140c');p.set(73,y,'#06060b')}
+  // insegna scura con le due righe
+  const l1=pulisci(T.insegna[0]),l2=pulisci(T.insegna[1]),pw=Math.min(66,Math.max(larg(l1),larg(l2))+6);
+  for(let y=6;y<21;y++)for(let x=5;x<5+pw;x++)p.set(x,y,(y===6||x===5)?'#3a4058':(y===20||x===4+pw)?'#06060b':'#12151f');
+  incidi(p,l1,5+Math.round((pw-larg(l1))/2),8,1,'#e6e9f2');
+  incidi(p,l2,5+Math.round((pw-larg(l2))/2),14,1,'#e6e9f2');
+  // pensilina bianca con le lampadine e la scritta CINEMA
+  for(let x=19;x<109;x++){p.set(x,35,'#06060b');p.set(x,36,'#e4e8f4');p.set(x,37,'#c4c9da');for(let y=38;y<42;y++)p.set(x,y,'#b3b9cd');p.set(x,42,'#7b8199');p.set(x,43,'#5d6279');p.set(x,44,'#06060b')}
+  for(let y=35;y<45;y++){p.set(19,y,'#06060b');p.set(109,y,'#06060b')}
+  for(let x=24;x<46;x+=5)p.set(x,40,'#ffe39a');for(let x=84;x<106;x+=5)p.set(x,40,'#ffe39a');
+  for(let y=37;y<44;y++)for(let x=47;x<81;x++)p.set(x,y,(y===37||y===43||x===47||x===80)?'#06060b':'#1a0d12');
+  incidi(p,'CINEMA',64-Math.round(larg('CINEMA')/2),38,1,'#ff6b4a');
+  // soffitto in legno e vetrate
+  for(let y=45;y<49;y++)for(let x=2;x<95;x++)p.set(x,y,y===45?'#06060b':y===48?'#3a1d0e':'#6a3a20');
+  const SEZ=[[2,26],[30,40],[44,54],[58,68],[72,82],[86,94]],PORTE=[2,3];
+  SEZ.forEach(([x0,x1],k)=>{for(let y=49;y<88;y++)for(let x=x0;x<x1;x++){
+    let c;
+    if(PORTE.includes(k)){
+      const t=(y-49)/39;c=bayer(x,y)<t*.8+.1?'#f2b45a':'#c27a2a';if(y>74&&bayer(x,y)<.4)c='#ffe39a';
+      if(x===x0||x===x1-1||y===49)c='#06060b';else if(x===x0+5)c='#2a1a0e';
+      else if(y>=64&&y<=70&&(x===x0+4||x===x0+6))c='#e8ecf2';
+    }else{
+      c=(x+y)%11<2?'#1a2840':'#0d1422';if(y>76)c=(x+y)%7<2?'#1e2f48':'#142033';
+      if((x===x0)||(y===49))c='#06060b';else if(bayer(x,y)<.06)c='#3a2f26'}
+    p.set(x,y,c)}});
+  for(const px of[26,40,54,68,82])for(let y=45;y<88;y++){p.set(px,y,'#d8dcec');p.set(px+1,y,'#b3b9cd');p.set(px+2,y,'#b3b9cd');p.set(px+3,y,'#8a90a8')}
+  for(let y=45;y<88;y++)for(let x=94;x<107;x++)p.set(x,y,x===94?'#06060b':x===95?'#d8dcec':x>=105?'#8a90a8':(x===100&&y%9!==0)?'#9aa0b8':'#b3b9cd');
+  // gradini con la luce delle porte
+  for(let x=2;x<109;x++){p.set(x,88,'#9aa0b8');p.set(x,89,'#6d7288')}
+  for(let x=0;x<111;x++){p.set(x,90,'#565b70');p.set(x,91,'#3a3e50')}
+  for(let x=44;x<68;x++){p.set(x,88,bayer(x,88)>.4?'#e8c27a':'#b8914f');p.set(x,89,'#8f6f3a')}
+  return p.fine();
+}
+function spriteOmbra(st){
+  const P=pittore(22,34);
+  // 1 mantello 2 volto vuoto 3 mano
+  for(let y=12;y<34;y++){const a=Math.round(7-(y-12)*.28),z=Math.round(15+(y-12)*.28);P.rett(a,y,z-a+1,1,1)}
+  P.disco(11,8,6.2,1);
+  P.disco(11,9,3.7,2,(x,y)=>y>=5);
+  P.rett(3,22,3,3,3);
+  const p=P.render({1:['#08080d','#12131e','#3b4170'],2:['#000000','#000000','#040406'],3:['#8f6a55','#c48e72','#dfae8e']});
+  const occhi=st==='parla'?[[9,9],[10,9],[9,10],[10,10],[12,9],[13,9],[12,10],[13,10]]:[[9,9],[10,9],[12,9],[13,9]];
+  occhi.forEach(([x,y])=>p.set(x,y,'#fff7c8'));
+  [[2,20],[3,20],[4,20],[5,20],[2,21],[3,21],[4,21],[5,21]].forEach(([x,y])=>p.set(x,y,'#efe6c8'));p.set(3,21,'#c0392b');p.set(4,21,'#c0392b');
+  return p.fine();
+}
+const OMF={fermo:spriteOmbra('fermo'),parla:spriteOmbra('parla')};
+const Teatro={
+  occupato:false,el:null,
+  crea(){
+    const T=NONNA.teatro,d=document.createElement('div');d.className='teatro';d.setAttribute('role','button');d.tabIndex=0;d.setAttribute('aria-label',T.etichetta);
+    d.innerHTML='<span class="luce-teatro"></span><canvas class="fac" width="112" height="92"></canvas><canvas class="ombra" width="22" height="34"></canvas><span class="fum-wrap" style="bottom:calc(var(--px)*40)"><span class="fumetto" hidden><span class="ft"></span></span></span>';
+    d.querySelector('.fac').getContext('2d').drawImage(spriteTeatro(),0,0);
+    d.querySelector('.ombra').getContext('2d').drawImage(OMF.fermo,0,0);
+    const clic=e=>{e.stopPropagation();if(trascinato)return;this.apri(d)};
+    d.addEventListener('click',clic);
+    d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();clic(e)}});
+    return d;
+  },
+  disegnaOmbra(st){const c=this.el&&this.el.querySelector('canvas.ombra');if(!c)return;const g=c.getContext('2d');g.clearRect(0,0,22,34);g.drawImage(OMF[st],0,0)},
+  ritratto(st){const g=$('#o-ritratto').getContext('2d');g.imageSmoothingEnabled=false;g.fillStyle='#14131c';g.fillRect(0,0,16,16);g.drawImage(OMF[st],3,1,16,16,0,0,16,16)},
+  fumetto(t,ms){const f=this.el.querySelector('.fumetto');f.querySelector('.ft').textContent=t;f.hidden=false;f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop');
+    clearTimeout(this.ft);if(ms)this.ft=setTimeout(()=>{f.hidden=true},ms)},
+  async apri(d){
+    if(this.occupato)return;this.occupato=true;this.el=d;
+    const T=NONNA.teatro,c=d.offsetLeft+d.offsetWidth/2-innerWidth/2;let aspetta=0;
+    if(Math.abs(cim.scrollLeft-c)>40){cim.scrollTo({left:c,behavior:ridotto?'auto':'smooth'});aspetta=ridotto?0:650}
+    await new Promise(r=>setTimeout(r,aspetta));
+    this.disegnaOmbra('fermo');d.classList.add('ombra-su');Audio.tonfo();
+    this.fumetto(T.psst,1600);Audio.blip(.5);
+    await new Promise(r=>setTimeout(r,ridotto?200:1300));
+    if(!this.occupato)return;
+    this.dialogo();
+  },
+  dialogo(){
+    const T=NONNA.teatro;this.el.querySelector('.fumetto').hidden=true;
+    $('#o-nome').textContent=T.nome;$('#o-ruolo').textContent=T.ruolo;$('#ombra-dlg').hidden=false;this.ritratto('fermo');$('#o-risposte').replaceChildren();
+    if(!ridotto)$('#ombra-dlg .box-r').animate([{transform:'translateY(40px)',opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'steps(4)'});
+    this.scrivi(T.domanda,()=>this.bottoni([[T.bottoni.entro,()=>this.entra(),true],[T.bottoni.chi,()=>this.chiSei()],[T.bottoni.via,()=>this.chiudi(true)]]));
+  },
+  chiSei(){const T=NONNA.teatro;$('#o-risposte').replaceChildren();this.scrivi(T.chiSei,()=>this.bottoni([[T.bottoni.entro,()=>this.entra(),true],[T.bottoni.via,()=>this.chiudi(true)]]))},
+  scrivi(testo,fine){
+    const el=$('#o-testo');clearInterval(this.tw);clearInterval(this.pt);$('#o-sr').textContent=testo;
+    if(ridotto){el.textContent=testo;fine&&fine();return}
+    let i=0,f=0;el.textContent='';
+    this.pt=setInterval(()=>{f^=1;const st=f?'parla':'fermo';this.ritratto(st);this.disegnaOmbra(st)},150);
+    this.fine=()=>{clearInterval(this.tw);clearInterval(this.pt);el.textContent=testo;this.ritratto('fermo');this.disegnaOmbra('fermo');this.fine=null;fine&&fine()};
+    this.tw=setInterval(()=>{i=Math.min(testo.length,i+2);el.textContent=testo.slice(0,i);if(i%6<2)Audio.blip(.55);if(i>=testo.length&&this.fine)this.fine()},32);
+  },
+  bottoni(lista){const box=$('#o-risposte');box.replaceChildren();
+    for(const[t,fn,prim]of lista){const b=document.createElement('button');b.type='button';b.className='r-btn'+(prim?' primario':'');b.textContent=t;b.onclick=fn;box.append(b)}
+    const primo=box.querySelector('button');if(primo)primo.focus({preventScroll:true})},
+  fermaDialogo(){if(this.fine)this.fine();clearInterval(this.tw);clearInterval(this.pt);this.fine=null;$('#ombra-dlg').hidden=true},
+  async chiudi(rifiuta){
+    if($('#ombra-dlg').hidden||!this.occupato)return;this.fermaDialogo();
+    if(rifiuta){this.fumetto(NONNA.teatro.via,2300);await new Promise(r=>setTimeout(r,ridotto?200:2400))}
+    this.finito();
+  },
+  entra(){this.fermaDialogo();this.el.querySelector('.fumetto').hidden=true;Sala.entra()},
+  finito(){if(this.el){this.el.classList.remove('ombra-su');this.el.querySelector('.fumetto').hidden=true}this.occupato=false}
+};
+$('#ombra-dlg .velo-r').addEventListener('click',()=>Teatro.chiudi(false));
+$('#o-testo').addEventListener('click',()=>{if(Teatro.fine)Teatro.fine()});
+
+const Sala={
+  entra(){
+    const nero=$('#nero');Audio.cigolio();nero.classList.add('on');
+    setTimeout(()=>{this.disegna();$('#sala').hidden=false;Audio.attutisci(true);nero.classList.remove('on');$('#esci-sala').focus({preventScroll:true});this.parti()},ridotto?50:900);
+  },
+  parti(){
+    const v=$('#film');try{v.currentTime=0}catch(e){}
+    if(ridotto)return;
+    const pr=v.play();if(pr&&pr.catch)pr.catch(()=>avviso('Tocca play per guardare il video.'));
+  },
+  esci(){
+    const nero=$('#nero');nero.classList.add('on');
+    setTimeout(()=>{$('#film').pause();$('#sala').hidden=true;Audio.attutisci(false);nero.classList.remove('on');Teatro.finito()},ridotto?50:600);
+  },
+  disegna(){
+    const cp=Math.max(S.px,Math.floor(Math.min(innerWidth/150,innerHeight/115))),W=Math.ceil(innerWidth/cp),H=Math.ceil(innerHeight/cp),cv=$('#sala-cv');
+    cv.width=W;cv.height=H;cv.style.width=W*cp+'px';cv.style.height=H*cp+'px';document.documentElement.style.setProperty('--cp',cp+'px');
+    const buf=new Array(W*H).fill('#0a0508');
+    const put=(x,y,c)=>{x=Math.round(x);y=Math.round(y);if(x>=0&&y>=0&&x<W&&y<H)buf[y*W+x]=c};
+    const get=(x,y)=>buf[y*W+x];
+    const mix=(a,b,t)=>{const A=RGB(a),B=RGB(b);return'#'+[0,1,2].map(i=>Math.round(A[i]+(B[i]-A[i])*t).toString(16).padStart(2,'0')).join('')};
+    const sh=Math.min(Math.round((W-16)/1.4916),Math.round(H*.46)),sw=Math.round(sh*1.4916),sx=Math.round((W-sw)/2),sy=Math.round(Math.max(18,H*.13)),fy=sy+sh+6;
+    // muro di fondo
+    for(let y=0;y<fy;y++)for(let x=0;x<W;x++){let c=(x%14===0)?'#12091a':'#1b0e1a';if(bayer(x,y)<(1-y/fy)*.25)c='#0f0714';put(x,y,c)}
+    // tende ai lati dello schermo
+    const FOLD=['#5e0f19','#7a1420','#9a2030','#7a1420','#5e0f19','#450a12'];
+    for(let y=0;y<fy;y++)for(let x=0;x<W;x++){if(x>=sx-3&&x<=sx+sw+2)continue;let c=FOLD[x%6];if(bayer(x,y)<(y/fy)*.4)c=mix(c,'#1a0508',.6);put(x,y,c)}
+    // mantovana con bordo dorato
+    for(let x=0;x<W;x++){const h=5+(Math.abs((x%10)-5)<3?1:0);for(let y=0;y<=h;y++)put(x,y,y===h?'#c9a24a':(y<2?'#9a2030':'#7a1420'))}
+    // bagliore dello schermo sul muro
+    for(let y=sy-7;y<sy+sh+8;y++)for(let x=sx-7;x<sx+sw+8;x++){const dx=Math.max(sx-x,0,x-(sx+sw-1)),dy=Math.max(sy-y,0,y-(sy+sh-1)),d=Math.hypot(dx,dy);
+      if(d>0&&d<7&&x>=0&&x<W&&y>=0&&y<fy&&bayer(x,y)<(1-d/7)*.55)put(x,y,mix(get(x,y),'#8fa6ff',.45))}
+    // schermo e cornice
+    for(let y=sy-2;y<sy+sh+2;y++)for(let x=sx-2;x<sx+sw+2;x++)put(x,y,(x<sx||y<sy||x>=sx+sw||y>=sy+sh)?'#050508':'#9aa0b8');
+    // palco e luci di sala
+    for(let x=0;x<W;x++){put(x,fy,'#6b4426');put(x,fy+1,'#3a2314');put(x,fy+2,'#3a2314');put(x,fy+3,'#1a0d08');if(x%9===4)put(x,fy+1,'#ffd27a')}
+    for(let y=fy+4;y<H;y++)for(let x=0;x<W;x++){let c=(h2(x>>2,y>>1,9)%6===0)?'#3a1220':'#2a0d16';if(bayer(x,y)<((y-fy)/(H-fy))*.3)c='#1a0710';put(x,y,c)}
+    // file di poltrone viste da dietro, con le teste del pubblico
+    const righe=[];{let y=fy+8,k=0,rh=10;while(y<H+12&&k<14){righe.push({y,k,rh});y+=rh;rh=Math.round(rh*1.18+.5);k++}}
+    const seats=[];
+    for(const r of righe){
+      const ws=Math.round(8+r.k*2.4),hb=r.rh+4,lum=Math.max(.38,1-r.k*.09),aisle=Math.round(ws*.9),tot=Math.ceil(W/ws)+2,start=Math.round(W/2-aisle/2)-Math.ceil(tot/2)*ws;
+      for(let c=0;c<tot*2;c++){
+        let x=start+c*ws;if(x>=W/2-aisle/2-1)x+=aisle;
+        if(x>W+ws||x+ws<-ws)continue;
+        const col=(i,t)=>mix(i,'#000000',1-lum+t);
+        for(let yy=0;yy<hb;yy++)for(let xx=0;xx<ws-1;xx++){
+          if(yy<2&&(xx<1||xx>=ws-2))continue;
+          let b=yy<2?'#b03a4c':(bayer(x+xx,r.y+yy)<yy/hb*.55?'#4a0b16':'#7a1424');
+          if(xx===0)b='#2a0610';else if(xx===ws-2)b='#3a0814';
+          put(x+xx,r.y+yy,col(b,0))}
+        if(r.k>=1&&h2(c,r.k,11)%100<40){
+          const hx=x+(ws-1)/2,hy=r.y-1,rx=ws*.27,ry=ws*.36;
+          for(let yy=Math.floor(hy-ry);yy<=Math.ceil(hy+ry*.4);yy++)for(let xx=Math.floor(hx-rx);xx<=Math.ceil(hx+rx);xx++){
+            if(((xx+.5-hx)/rx)**2+((yy+.5-hy)/ry)**2<=1)put(xx,yy,yy<=Math.floor(hy-ry)+1?'#2c3563':'#060509')}
+          if(h2(c,r.k,12)%7===0)for(let xx=Math.floor(hx-rx-2);xx<=Math.ceil(hx+rx+2);xx++){put(xx,Math.round(hy-ry)+1,'#060509');if(xx>hx-rx&&xx<hx+rx)put(xx,Math.round(hy-ry),'#060509')}
+        }
+        seats.push({x,y:r.y,k:r.k,ws})
+      }
+    }
+    // il raggio del proiettore da dietro la sala
+    const bx=W/2,by=H+8,ty=sy+sh;
+    for(let y=ty;y<H;y++){const t=(y-ty)/(by-ty),hw=(sw/2-4)*(1-t);for(let x=Math.round(bx-hw);x<=Math.round(bx+hw);x++){
+      const f=1-Math.abs(x-bx)/Math.max(hw,1)*.6;if(x>=0&&x<W&&bayer(x,y)<.13*f*(1-t*.6))put(x,y,mix(get(x,y),'#cfd8ff',.3))}}
+    // uscita illuminata
+    const ex=W-30,ey=8;
+    for(let y=ey-3;y<ey+13;y++)for(let x=ex-3;x<ex+33;x++){const d=Math.max(ex-x,0,x-(ex+26),ey-y,0,y-(ey+8));if(d>0&&d<4&&x<W&&bayer(x,y)<(1-d/4)*.5)put(x,y,mix(get(x,y),'#2aff80',.35))}
+    for(let y=ey;y<ey+9;y++)for(let x=ex;x<ex+27;x++)put(x,y,(y===ey||y===ey+8||x===ex||x===ex+26)?'#1c6b3a':'#0a2a14');
+    {const im={set:(x,y,c)=>put(x,y,c)};incidi(im,'USCITA',ex+2,ey+2,1,'#5dff9a')}
+    // scrivo i pixel sul canvas
+    const p=Pix(W,H);for(let y=0;y<H;y++)for(let x=0;x<W;x++)p.set(x,y,buf[y*W+x]);
+    const g=cv.getContext('2d');g.drawImage(p.fine(),0,0);
+    // un corvo seduto su una poltrona, in prima fila visibile
+    const sc=seats.filter(s=>s.k===2&&s.x>8&&s.x<W-20);
+    if(sc.length){const s=sc[Math.floor(sc.length*.62)];g.drawImage(spriteCorvo(),Math.round(s.x+(s.ws-12)/2),s.y-8)}
+    // posiziono il video nello schermo
+    const v=$('#film');v.style.left=sx*cp+'px';v.style.top=sy*cp+'px';v.style.width=sw*cp+'px';v.style.height=sh*cp+'px';
+  }
+};
+$('#esci-sala').addEventListener('click',()=>Sala.esci());
+$('#film').addEventListener('ended',()=>avviso(NONNA.teatro.fine));
+$('#film').addEventListener('error',()=>avviso('Il video non si carica. Riprova tra un attimo.'));
+
 /* ---------- la fossa e il Caffè dal Re dei Corvi ---------- */
 const Caffe={
   chiedi(){$('#chiedi').hidden=false;$('#c-si').focus({preventScroll:true})},
@@ -1836,7 +2081,7 @@ $('#audio').addEventListener('click',()=>Audio.imposta(!Audio.on));
 $('#entra').addEventListener('click',e=>{e.stopPropagation();entra(true)});
 $('#entra-muto').addEventListener('click',e=>{e.stopPropagation();entra(false)});
 $('#intro').addEventListener('click',()=>{if(!$('.intro-azioni').classList.contains('on')){introTimer.forEach(clearTimeout);mostraEntra()}else entra(true)});
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const oldPx=S.px;dimensiona();if(oldPx!==S.px)adattaNomi();aggiornaFrecce();Jediego.posiziona();Gigi.posiziona();if(!$('#caffe').hidden)Caffe.disegna();if(!zoom.hidden){dimensionaZoom();adatta($('.z-motivo'),11)}},120)});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const oldPx=S.px;dimensiona();if(oldPx!==S.px)adattaNomi();aggiornaFrecce();Jediego.posiziona();Gigi.posiziona();if(!$('#caffe').hidden)Caffe.disegna();if(!$('#sala').hidden)Sala.disegna();if(!zoom.hidden){dimensionaZoom();adatta($('.z-motivo'),11)}},120)});
 
 texture();costruisciSprite();dimensiona();
 Audio.imposta(false);

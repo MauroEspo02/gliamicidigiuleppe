@@ -124,6 +124,21 @@
     probabilita: 0.1
   };
 
+  // Il teatro comunale con la sala cinema (il video e' in /video/indizio.mp4).
+  const teatro = {
+    insegna: ["TEATRO COMUNALE", "MAESTRO GIULEPPE"],
+    etichetta: "Teatro comunale. Dalle porte esce una luce. Vuoi guardare?",
+    psst: "Psst.",
+    nome: "L'Ombra",
+    ruolo: "Chi è? Nessuno lo sa",
+    domanda: "Ehi, tu. Fermo lì.\n\nPrima di entrare ti dico una cosa sola: là dentro c'è un indizio.\n\nStai attento a chi è... e a cosa balla.",
+    chiSei: "Chi sono io? Uno che sa. Uno che balla pure lui, ma di nascosto.\n\nAdesso vai, prima che mi vedano. E guarda bene.",
+    bottoni: { chi: "Chi sei?", entro: "Entro", via: "Meglio di no" },
+    via: "Fai bene ad avere paura. Ma l'indizio resta lì.",
+    uscita: "Esci dal teatro",
+    fine: "Hai visto bene chi è? E cosa balla?"
+  };
+
   // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
   const jediego = [
     "Sniff… {nome} era il più forte di tutti noi.",
@@ -204,5 +219,5 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
