@@ -50,12 +50,16 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - **Detective Terry** non fa più animazioni: passeggia per il cimitero e, se la tocchi, dice una frase (`terryPasseggio`). Il **custode** è ora un **fantasma** che ogni tanto attraversa il cielo (`fantasma`).
 - **Angioletto**, tifoso del Napoli con la maglia di Maradona e l'aureola, arriva da destra dopo un po' e ti racconta la storia assurda di Donna Carmela e della bara (`angioletto`).
 - **Visco Visconti**, motociclista, è in fondo a tutto: sta scolpendo la lapide del custode (`visco`; `visco.lapide` sono le due righe incise). Quando arrivi si sente "Ehi... vieni.".
+- **Ragnetto**, il ragno detective (cappellino e lente), appena entri scende dal filo, entra ed esce dall'inquadratura, poi si ferma e dice che è arrivato a risolvere il delitto con la Detective Terry. Dopo resta appeso in alto a destra: toccalo per sentirlo (`ragnetto`).
+- **Gigio il veggente**, chiamato da Milano, ha il suo banchetto con la sfera di cristallo tra le tombe (dopo l'ottava, o in fondo se sono meno). Parla metà napoletano e metà milanese e ti legge il futuro (`gigio`, le profezie sono in `gigio.profezie`).
 - Nello sfondo, lontano, c'è la **stazione di Afragola**: la grande rampa bianca, l'edificio con le finestre accese e ogni tanto passa un treno.
 
 ## Il caffè finito e le carte
 
 - Il **Caffè dal Re dei Corvi** (dalla fossa con la luce) ora è finito: bancone, macchina del caffè, cornetti, lavagna del menu, insegna APERTO. Dentro c'è **Matteofino**, il muratore che ha finito dopo 4 anni (`matteofino`). Ti dà **una carta al giorno** e ti chiede se sai chi è il Re dei Corvi.
 - Le carte sono 12 mostriciattoli **inventati** (non sono Pokémon veri), disegnati dal codice a partire dal `seed` di ciascuna (`carte` in `storie.js`: nome, tipo, rarità, PV, attacchi, frase). Il pulsante in alto a destra nel caffè apre l'album. Le carte restano nel browser di chi gioca (`giuleppe-carte`).
+- Al bar c'è anche **Gaia Pappaia**, che ha avuto una storia con il custode Luigi, finita male. Parla in corsivo, stile generazione Z, e il suo testo è proprio in corsivo (`gaia`).
+- Accanto al bar c'è la porta della **Palestra Fit**: si apre solo se hai almeno 3 carte diverse (`palestra.carteRichieste`). Dentro c'è un sacco da boxe da colpire: i colpi si contano (`giuleppe-colpi`).
 
 ## Struttura
 

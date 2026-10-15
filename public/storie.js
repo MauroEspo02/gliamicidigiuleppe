@@ -326,5 +326,74 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  // Ragnetto, il ragno detective che arriva appena entri.
+  const ragnetto = {
+    nome: "Ragnetto", ruolo: "Detective a otto zampe",
+    saluto: "Ciao! È arrivato Ragnetto al cimitero, a risolvere il delitto insieme alla Detective Terry!",
+    frasi: [
+      "Ho tessuto una tela su ogni tomba. Niente mi sfugge.",
+      "Terry guarda per terra, io guardo dall'alto. Squadra perfetta.",
+      "Otto zampe, otto indizi. Me ne mancano sette.",
+      "Il colpevole ha lasciato un'impronta. Una sola. Io ne lascio otto.",
+      "Chi ha ucciso il custode? Lo scopro. Prima però mi riposo sul filo.",
+      "Il fantasma vola, io penzolo. Ognuno ha i suoi mezzi.",
+      "Ho visto tutto da quassù. Tutto. Tranne quello che serviva.",
+      "Se piove ancora, la tela si scioglie. Terry, sbrigati."
+    ]
+  };
+
+  // Gigio, il veggente chiamato da Milano: metà napoletano, metà milanese.
+  const gigio = {
+    nome: "Gigio", ruolo: "Veggente, chiamato da Milano",
+    chiamata: "Uè, guagliò! Vieni che ti leggo il futuro, taac!",
+    insegna: ["GIGIO", "VEGGENTE"],
+    passi: [
+      { t: "Uè uè! Sono Gigio, il veggente. M'hanno chiamato da Milano apposta: ho preso il Frecciarossa, sono sceso ad Afragola e jamme, eccomi qua. Che vuoi sapere, ciccio?", b: [["Leggimi il futuro", "@futuro"], ["Chi ha ucciso il custode?", 2], ["Ma come parli?", 3]] },
+      { t: "", b: [["Un'altra!", "@futuro"], ["Grazie, Gigio", null]] },
+      { t: "Mamma mia, la sfera s'è fatta tutta nebbiosa, tipo la Bovisa a novembre. Vedo... un caschetto. Vedo... una sigaretta. E vedo uno che balla. Più de chesto nun pozzo dì, se no la Detective mi fa la multa.", b: [["Leggimi il futuro", "@futuro"], ["Ciao Gigio", null]] },
+      { t: "Sono nato a Napoli, ma sto a Milano da dieci anni. Mo' dico \"uè\" e \"guagliò\" nella stessa frase, faccio l'apericena col babà e pago il caffè due euro. Non sono più di nessuna parte, ciccio. Sono un veggente internazionale.", b: [["Leggimi il futuro", "@futuro"], ["Ciao Gigio", null]] }
+    ],
+    profezie: [
+      "Vedo un gran sbatti nel tuo futuro... ma poi una sfogliatella. Ne vale la pena, fidati.",
+      "Oggi qualcuno ti dirà \"ciao bello\". Tu rispondi \"uè guagliò\" e vedi che succede.",
+      "Le carte dicono: non uscire dal gruppo. Se esci, ti fanno la lapide. L'ho visto succedere, ciccio.",
+      "Vedo soldi in arrivo. Pochi. Tipo il resto del caffè. Ma sempre soldi sono, taac.",
+      "Domani piove. Qua piove sempre, che ci vuole a fare il veggente... però l'ho detto, eh.",
+      "Vedo un treno in ritardo ad Afragola. Questa è facile, la vedo tutti i giorni.",
+      "Nel tuo futuro c'è un hot dog carditese. Ma Prof Narciso non te lo dà. Destino, guagliò.",
+      "Vedo un amore che finisce in palestra. Chiedi a Gaia, al bar del corvo: lei sa.",
+      "Ghe pensi mi: la tua fortuna sta dietro la quinta tomba. O la sesta. La sfera è un po' sbattuta.",
+      "Le stelle dicono: stasera apericena. Ma con la pizza fritta. Sei un ponte tra due mondi, ciccio.",
+      "Vedo un corvo con la corona. Ti guarda. Nun te preoccupà, guarda così a tutti.",
+      "Vedo una carta leggendaria nel tuo futuro. O era un biglietto del tram? Boh, comunque fortuna."
+    ],
+    frasi: ["Uè, taac!", "Jamme, che la sfera si raffredda.", "Ghe pensi mi, guagliò.", "Il futuro costa poco: un caffè. Ma a Milano."]
+  };
+
+  // Gaia Pappaia, al bar del corvo. Parla in corsivo, stile generazione Z.
+  // {n} = carte che servono per la palestra, {k} = carte che hai.
+  const gaia = {
+    nome: "Gaia Pappaia", ruolo: "Cliente fissa del bar",
+    chiamata: "Amioooo, vieni quaaa",
+    passi: [
+      { t: "Ciaooo amio! Sono Gaia Pappaia, raga letteralmente la regina di questo bar. Cioè tipo no vabbè, sei nuovo? Slayyy.", b: [["Conoscevi il custode?", 1], ["Cos'è quella porta?", 4], ["Ciao Gaia", null]] },
+      { t: "Luigiii... cioè raga, il custode. Abbiamo avuto una storia d'amore pazzescaaa, tipo lui mi apriva il cancello alle tre di notte. Red flag però anche green flag, capito amio?", b: [["E poi?", 2]] },
+      { t: "E poi niente, è finita malissimooo. Mi ha ghostata, letteralmente: adesso è un fantasma e passa sopra il cimitero senza manco salutarmi. Io sto benissimo eh. Sto. Benissimooo.", b: [["Mi dispiace", 3], ["Cos'è quella porta?", 4]] },
+      { t: "Nono tranqui, sono in fase healing. Infatti mi sono iscritta in palestraaa. Vibe da nuova me, bestie.", b: [["Che palestra?", 4]] },
+      { t: "Raga hanno aperto una palestra fitness proprio qua accanto, iconicaaa. Però non si paga: per entrare servono le carte pokemon, almeno {n}. Tu ne hai {k}. Tipo club esclusivo, capito amio? Le regala Matteofino.", b: [["Ok, grazie", null]] }
+    ],
+    frasi: ["Amiooo", "Luigi chi? Mai sentito. Ok, sì.", "No vabbè, la palestra è troppo slay.", "Letteralmente sto morendooo.", "Cringiooo.", "Bestie, ti voglio bene."]
+  };
+
+  // La palestra accanto al bar: si entra solo con le carte.
+  const palestra = {
+    carteRichieste: 3,
+    insegna: "FIT",
+    chiusa: "Amiooo, è chiusaaa: servono almeno {n} carte diverse e tu ne hai {k}. Chiedile a Matteofino, bestie.",
+    aperta: "Carte controllate. Benvenuto alla Palestra Fit!",
+    sacco: ["Pam!", "Bam!", "Ahia!", "Ancora!", "Per Luigi!", "Slay!", "Taac!"],
+    traguardi: { 10: "10 colpi! Matteofino sarebbe fiero.", 50: "50 colpi! Gaia ti mette like.", 100: "100 colpi! Sei il Re dei Corvi della palestra." }
+  };
+
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();

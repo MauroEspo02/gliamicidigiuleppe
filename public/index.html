@@ -185,6 +185,34 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 @keyframes neon{0%,91%,95%{opacity:1}92%,94%{opacity:.35}}
 #corvo-re{position:absolute;right:-6px;top:calc(var(--cp,4px)*-12 + 3px);width:calc(var(--cp,4px)*12);height:calc(var(--cp,4px)*12);image-rendering:pixelated}
 #risali{left:14px;top:calc(env(safe-area-inset-top,0px) + 14px)}
+#gaia,#porta-palestra{position:absolute;display:block;padding:0;border:0;background:none;cursor:pointer;z-index:3}
+#gaia canvas,#porta-palestra canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
+#porta-palestra{z-index:2}
+#gaia:focus-visible,#porta-palestra:focus-visible,#sacco:focus-visible{outline:3px dashed var(--osso);outline-offset:4px}
+#gaia .fum-wrap{left:-200px;right:-200px}
+#dlg.corsivo .r-testo{font-style:italic}
+#palestra{position:fixed;inset:0;z-index:26;background:#14161e;overflow:hidden}
+#palestra-cv{position:absolute;left:0;top:0;image-rendering:pixelated}
+#sacco{position:absolute;padding:0;border:0;background:none;cursor:pointer;transform-origin:50% 0}
+#sacco canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
+#colpi{position:absolute;right:14px;top:calc(env(safe-area-inset-top,0px) + 14px);margin:0;padding:8px 12px;background:#151722;color:#5af0a0;font-family:var(--f-pixel);font-weight:700;font-size:16px;box-shadow:0 0 0 3px #04050a;font-variant-numeric:tabular-nums}
+#esci-palestra{left:14px;top:calc(env(safe-area-inset-top,0px) + 14px)}
+.pam{position:fixed;z-index:27;transform:translate(-50%,-50%);font-family:var(--f-pixel);font-weight:700;font-size:22px;color:#ffe066;text-shadow:0 3px 0 #000,0 0 6px #000;pointer-events:none;animation:pam .9s steps(6) forwards}
+@keyframes pam{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}20%{opacity:1;transform:translate(-50%,-60%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-180%)}}
+#ragno{position:fixed;left:0;top:0;z-index:6;width:calc(var(--px)*24);height:calc(var(--px)*22);will-change:transform}
+#ragno .filo{position:absolute;left:calc(50% - 1px);bottom:calc(100% - var(--px)*8);width:2px;height:130vh;background:rgba(215,222,240,.75)}
+#ragno .corpo-r{position:absolute;inset:0;padding:0;border:0;background:none;cursor:pointer}
+#ragno canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
+#ragno .corpo-r:focus-visible{outline:3px dashed var(--osso);outline-offset:3px}
+#ragno .fum-wrap{left:-200px;right:-200px}
+.veggente{position:relative;flex:none;width:calc(var(--px)*72);height:calc(var(--px)*72);margin-inline:calc(var(--px)*12);z-index:1;cursor:pointer}
+.veggente>canvas{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated}
+.veggente>canvas.v-gigio{left:calc(var(--px)*25);top:calc(var(--px)*22);width:calc(var(--px)*22);height:calc(var(--px)*28)}
+.veggente .sfera-luce{position:absolute;left:calc(var(--px)*20);top:calc(var(--px)*28);width:calc(var(--px)*32);height:calc(var(--px)*32);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(190,140,255,.5),rgba(150,100,255,.15) 45%,transparent 68%);animation:fiamma 3.2s steps(1) infinite}
+.veggente.legge .sfera-luce{background:radial-gradient(circle,rgba(220,190,255,.8),rgba(170,120,255,.3) 45%,transparent 70%)}
+.veggente:hover,.veggente:focus-visible{filter:brightness(1.15)}
+.veggente:focus-visible{outline:3px dashed var(--osso);outline-offset:3px}
 .visco{position:relative;flex:none;width:calc(var(--px)*150);height:calc(var(--px)*82);margin-left:calc(var(--px)*14)}
 .visco .v-sf{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated;pointer-events:none}
 .visco .v-p{position:absolute;left:calc(var(--px)*50);bottom:calc(var(--px)*1);width:calc(var(--px)*28);height:calc(var(--px)*40)}
@@ -500,6 +528,8 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
   <canvas id="caffe-cv" aria-hidden="true"></canvas>
   <div class="insegna-caffe" role="img" aria-label="Insegna: Caffè dal Re dei Corvi"><canvas id="corvo-re" width="12" height="12" aria-hidden="true"></canvas><span class="ic-1">Caffè dal</span><span class="ic-2">Re dei Corvi</span></div>
   <button id="matteo" type="button" aria-label="Matteofino, il muratore. Tocca per parlargli"><canvas width="28" height="40" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
+  <button id="porta-palestra" type="button" aria-label="Porta della palestra"><canvas width="24" height="40" aria-hidden="true"></canvas></button>
+  <button id="gaia" type="button" aria-label="Gaia Pappaia. Tocca per parlarle"><canvas width="22" height="38" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
   <button id="btn-album" class="btn-px" type="button" aria-label="Apri la collezione di carte"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M3 1h6v10H3zM4 2v8h4V2z"/><path fill="currentColor" d="M5 4h2v2H5z"/></svg><span id="album-n" class="album-n">0/12</span></button>
   <button id="risali" class="btn-px" type="button" aria-label="Risali nel cimitero"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1h1v1h1v1h1v2H8V6H7v4H5V6H4v1H2V5h1V4h1V3h1z"/></svg></button>
 </div>
@@ -519,6 +549,12 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
   <canvas id="sala-cv" aria-hidden="true"></canvas>
   <video id="film" playsinline controls preload="none" poster="/video/indizio.jpg" aria-label="Il video dell'indizio"><source src="/video/indizio.mp4" type="video/mp4"><source src="/video/indizio.webm" type="video/webm"></video>
   <button id="esci-sala" class="btn-px" type="button" aria-label="Esci dal teatro"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1H6v2h5v2H6v2h1v1H5V9H4V8H3V7H2V5h1V4h1V3h1z"/></svg></button>
+</div>
+<div id="palestra" hidden>
+  <canvas id="palestra-cv" aria-hidden="true"></canvas>
+  <button id="sacco" type="button" aria-label="Sacco da boxe. Tocca per colpirlo"><canvas aria-hidden="true"></canvas></button>
+  <p id="colpi" aria-live="polite">Colpi: 0</p>
+  <button id="esci-palestra" class="btn-px" type="button" aria-label="Torna al bar"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1H6v2h5v2H6v2h1v1H5V9H4V8H3V7H2V5h1V4h1V3h1z"/></svg></button>
 </div>
 <div id="carta-ov" hidden></div>
 <div id="album" hidden></div>
@@ -1006,7 +1042,8 @@ function entra(conAudio){
     $('#insegna').classList.add('cala');
     cim.focus({preventScroll:true});
     Gigi.arriva();Terry.arriva();Risurrezione.abilita();Fantasma.inizia();
-    setTimeout(()=>Nonna.inizio(),ridotto?300:1500);
+    setTimeout(()=>Ragnetto.arriva(),ridotto?100:500);
+    setTimeout(()=>Nonna.inizio(),ridotto?7000:15000);
   },ridotto?700:2600);
 }
 
@@ -1102,12 +1139,13 @@ function creaLapide(l,i){
 function adatta(el,min){let fs=parseFloat(getComputedStyle(el).fontSize);el.style.fontSize='';fs=parseFloat(getComputedStyle(el).fontSize);let k=0;while((el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1)&&fs>min&&k<30){fs*=.92;el.style.fontSize=fs+'px';k++}}
 function adattaNomi(){document.querySelectorAll('.lapide .nome,.lapide .data,.lapide .morte').forEach(n=>adatta(n,S.px*2.4))}
 function mostraLapidi(){
-  fila.querySelectorAll('.lapide,.prop,.posto-libero,.vuoto,.risorto,.chiosco,.teatro,.visco').forEach(e=>e.remove());
+  fila.querySelectorAll('.lapide,.prop,.posto-libero,.vuoto,.risorto,.chiosco,.teatro,.visco,.veggente').forEach(e=>e.remove());
   let i=0;
-  TUTTE.forEach((l,k)=>{if(k===2)fila.append(Chiosco.crea());if(k===5)fila.append(Teatro.crea());if(k>0)fila.append(creaProp(k,hash(l.id)+1));if(l.risorto)fila.append(Risurrezione.crea(l));else{fila.append(creaLapide(l,i));i++}});
+  TUTTE.forEach((l,k)=>{if(k===2)fila.append(Chiosco.crea());if(k===5)fila.append(Teatro.crea());if(k===8)fila.append(Veggente.crea());if(k>0)fila.append(creaProp(k,hash(l.id)+1));if(l.risorto)fila.append(Risurrezione.crea(l));else{fila.append(creaLapide(l,i));i++}});
   if(TUTTE.length)fila.append(creaProp(TUTTE.length,77));
   if(TUTTE.length<=2)fila.append(Chiosco.crea());
   if(TUTTE.length<=5)fila.append(Teatro.crea());
+  if(TUTTE.length<=8)fila.append(Veggente.crea());
   fila.append(postoLibero());
   fila.append(Visco.crea());
   aggiornaConta();
@@ -1147,7 +1185,10 @@ cim.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)
 addEventListener('pointermove',e=>{if(!presa)return;const d=e.clientX-presa.x;if(Math.abs(d)>6){trascinato=true;cim.classList.add('trascina')}if(trascinato)cim.scrollLeft=presa.s-d});
 addEventListener('pointerup',()=>{presa=null;cim.classList.remove('trascina');setTimeout(()=>{trascinato=false},0)});
 addEventListener('keydown',e=>{
+  if(!$('#carta-ov').hidden){if(e.key==='Escape'&&$('#carta-ov')._chiudi)$('#carta-ov')._chiudi();return}
+  if(!$('#album').hidden){if(e.key==='Escape')$('#album').hidden=true;return}
   if(!$('#sala').hidden){if(e.key==='Escape')Sala.esci();return}
+  if(!$('#palestra').hidden){if(e.key==='Escape')Palestra.esci();return}
   if(!$('#dlg').hidden){if(e.key==='Escape')Dlg.chiudi();return}
   if(!$('#caffe').hidden){if(e.key==='Escape')Caffe.esci();return}
   if(!$('#chiedi').hidden){if(e.key==='Escape')$('#chiedi').hidden=true;return}
@@ -1439,7 +1480,7 @@ const Dlg={
   apri(o){
     this.fermaTesto();this.att=o;this.albero=o.passi;
     $('#d-nome').textContent=o.nome;$('#d-ruolo').textContent=o.ruolo||'';
-    this.el.classList.toggle('scuro',o.tema==='scuro');
+    this.el.classList.toggle('scuro',o.tema==='scuro');this.el.classList.toggle('corsivo',!!o.corsivo);
     this.el.hidden=false;this.ritr('fermo');
     if(!ridotto)this.el.querySelector('.box-r').animate([{transform:'translateY(40px)',opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'steps(4)'});
     this.mostra(0);
@@ -1546,7 +1587,7 @@ const Fantasma={
   disegna(){const g=this.cv.getContext('2d');g.clearRect(0,0,22,32);g.drawImage(this.FF[this.f],0,0)},
   inizia(){if(!this.el)this.crea();this.prossimo(ridotto?5000:14000)},
   prossimo(ms){clearTimeout(this.to);this.to=setTimeout(()=>this.vola(),ms)},
-  libero(){return!document.hidden&&$('#dlg').hidden&&$('#sala').hidden&&$('#caffe').hidden&&$('#carta-ov').hidden&&$('#album').hidden},
+  libero(){return!document.hidden&&$('#dlg').hidden&&$('#sala').hidden&&$('#caffe').hidden&&$('#carta-ov').hidden&&$('#album').hidden&&$('#palestra').hidden},
   vola(){
     if(!this.libero()||this.volando)return this.prossimo(6000);
     this.volando=true;const el=this.el,w=S.px*22,dir=Math.random()<.5?1:-1,y0=innerHeight*(.2+Math.random()*.2);
@@ -2179,7 +2220,7 @@ const Carte={
     try{localStorage.setItem('giuleppe-carte',JSON.stringify(poss));localStorage.setItem('giuleppe-carte-gg',JSON.stringify({d:oggiR(),n:this.oggi()+1}))}catch(e){}
     this.aggiornaConta();return{c,nuova,n:poss[c.id]};
   },
-  aggiornaConta(){const e=$('#album-n');if(e)e.textContent=`${this.nPoss()}/${this.tot()}`},
+  aggiornaConta(){const e=$('#album-n');if(e)e.textContent=`${this.nPoss()}/${this.tot()}`;try{Porta.disegna()}catch(e){}},
   elemento(c,coperta,num){
     const T=TIPI[c.tipo]||TIPI.Ombra,d=document.createElement('div');d.className='carta r-'+c.rarita+(coperta?' coperta':'');
     d.style.cssText=`--c1:${T[0]};--c2:${T[1]};--arte:radial-gradient(circle at 50% 60%,${T[1]},${T[0]} 80%)`;
@@ -2257,7 +2298,7 @@ const Caffe={
   entra(){
     $('#chiedi').hidden=true;Audio.caduta();const nero=$('#nero');nero.classList.add('on');
     setTimeout(()=>{this.disegna();$('#caffe').hidden=false;nero.classList.remove('on');$('#risali').focus({preventScroll:true});
-      setTimeout(()=>{if(!$('#caffe').hidden&&$('#dlg').hidden)Matteo.fumetto(NONNA.matteofino.chiamata,4200)},ridotto?200:900)},ridotto?50:750);
+      setTimeout(()=>{if(!$('#caffe').hidden&&$('#dlg').hidden)Matteo.fumetto(NONNA.matteofino.chiamata,4200)},ridotto?200:900);setTimeout(()=>{if(!$('#caffe').hidden&&$('#dlg').hidden)Gaia.fumetto(NONNA.gaia.chiamata,3600)},ridotto?600:5400)},ridotto?50:750);
   },
   esci(){const nero=$('#nero');nero.classList.add('on');setTimeout(()=>{$('#caffe').hidden=true;nero.classList.remove('on')},ridotto?50:600)},
   disegna(){
@@ -2278,7 +2319,7 @@ const Caffe={
       R(lx-4,ly,9,1,'#2b2e38');R(lx-3,ly+1,7,1,'#3b3f4c');R(lx-2,ly+2,5,1,'#ffd27a');p.set(lx,ly+2,'#fff1b8');R(lx-3,ly-1,7,1,'#1b1d26')};
     lamp(Math.round(W*.15),Math.round(rail*.4));lamp(Math.round(W*.85),Math.round(rail*.4));
     // banco finito
-    const bw=Math.min(Math.round(W*.62),96),b0=Math.round(W/2-bw/2),bh=17,by=fy-bh,sb=Math.round((innerHeight*.13+135)/cp);
+    const bw=W<150?Math.round(W*.48):Math.min(Math.round(W*.62),96),b0=Math.round(W/2-bw/2),bh=17,by=fy-bh,sb=Math.round((innerHeight*.13+135)/cp);
     // mensole con bottiglie e tazze
     const s1=Math.max(sb+3,Math.round(rail*.3)),shelf=(y,seed)=>{const x0=b0,x1=b0+bw;
       for(let x=x0;x<x1;x++){p.set(x,y,'#8a5a2a');p.set(x,y+1,'#4a2c14')}
@@ -2325,8 +2366,251 @@ const Caffe={
     // Matteofino davanti al banco
     const m=$('#matteo'),mxp=W<150?Math.max(3,Math.round(W*.04)):Math.max(3,b0-36),myp=fy+Math.round((H-fy)*.22)-40;
     m.style.left=mxp*cp+'px';m.style.top=myp*cp+'px';m.style.width=28*cp+'px';m.style.height=40*cp+'px';
+    const pd=$('#porta-palestra'),pdx=Math.min(W-24,Math.max(b0+bw+1,W-27));pd.style.left=pdx*cp+'px';pd.style.top=(fy-40)*cp+'px';pd.style.width=24*cp+'px';pd.style.height=40*cp+'px';Porta.disegna();
+    const gz=$('#gaia'),gx=W<150?Math.round(W/2-11):Math.min(pdx-23,b0+bw+2),feet=fy+Math.round((H-fy)*.22);gz.style.left=gx*cp+'px';gz.style.top=(feet-38)*cp+'px';gz.style.width=22*cp+'px';gz.style.height=38*cp+'px';
   }
 };
+/* ---------- Ragnetto, il ragno detective ---------- */
+function spriteRagno(st){
+  const P=pittore(24,22),k=st==='zampe'?1:0;
+  for(let i=0;i<4;i++){const y=9+i*2.2;
+    P.linea(8,y,3,y-3+i*1.2+k,1,1);P.linea(3,y-3+i*1.2+k,0,y+2+i*.8-k,1,1);
+    P.linea(16,y,21,y-3+i*1.2-k,1,1);P.linea(21,y-3+i*1.2-k,23,y+2+i*.8+k,1,1)}
+  P.disco(12,13,5.6,1);
+  P.disco(12,8,4.2,2,(x,y)=>y<=8);P.rett(6,8,13,1,2);P.rett(15,6,4,2,2);
+  const p=P.render({1:['#120c1e','#2a1e44','#4a3a70'],2:['#4a2c14','#7a4a24','#a8703c']});
+  for(const ex of[9,14]){p.set(ex,11,'#ffffff');p.set(ex+1,11,'#ffffff');p.set(ex,12,'#ffffff');p.set(ex+1,12,'#1b1a22')}
+  if(st==='parla'){p.set(11,15,'#7a1f2a');p.set(12,15,'#7a1f2a');p.set(13,15,'#7a1f2a');p.set(12,16,'#c0392b')}
+  else{p.set(11,15,'#8a5aa0');p.set(12,16,'#8a5aa0');p.set(13,15,'#8a5aa0')}
+  // lente d'ingrandimento
+  for(let y=-3;y<=3;y++)for(let x=-3;x<=3;x++){const d=Math.hypot(x,y);if(d<=2.9)p.set(19+x,16+y,d>1.9?'#e3c35a':(x<0&&y<0?'#e8f4ff':'#a8c8f0'))}
+  p.set(22,19,'#7a4a24');p.set(23,20,'#7a4a24');p.set(23,21,'#7a4a24');
+  return p.fine();
+}
+const RF={fermo:spriteRagno('fermo'),zampe:spriteRagno('zampe'),parla:spriteRagno('parla')};
+const Ragnetto={
+  el:null,fatto:false,
+  crea(){
+    const d=document.createElement('div');d.id='ragno';d.hidden=true;
+    d.innerHTML='<span class="filo"></span><button type="button" class="corpo-r" aria-label="Ragnetto, il ragno detective. Tocca per sentirlo"><canvas width="24" height="22"></canvas></button><span class="fum-wrap" style="bottom:calc(100% + 6px)"><span class="fumetto" hidden><span class="ft"></span></span></span>';
+    document.body.append(d);this.el=d;this.cv=d.querySelector('canvas');
+    d.querySelector('.corpo-r').addEventListener('click',()=>{if(this.inMoto)return;const fr=NONNA.ragnetto.frasi;this.parla(fr[Math.floor(Math.random()*fr.length)],3800)});
+  },
+  disegna(st){const g=this.cv.getContext('2d');g.clearRect(0,0,24,22);g.drawImage(RF[st],0,0)},
+  pos(x,y){return`translate(${Math.round(x)}px,${Math.round(y)}px)`},
+  zampe(on){clearInterval(this.tz);if(on){let k=0;this.tz=setInterval(()=>{k^=1;this.disegna(k?'zampe':'fermo')},140)}else this.disegna('fermo')},
+  parla(t,ms){
+    const f=this.el.querySelector('.fumetto');f.querySelector('.ft').textContent=t;f.hidden=false;f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop');
+    clearInterval(this.tp);let k=0,n=0;this.tp=setInterval(()=>{k^=1;this.disegna(k?'parla':'fermo');if(k)Audio.blip(1.7);if(++n>Math.min(24,t.length/3)){clearInterval(this.tp);this.disegna('fermo')}},140);
+    clearTimeout(this.ft);this.ft=setTimeout(()=>{f.hidden=true},ms);
+  },
+  async arriva(){
+    if(this.fatto)return;this.fatto=true;if(!this.el)this.crea();
+    const el=this.el,w=S.px*24,h=S.px*22,X=f=>innerWidth*f-w/2,Y=f=>innerHeight*f,su=-h-30,tel=innerWidth<600;
+    const stop=Y(tel?.44:.36),riposo=[X(tel?.84:.88),Y(tel?.4:.3)];
+    el.hidden=false;this.disegna('fermo');
+    const pausa=ms=>new Promise(r=>setTimeout(r,ms));
+    if(ridotto){el.style.transform=this.pos(X(.5),stop);this.parla(NONNA.ragnetto.saluto,6000);await pausa(6500);el.style.transform=this.pos(...riposo);return}
+    this.inMoto=true;this.zampe(true);
+    const kf=[[0,.25,su],[.12,.25,.28],[.24,.25,su],[.25,.72,su],[.38,.72,.22],[.5,.72,su],[.51,.5,su],[.72,.5,null],[.8,.5,'-'],[.88,.5,'+'],[1,.5,null]];
+    const fy=v=>v===null?stop:v==='-'?stop-S.px*8:v==='+'?stop+S.px*3:v===su?su:Y(v);
+    const a=el.animate(kf.map(([o,x,y])=>({offset:o,transform:this.pos(X(x),fy(y))})),{duration:4400,easing:'ease-in-out',fill:'forwards'});
+    Audio.blip(2.2);
+    await a.finished;el.style.transform=this.pos(X(.5),stop);a.cancel();
+    this.zampe(false);this.inMoto=false;
+    this.parla(NONNA.ragnetto.saluto,5600);
+    await pausa(6200);
+    if(!$('#dlg').hidden||!$('#racconto').hidden){} // va comunque a riposare
+    this.inMoto=true;this.zampe(true);el.querySelector('.fumetto').hidden=true;
+    const b=el.animate([{transform:this.pos(X(.5),stop)},{transform:this.pos(X(.5),su),offset:.45},{transform:this.pos(riposo[0],su),offset:.55},{transform:this.pos(...riposo)}],{duration:2600,easing:'ease-in-out',fill:'forwards'});
+    await b.finished;el.style.transform=this.pos(...riposo);b.cancel();this.zampe(false);this.inMoto=false;
+  }
+};
+
+/* ---------- Gigio, il veggente chiamato da Milano ---------- */
+function spriteGigio(st){
+  const P=pittore(22,28);
+  // 1 turbante 2 pelle 3 mantello 4 colletto d'oro
+  P.rett(2,14,18,14,3);P.rett(9,11,4,3,2);P.disco(11,8,4.2,2);
+  P.disco(11,4.5,5,1,(x,y)=>y<=6);P.rett(6,4,11,3,1);
+  P.rett(6,14,10,2,4);P.rett(5,21,4,3,2);P.rett(13,21,4,3,2);
+  const p=P.render({1:['#4a1a6a','#7a2aa8','#a85ad8'],2:['#b8825e','#dca27a','#f0bf98'],3:['#0f3a2a','#1a5a40','#2a8a60'],4:['#a07a1a','#e3c35a','#fff0a0']});
+  p.set(11,4,'#5af0d0');p.set(11,3,'#c0fff0');
+  [[7,8],[8,7],[9,7],[10,8],[12,8],[13,7],[14,7],[15,8],[8,9],[9,9],[13,9],[14,9],[11,8]].forEach(([x,y])=>p.set(x,y,'#1b1a22'));
+  p.set(8,8,'#a8c8f0');p.set(9,8,'#e8f4ff');p.set(13,8,'#a8c8f0');p.set(14,8,'#e8f4ff');
+  [[8,11],[9,11],[10,11],[12,11],[13,11],[14,11],[9,10],[13,10]].forEach(([x,y])=>p.set(x,y,'#1a0f0a'));
+  if(st==='parla'){p.set(10,12,'#5a1f24');p.set(11,12,'#5a1f24');p.set(12,12,'#5a1f24')}else p.set(11,12,'#8a4a3a');
+  return p.fine();
+}
+const GGF={fermo:spriteGigio('fermo'),parla:spriteGigio('parla')};
+function spriteTenda(){
+  const W=72,H=72,p=Pix(W,H),R=(x,y,w,h,c)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,c)},G=NONNA.gigio.insegna;
+  R(4,14,2,58,'#5a3a1e');R(66,14,2,58,'#5a3a1e');
+  for(let y=22;y<58;y++)for(let x=6;x<66;x++){let c=(x%6===0)?'#1e0c2a':'#2a123a';if(bayer(x,y)<(y-22)/36*.35)c='#1e0c2a';p.set(x,y,c)}
+  for(let k=0;k<18;k++){const x=8+(h2(k,1,61)%56),y=24+(h2(k,2,61)%30);p.set(x,y,k%4?'#e3c35a':'#fff0a0')}
+  for(let y=-3;y<=3;y++)for(let x=-3;x<=3;x++){const a=Math.hypot(x,y)<=3,b=Math.hypot(x+1.6,y-.8)<=2.6;if(a&&!b)p.set(58+x,30+y,'#e8e2c2')}
+  for(let x=2;x<70;x++){const c=Math.floor((x-2)/6)%2?'#e3c35a':'#5a2a8a';for(let y=14;y<22;y++)p.set(x,y,y===14?(c==='#e3c35a'?'#fff0a0':'#7a3aa8'):c);
+    const s=(x-2)%6,dy=Math.round(Math.sqrt(Math.max(0,9-(s-2.5)**2))*.8);for(let y=22;y<22+dy;y++)p.set(x,y,c)}
+  R(17,0,38,14,'#2a1609');R(18,1,36,12,'#6b3f22');for(let x=18;x<54;x+=7)for(let y=1;y<13;y++)p.set(x,y,'#5a3519');
+  incidi(p,G[0],18+Math.round((36-larg(G[0]))/2),2,1,'#ffd27a','#2a1609');incidi(p,G[1],18+Math.round((36-larg(G[1]))/2),8,1,'#efe6c8','#2a1609');
+  return p.fine();
+}
+function spriteTavolo(){
+  const W=72,H=72,p=Pix(W,H),R=(x,y,w,h,c)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,c)};
+  R(10,50,52,2,'#6a2a9a');R(10,52,52,1,'#2a0f3a');
+  for(let y=53;y<70;y++)for(let x=12;x<60;x++)p.set(x,y,(x-12)%8===0?'#2a0f3a':((x-12)%8<3?'#5a2a8a':'#4a1f6a'));
+  for(let x=12;x<60;x++)p.set(x,70,x%2?'#e3c35a':'#a07a1a');
+  for(const cx of[16,52]){R(cx,47,6,3,'#efe6c8');p.set(cx+2,48,'#c0392b');p.set(cx+3,48,'#c0392b')}
+  R(60,43,2,7,'#efe6c8');p.set(60,42,'#ffd27a');p.set(61,41,'#f2a33a');p.set(60,40,'#fff1b8');
+  R(31,48,10,2,'#c9a24a');R(32,47,8,1,'#f2d35a');
+  for(let y=-6;y<=6;y++)for(let x=-6;x<=6;x++){const d=Math.hypot(x,y);if(d<=5.6){let c=d>4.7?'#6a4aa0':d>3.3?'#a884d8':'#d6c4f4';if(x<-1&&y<-1&&d<3.3)c='#ffffff';p.set(36+x,43+y,c)}}
+  return p.fine();
+}
+const Veggente={
+  el:null,occupato:false,
+  crea(){
+    const d=document.createElement('div');d.className='veggente';d.setAttribute('role','button');d.tabIndex=0;d.setAttribute('aria-label','Gigio il veggente. Tocca per farti leggere il futuro');
+    d.innerHTML='<canvas class="v-dietro" width="72" height="72"></canvas><canvas class="v-gigio" width="22" height="28"></canvas><canvas class="v-davanti" width="72" height="72"></canvas><span class="sfera-luce"></span><span class="fum-wrap" style="bottom:calc(var(--px)*74)"><span class="fumetto" hidden><span class="ft"></span></span></span>';
+    d.querySelector('.v-dietro').getContext('2d').drawImage(spriteTenda(),0,0);
+    d.querySelector('.v-davanti').getContext('2d').drawImage(spriteTavolo(),0,0);
+    this.el=d;this.cv=d.querySelector('.v-gigio');this.disegna('fermo');
+    const clic=e=>{e.stopPropagation();if(trascinato)return;this.apri()};
+    d.addEventListener('click',clic);d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();clic(e)}});
+    if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting&&!this.chiamato&&S.attiva){this.chiamato=true;
+      setTimeout(()=>{if(!this.occupato)this.fumetto(NONNA.gigio.chiamata,3600)},600)}},{threshold:.6});io.observe(d)}
+    return d;
+  },
+  disegna(st){const g=this.cv.getContext('2d');g.clearRect(0,0,22,28);g.drawImage(GGF[st],0,0)},
+  fumetto(t,ms){const f=this.el.querySelector('.fumetto');f.querySelector('.ft').textContent=t;f.hidden=false;f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop');
+    Audio.blip(.9);clearTimeout(this.ft);if(ms)this.ft=setTimeout(()=>{f.hidden=true},ms)},
+  apri(){
+    if(this.occupato)return;this.occupato=true;this.el.querySelector('.fumetto').hidden=true;
+    const G=NONNA.gigio,passi=G.passi.map(p=>({...p}));let ultima=-1;
+    Dlg.apri({nome:G.nome,ruolo:G.ruolo,passi,blip:.9,ritratto:st=>[GGF[st==='parla'?'parla':'fermo'],3,0],
+      onParla:st=>this.disegna(st==='parla'?'parla':'fermo'),onChiudi:()=>{this.occupato=false;this.el.classList.remove('legge')},
+      azioni:{futuro:()=>{let i,k=0;do{i=Math.floor(Math.random()*G.profezie.length);k++}while(G.profezie.length>1&&i===ultima&&k<20);ultima=i;
+        passi[1].t=G.profezie[i];this.el.classList.add('legge');Audio.campanella();return 1}}});
+  }
+};
+
+/* ---------- Gaia Pappaia, al bar del corvo ---------- */
+function spriteGaia(st){
+  const P=pittore(22,38);
+  // 1 capelli lilla 2 pelle 3 top rosa 4 leggings 5 sneakers 6 telefono
+  P.rett(5,6,3,14,1);P.rett(15,6,3,14,1);
+  P.rett(7,24,3,10,4);P.rett(12,24,3,10,4);P.rett(6,34,5,3,5);P.rett(12,34,5,3,5);
+  P.rett(7,20,8,4,2);P.rett(6,14,10,6,3);
+  P.rett(3,15,3,9,2);P.linea(16,15,17,20,2,2);P.rett(15,17,3,5,6);
+  P.rett(9,12,4,2,2);P.disco(11,8,4.2,2);
+  P.disco(11,6.4,5,1,(x,y)=>y<=6);P.rett(6,5,4,3,1);
+  const p=P.render({1:['#7a5a9a','#a884c8','#d0b4ec'],2:['#c48e72','#ecc3a5','#f8dcc6'],3:['#b02a6a','#e04a8e','#ff86bc'],4:['#0f0f14','#1c1c24','#30303c'],5:['#b8b8c4','#e8e8f0','#ffffff'],6:['#1a1a22','#2a2a34','#4a4a58']});
+  p.set(8,8,'#1b1a22');p.set(13,8,'#1b1a22');p.set(8,7,'#1b1a22');p.set(13,7,'#1b1a22');p.set(7,7,'#1b1a22');p.set(14,7,'#1b1a22');
+  p.set(9,10,'#e88a9a');p.set(12,10,'#e88a9a');
+  if(st==='parla'){p.set(10,11,'#a01a3a');p.set(11,11,'#5a1f24');p.set(12,11,'#a01a3a');p.set(11,12,'#a01a3a')}else{p.set(10,11,'#c0305a');p.set(11,11,'#c0305a');p.set(12,11,'#c0305a')}
+  for(const ex of[6,16]){p.set(ex,10,'#f2d35a');p.set(ex,11,'#f2d35a');p.set(ex,12,'#f2d35a')}
+  p.set(16,18,'#8ad0ff');p.set(16,19,'#8ad0ff');
+  [[9,16],[11,17],[13,16]].forEach(([x,y])=>p.set(x,y,'#ffd0e4'));
+  return p.fine();
+}
+const GAF={fermo:spriteGaia('fermo'),parla:spriteGaia('parla')};
+const Gaia={
+  disegna(st){const g=$('#gaia canvas').getContext('2d');g.clearRect(0,0,22,38);g.drawImage(GAF[st],0,0)},
+  fumetto(t,ms){const f=$('#gaia .fumetto');f.querySelector('.ft').textContent=t;f.hidden=false;f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop');Audio.blip(1.4);clearTimeout(this.ft);if(ms)this.ft=setTimeout(()=>{f.hidden=true},ms)},
+  parla(){
+    const G=NONNA.gaia,n=NONNA.palestra.carteRichieste,k=Carte.nPoss();$('#gaia .fumetto').hidden=true;
+    const passi=G.passi.map(p=>({...p,t:p.t.replace(/\{n\}/g,n).replace(/\{k\}/g,k)}));
+    Dlg.apri({nome:G.nome,ruolo:G.ruolo,passi,corsivo:true,blip:1.4,ritratto:st=>[GAF[st==='parla'?'parla':'fermo'],3,0],onParla:st=>this.disegna(st==='parla'?'parla':'fermo')});
+  }
+};
+
+/* ---------- la porta della palestra ---------- */
+const Porta={
+  disegna(){
+    const c=$('#porta-palestra canvas');if(!c)return;const ok=Carte.nPoss()>=NONNA.palestra.carteRichieste,p=Pix(24,40),R=(x,y,w,h,col)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,col)};
+    R(0,0,24,40,'#06060b');R(1,9,22,31,'#2b2e38');R(3,11,18,29,'#5d6273');R(3,11,18,1,'#8a909e');R(3,11,1,29,'#7a8090');
+    R(6,15,12,8,'#1a1d26');R(7,16,10,6,ok?'#3a7a5a':'#2a3040');if(ok){p.set(8,17,'#8af0c0');p.set(9,17,'#8af0c0')}
+    R(16,27,3,2,'#cfd4e0');R(3,34,18,1,'#4a4e5c');
+    R(1,0,22,8,'#0c0f14');incidi(p,NONNA.palestra.insegna,12-Math.round(larg(NONNA.palestra.insegna)/2),2,1,'#5af0a0','#1a6a40');
+    R(20,24,2,2,ok?'#2fe07a':'#d8423a');
+    const g=c.getContext('2d');g.clearRect(0,0,24,40);g.drawImage(p.fine(),0,0);
+    $('#porta-palestra').setAttribute('aria-label',ok?'Porta della palestra: aperta. Entra':`Porta della palestra: servono ${NONNA.palestra.carteRichieste} carte`);
+  },
+  apri(){
+    const P=NONNA.palestra,n=P.carteRichieste,k=Carte.nPoss();
+    if(k<n){Audio.tonfo();
+      if(!ridotto)$('#porta-palestra').animate([{transform:'none'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'none'}],{duration:300,easing:'steps(4)'});
+      Gaia.fumetto(P.chiusa.replace(/\{n\}/g,n).replace(/\{k\}/g,k),4200);return}
+    Palestra.entra();
+  }
+};
+
+/* ---------- la palestra fitness ---------- */
+const Palestra={
+  colpi(){try{return +localStorage.getItem('giuleppe-colpi')||0}catch(e){return 0}},
+  entra(){
+    $('#avviso').style.zIndex=29;avviso(NONNA.palestra.aperta);const nero=$('#nero');nero.classList.add('on');Audio.cigolio();
+    setTimeout(()=>{this.disegna();$('#palestra').hidden=false;nero.classList.remove('on');$('#esci-palestra').focus({preventScroll:true})},ridotto?50:650);
+  },
+  esci(){const nero=$('#nero');nero.classList.add('on');setTimeout(()=>{$('#palestra').hidden=true;$('#avviso').style.zIndex='';nero.classList.remove('on')},ridotto?50:550)},
+  colpisci(){
+    const P=NONNA.palestra,n=this.colpi()+1;try{localStorage.setItem('giuleppe-colpi',n)}catch(e){}
+    $('#colpi').textContent=`Colpi: ${n}`;Audio.tonfo();
+    const s=$('#sacco');if(!ridotto)s.animate([{transform:'rotate(0)'},{transform:'rotate(10deg)',offset:.25},{transform:'rotate(-6deg)',offset:.55},{transform:'rotate(3deg)',offset:.8},{transform:'rotate(0)'}],{duration:800,easing:'ease-out'});
+    const r=s.getBoundingClientRect(),t=document.createElement('span');t.className='pam';t.textContent=P.sacco[Math.floor(Math.random()*P.sacco.length)];
+    t.style.left=(r.left+r.width/2+(Math.random()-.5)*r.width*1.6)+'px';t.style.top=(r.top+r.height*(.45+Math.random()*.3))+'px';$('#palestra').append(t);setTimeout(()=>t.remove(),900);
+    if(P.traguardi[n])avviso(P.traguardi[n]);
+  },
+  disegna(){
+    const cp=Math.max(S.px,Math.floor(Math.min(innerWidth/150,innerHeight/115))),W=Math.ceil(innerWidth/cp),H=Math.ceil(innerHeight/cp),cv=$('#palestra-cv');
+    cv.width=W;cv.height=H;cv.style.width=W*cp+'px';cv.style.height=H*cp+'px';
+    const p=Pix(W,H),fy=Math.round(H*.78),R=(x,y,w,h,c)=>{x=Math.round(x);y=Math.round(y);for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,c)};
+    // pareti e soffitto
+    for(let y=0;y<fy;y++)for(let x=0;x<W;x++){let c=x%16===0?'#283041':'#2f3647';if(bayer(x,y)<y/fy*.25)c='#283041';if(y<4)c='#14161e';p.set(x,y,c)}
+    const fascia=Math.round(fy*.7);for(let x=0;x<W;x++){p.set(x,fascia,'#f2c230');p.set(x,fascia+1,'#f2c230');p.set(x,fascia+2,'#111111')}
+    for(let x=6;x<W-16;x+=34){R(x,4,18,1,'#e8f4ff');R(x,5,18,1,'#9ab0c8');for(let y=6;y<16;y++)for(let i=-2;i<20;i++)if(bayer(x+i,y)<(1-(y-6)/10)*.18)p.set(x+i,y,'#4a5670')}
+    // specchio
+    const m0=Math.round(W*.36),m1=W-6,mt=Math.round(fy*.24),mb=fascia-3;
+    R(m0-1,mt-1,m1-m0+2,mb-mt+2,'#9aa0ad');R(m0,mt,m1-m0,mb-mt,'#41506c');
+    for(let k=0;k<5;k++){const sx=m0+8+k*Math.round((m1-m0)/5);for(let i=0;i<mb-mt;i++){const x=sx+Math.round(i*.5);if(x<m1)p.set(x,mt+i,'#5a6c8e');if(x+1<m1)p.set(x+1,mt+i,'#4e5f80')}}
+    // scritta
+    const sc=W>=130?2:1,tit='PALESTRA FIT';incidi(p,tit,Math.round((W-larg(tit,sc))/2),Math.round(fy*.24)-6*sc-3,sc,'#5af0a0','#1a6a40');
+    // poster NO PAIN NO GAIN
+    const px0=4,py0=Math.round(fy*.3);R(px0,py0,31,17,'#c0392b');R(px0,py0,31,1,'#e35b4a');incidi(p,'NO PAIN',px0+2,py0+3,1,'#ffffff');incidi(p,'NO GAIN',px0+2,py0+10,1,'#ffffff');
+    // pavimento in gomma
+    for(let y=fy;y<H;y++)for(let x=0;x<W;x++){let c=h2(x,y,13)%9===0?'#2a2a33':'#18181e';if(y===fy)c='#0c0c10';if(y===fy+1)c='#3a3a46';p.set(x,y,c)}
+    for(let x=0;x<W;x+=2)p.set(x,fy+Math.round((H-fy)*.6),'#f2c230');
+    // rastrelliera con manubri
+    const rx=4,ry=fy-6;R(rx,ry,34,2,'#5d6273');R(rx,ry+2,2,10,'#3a3e4a');R(rx+32,ry+2,2,10,'#3a3e4a');R(rx,ry+9,34,2,'#5d6273');
+    ['#c0392b','#2f7fc4','#2f9f5a','#f2c230'].forEach((c,i)=>{const x=rx+3+i*8;R(x,ry-4,2,4,c);R(x+4,ry-4,2,4,c);R(x+2,ry-3,2,2,'#cfd4e0');R(x,ry+5,2,4,c);R(x+4,ry+5,2,4,c);R(x+2,ry+6,2,2,'#cfd4e0')});
+    // panca con bilanciere
+    const bx=Math.round(W*.3)+4,by=fy+Math.round((H-fy)*.3);
+    R(bx-13,by,26,3,'#c0392b');R(bx-13,by,26,1,'#e35b4a');R(bx-11,by+3,2,6,'#5d6273');R(bx+9,by+3,2,6,'#5d6273');
+    R(bx-11,by-14,2,14,'#5d6273');R(bx+9,by-14,2,14,'#5d6273');R(bx-20,by-15,40,1,'#cfd4e0');
+    for(const ex of[bx-19,bx+15])for(let y=-4;y<=4;y++)for(let x=0;x<4;x++)if(Math.abs(y)<=4-(x===0||x===3?1:0))p.set(ex+x,by-15+y,x===1?'#2a2d38':'#111116');
+    // tapis roulant
+    const tx=Math.round(W*.84),ty=fy+Math.round((H-fy)*.45);
+    R(tx-16,ty,30,3,'#2a2d38');R(tx-16,ty-1,30,1,'#111116');R(tx+10,ty-20,2,20,'#5d6273');R(tx+5,ty-24,11,5,'#2b2e38');R(tx+6,ty-23,9,3,'#0a2a1a');
+    p.set(tx+7,ty-22,'#5af0a0');p.set(tx+9,ty-22,'#5af0a0');p.set(tx+11,ty-22,'#5af0a0');R(tx-14,ty-12,2,12,'#5d6273');R(tx-14,ty-12,26,1,'#5d6273');
+    // kettlebell e borraccia
+    const kb=(x,y,c)=>{R(x,y,5,4,c);R(x+1,y-2,3,1,c);p.set(x+1,y-1,c);p.set(x+3,y-1,c);p.set(x+1,y,'#ffffff')};kb(Math.round(W*.55),fy+6,'#2f7fc4');kb(Math.round(W*.55)+7,fy+7,'#c0392b');
+    R(Math.round(W*.66),fy+3,3,6,'#5af0a0');R(Math.round(W*.66),fy+2,3,1,'#ffffff');
+    cv.getContext('2d').drawImage(p.fine(),0,0);
+    // sacco da boxe appeso
+    const sx=Math.round(W*.6),sh=Math.max(40,fy-6),s=Pix(16,sh),RS=(x,y,w,h,c)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)s.set(x+i,y+j,c)};
+    for(let y=0;y<sh-30;y++)s.set(7+(y%4<2?0:1),y,y%4===0?'#cfd4e0':'#7a8090');
+    const b0=sh-30;RS(2,b0,12,30,'#a82a2a');RS(2,b0,3,30,'#c84a4a');RS(12,b0,2,30,'#7a1a1a');RS(2,b0,12,3,'#111116');RS(2,b0+26,12,4,'#111116');RS(4,b0+12,8,4,'#efe6c8');
+    s.set(5,b0+13,'#c0392b');s.set(7,b0+13,'#c0392b');s.set(9,b0+13,'#c0392b');
+    const sacco=$('#sacco'),sc2=sacco.querySelector('canvas');sc2.width=16;sc2.height=sh;sc2.getContext('2d').drawImage(s.fine(),0,0);
+    sacco.style.left=(sx-8)*cp+'px';sacco.style.top='0px';sacco.style.width=16*cp+'px';sacco.style.height=sh*cp+'px';
+    $('#colpi').textContent=`Colpi: ${this.colpi()}`;
+  }
+};
+$('#gaia').addEventListener('click',()=>Gaia.parla());
+$('#porta-palestra').addEventListener('click',()=>Porta.apri());
+$('#sacco').addEventListener('click',()=>Palestra.colpisci());
+$('#esci-palestra').addEventListener('click',()=>Palestra.esci());
+Gaia.disegna('fermo');
+
 $('#c-si').addEventListener('click',()=>Caffe.entra());
 $('#c-no').addEventListener('click',()=>{$('#chiedi').hidden=true;avviso('Meglio così. Per ora.')});
 $('#chiedi .velo-r').addEventListener('click',()=>{$('#chiedi').hidden=true});
