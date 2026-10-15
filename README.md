@@ -41,9 +41,21 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 
 ## Il teatro e il video
 
-- Dopo la quinta tomba c'è il **teatro comunale** (mattoni, colonne bianche, insegna "Maestro Giuleppe", porte accese). Toccalo: dalle porte spunta **L'Ombra**, un personaggio incappucciato che dice "stai attento a chi è... e a cosa balla". Se scegli "Entro" ti ritrovi nella **sala cinema** (poltrone rosse, pubblico in ombra, un corvo, schermo) e parte il video. Il tasto freccia in alto a sinistra (o Esc) riporta fuori.
+- Dopo la quinta tomba c'è il **teatro comunale**, ora **in fiamme**: davanti c'è **Vigile Umberto** (biondino) che non fa entrare nessuno e racconta della ragazza con il caschetto, la sigaretta o forse una canna. Dopo il suo discorso, mentre lui si gira, dal retro spunta **L'Ombra**, un personaggio incappucciato che dice "stai attento a chi è... e a cosa balla". Se scegli "Entro" ti ritrovi nella **sala cinema** (poltrone rosse, pubblico in ombra, un corvo, schermo) e parte il video. Il tasto freccia in alto a sinistra (o Esc) riporta fuori.
 - Il video è `public/video/indizio.mp4` (con `indizio.webm` di riserva e `indizio.jpg` come locandina). Per **cambiarlo** sostituisci questi file tenendo lo stesso nome: meglio mp4 H.264 sotto i 24 MB (limite di Cloudflare Pages: 25 MB a file). Per ridurlo: `ffmpeg -i originale.mov -c:v libx264 -crf 26 -vf scale=720:-2 -pix_fmt yuv420p -movflags +faststart indizio.mp4`.
-- Le frasi dell'Ombra e le scritte sono in `public/storie.js` (`teatro`).
+- Le frasi del vigile, dell'Ombra e le scritte sono in `public/storie.js` (`teatro`).
+
+## Personaggi che camminano e volano
+
+- **Detective Terry** non fa più animazioni: passeggia per il cimitero e, se la tocchi, dice una frase (`terryPasseggio`). Il **custode** è ora un **fantasma** che ogni tanto attraversa il cielo (`fantasma`).
+- **Angioletto**, tifoso del Napoli con la maglia di Maradona e l'aureola, arriva da destra dopo un po' e ti racconta la storia assurda di Donna Carmela e della bara (`angioletto`).
+- **Visco Visconti**, motociclista, è in fondo a tutto: sta scolpendo la lapide del custode (`visco`; `visco.lapide` sono le due righe incise). Quando arrivi si sente "Ehi... vieni.".
+- Nello sfondo, lontano, c'è la **stazione di Afragola**: la grande rampa bianca, l'edificio con le finestre accese e ogni tanto passa un treno.
+
+## Il caffè finito e le carte
+
+- Il **Caffè dal Re dei Corvi** (dalla fossa con la luce) ora è finito: bancone, macchina del caffè, cornetti, lavagna del menu, insegna APERTO. Dentro c'è **Matteofino**, il muratore che ha finito dopo 4 anni (`matteofino`). Ti dà **una carta al giorno** e ti chiede se sai chi è il Re dei Corvi.
+- Le carte sono 12 mostriciattoli **inventati** (non sono Pokémon veri), disegnati dal codice a partire dal `seed` di ciascuna (`carte` in `storie.js`: nome, tipo, rarità, PV, attacchi, frase). Il pulsante in alto a destra nel caffè apre l'album. Le carte restano nel browser di chi gioca (`giuleppe-carte`).
 
 ## Struttura
 
