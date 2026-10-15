@@ -395,5 +395,50 @@
     traguardi: { 10: "10 colpi! Matteofino sarebbe fiero.", 50: "50 colpi! Gaia ti mette like.", 100: "100 colpi! Sei il Re dei Corvi della palestra." }
   };
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  // Massimino e Cristina, seduti al tavolino del caffè. chi: "m" = Massimino, "c" = Cristina.
+  const tavolino = {
+    massimino: { nome: "Massimino", ruolo: "Al tavolino" },
+    cristina: { nome: "Cristina", ruolo: "Al tavolino" },
+    passi: [
+      { chi: "m", t: "Ah, che caffè. Il caffè del Re dei Corvi è il più buono di tutta la provincia, te lo dico io.", b: [["Davvero?", 1], ["Buon appetito", null]] },
+      { chi: "c", t: "Buonissimo, Massimì. Però... non senti un retrogusto amaro? Tipo... ferro?", b: [["Amaro?", 2]] },
+      { chi: "m", t: "Eh, sì. Dicono che il Re dei Corvi ci mette un goccio di sangue di traditori. Quelli che escono dal gruppo, hai capito. Caffè e sangue di traditori.", b: [["Ma dai!", 3], ["Che schifo", 3]] },
+      { chi: "c", t: "Io però ho visto delle cose, sai? La sera prima del custode... c'era una luce vicino al teatro. E una persona con in mano un biglietto.", b: [["Un biglietto?", 4]] },
+      { chi: "c", t: "Un biglietto del treno. Andata e basta, niente ritorno. Per... per...", b: [["Per dove?", 5]] },
+      { chi: "c", pazzo: true, t: "AFRAGOLA. AFRAGOLA! AFRAGOLA AFRAGOLA AFRAGOLA AFRAGOLA!!!", b: [["Cristina?!", 6]] },
+      { chi: "m", t: "Lasciala stare, le succede sempre al terzo caffè. Domani si ricorda tutto. Forse.", b: [["Ok...", null]] }
+    ],
+    frasiMassimino: ["Un altro caffè? Sì, grazie.", "Buono, eh. Amaro, ma buono.", "Non guardarla negli occhi quando dice Afragola."],
+    frasiCristina: ["AFRAGOLA!", "Afragola... afragola...", "AFRAGOLA AFRAGOLA!", "Il biglietto... AFRAGOLA!"]
+  };
+
+  // Minni, barboncino toy nero col collare rosso. Ti porta all'armadietto.
+  const minni = {
+    nome: "Minni",
+    bau: ["Bau bau!", "Bau!", "Bau bau bau!", "Wuf!"],
+    porta: "Minni ti tira per i pantaloni verso il retrobottega...",
+    chiuso: "Un vecchio armadietto di metallo, con le iniziali L.M. Minni ci abbaia contro. Toccalo per aprirlo.",
+    aperto: "Dentro ci sono delle armi: un coltello, una mazza da baseball e una pistola. E un gancio vuoto: ne manca una...",
+    etichetta: "L.M."
+  };
+
+  // Carmine, accanto a Gigio: parla solo tedesco.
+  const carmine = {
+    nome: "Carmine",
+    chiamata: "Hallo! Guten Abend!",
+    frasi: [
+      "Guten Abend! Wo ist hier der Bahnhof?",
+      "Ich verstehe nur Bahnhof.",
+      "Das Wetter ist heute wirklich schrecklich.",
+      "Entschuldigung, wo kann man hier einen guten Kaffee trinken?",
+      "Ich heiße Carmine. Ich komme aus... ach, egal.",
+      "Alles klar? Nein? Gut.",
+      "Der Hund heißt Minni? Sehr schön.",
+      "Mein Hovercraft ist voller Aale.",
+      "Gigio sagt, ich habe eine große Zukunft. Ich glaube ihm nicht.",
+      "Kartoffeln. Ich vermisse Kartoffeln."
+    ]
+  };
+
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
