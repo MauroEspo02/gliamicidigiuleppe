@@ -124,20 +124,127 @@
     probabilita: 0.1
   };
 
-  // Il teatro comunale con la sala cinema (il video e' in /video/indizio.mp4).
+  // Il teatro comunale: sta andando a fuoco. Il vigile non fa entrare, ma dal retro si può (il video e' in /video/indizio.mp4).
+  // Ogni dialogo e' un albero: b = bottoni [testo, dove vai]. Un numero = passo successivo, null = chiudi, "@nome" = azione speciale.
   const teatro = {
     insegna: ["TEATRO COMUNALE", "MAESTRO GIULEPPE"],
-    etichetta: "Teatro comunale. Dalle porte esce una luce. Vuoi guardare?",
+    etichetta: "Il teatro comunale sta andando a fuoco. Davanti alla porta c'è un vigile.",
+    fischio: "Indietro! Non si passa!",
     psst: "Psst.",
-    nome: "L'Ombra",
-    ruolo: "Chi è? Nessuno lo sa",
-    domanda: "Ehi, tu. Fermo lì.\n\nPrima di entrare ti dico una cosa sola: là dentro c'è un indizio.\n\nStai attento a chi è... e a cosa balla.",
-    chiSei: "Chi sono io? Uno che sa. Uno che balla pure lui, ma di nascosto.\n\nAdesso vai, prima che mi vedano. E guarda bene.",
-    bottoni: { chi: "Chi sei?", entro: "Entro", via: "Meglio di no" },
+    vigile: {
+      nome: "Vigile Umberto", ruolo: "Polizia locale",
+      passi: [
+        { t: "Indietro, indietro! Il teatro sta andando a fuoco, non si entra!", b: [["Ma che è successo?", 1], ["E io posso entrare?", 2], ["Vado via", null]] },
+        { t: "Io ho visto tutto. Una ragazza con il caschetto, qua davanti, con la sigaretta in mano. O forse era una canna... non ho fatto in tempo a sentire l'odore. Sta di fatto che poi: pof. Fuoco.", b: [["E io posso entrare?", 2], ["Capito, grazie", null]] },
+        { t: "NO. Non si entra. Sono pagato per questo. Anzi, non sono pagato. Ma non si entra lo stesso.", b: [["Capito", "@retro"]] }
+      ]
+    },
+    ombra: {
+      nome: "L'Ombra", ruolo: "Chi è? Nessuno lo sa",
+      passi: [
+        { t: "Psst. Qua, tu. Il vigile non guarda.\n\nDal retro si entra. Là dentro c'è un indizio.\n\nStai attento a chi è... e a cosa balla.", b: [["Entro dal retro", "@entra"], ["Chi sei?", 1], ["Meglio di no", "@via"]] },
+        { t: "Chi sono io? Uno che sa. Uno che balla pure lui, ma di nascosto.\n\nAdesso vai, prima che il vigile si giri. E guarda bene.", b: [["Entro dal retro", "@entra"], ["Meglio di no", "@via"]] }
+      ]
+    },
     via: "Fai bene ad avere paura. Ma l'indizio resta lì.",
     uscita: "Esci dal teatro",
     fine: "Hai visto bene chi è? E cosa balla?"
   };
+
+  // Detective Terry non interroga più: ormai si sa tutto. Cammina per il cimitero e ogni tanto borbotta.
+  const terryPasseggio = [
+    "Qualcuno qui sa qualcosa...",
+    "Non ho visto niente. Neanche lei. Giusto?",
+    "Un colpo solo. Pulito. Professionista.",
+    "Tutti hanno un alibi. Tranne i morti.",
+    "Se sente parlare del Re dei Corvi, mi chiami.",
+    "Il biondo dietro la tomba. Prima o poi lo prendo.",
+    "Afragola... perché sempre Afragola?"
+  ];
+
+  // Il fantasma del custode, che ogni tanto vola sopra il cimitero.
+  const fantasma = {
+    comparsa: "Un fantasma passa sopra il cimitero...",
+    frasi: [
+      "Uuuuh... tovarišč...",
+      "Chi mi ha sparato? Nessuno dice niente...",
+      "Il cancello... chi lo apre adesso?",
+      "Detective! Sono io! Ti dico chi è stato! ...no, non mi sente.",
+      "Uuuh... io volo, tu no. Ah ah ah.",
+      "Il mio colbacco... dov'è finito il mio colbacco?"
+    ]
+  };
+
+  // Angioletto, tifoso del Napoli con la maglia di Maradona: entra dopo Donna Carmela e dice che è pazza.
+  const angioletto = {
+    nome: "Angioletto", ruolo: "Tifoso del Napoli",
+    arrivo: "Psss! Venite qua! Donna Carmela è pazza!",
+    passi: [
+      { t: "Psss! Vieni qua, non farti sentire da lei. Ti dico una cosa su Donna Carmela: quella è pazza!", b: [["Pazza? In che senso?", 1], ["Ma che dici?", 1]] },
+      { t: "Una notte l'ho vista io, con questi occhi che mi devono pure bruciare. Stava qua, in mezzo alle tombe, con la lanterna e una forchetta.", b: [["E poi?", 2], ["Una forchetta?", 2]] },
+      { t: "Ha aperto una bara. Ha tolto il corpo. E se l'è mangiato! Così, intero, col sugo che si era portata da Afragola dentro un thermos.", b: [["Impossibile...", 3], ["E poi?", 3]] },
+      { t: "Dopo s'è pulita la bocca col fazzoletto e ha detto: \"Questo è meglio 'e chillo 'e ieri\". Io ero dietro quella croce. Mi sono fatto il segno della croce, e pure quello di Maradona.", b: [["Lo dirò a tutti", 4], ["Tu hai bevuto", 4]] },
+      { t: "Credimi! E sai chi c'era con lei? Nessuno. Perché lei mangia sola. Sempre. Ricordatelo.\n\nMo' me ne vado prima che mi vede. E non dire che te l'ho detto io!", b: [["Ok, ciao Angioletto", null]] }
+    ],
+    frasi: [
+      "Forza Napoli!",
+      "Non mangiare niente da Donna Carmela. Niente!",
+      "Donna Carmela mi guarda male. Lo so che lo sa.",
+      "Io la bara non la apro manco morto. Lei sì.",
+      "Maradona è meglio 'e tutti. Pure 'e chi sta qua sotto."
+    ]
+  };
+
+  // Matteofino, il muratore del Caffè dal Re dei Corvi. Dà una carta al giorno.
+  const matteofino = {
+    nome: "Matteofino", ruolo: "Muratore",
+    chiamata: "Psst! Vieni qua!",
+    carteAlGiorno: 1,
+    passi: [
+      { t: "Oh, ciao! Sono Matteofino, il muratore. Qua dentro ci sto da 4 anni, eh. Quattro. Anni. Non vedo la mia famiglia bagnolese da troppo tempo.", b: [["E adesso?", 1], ["Che braccia che hai", 2], ["Ciao Matteofino", null]] },
+      { t: "E adesso ho finito! M'hanno pure pagato! E sai che mi sono comprato con i soldi? Le carte pokemon! Tieni, una è per te.", b: [["Grazie!", "@carta"]] },
+      { t: "Eh, il cemento non si porta da solo. Quattro anni di secchi: i muscoli vengono per forza. I ricci non so perché, ma vengono pure quelli.", b: [["E adesso?", 1]] },
+      { t: "Ma dimmi una cosa... tu lo sai chi è il Re dei Corvi?", b: [["Certo che lo so", 4], ["No... chi è?", 5], ["Non mi interessa", null]] },
+      { t: "Davvero?! E chi è? Dai, dimmelo piano, che qua i muri hanno le orecchie. E pure le piume.", b: [["Non te lo dico", 6], ["Ancora non lo so", 6]] },
+      { t: "Eh, lo chiedevo a te! Io l'ho solo costruito 'sto posto. Il proprietario non l'ho mai visto. Mi pagava in semi di girasole... e in carte.", b: [["Strano", 6]] },
+      { t: "Se lo scopri dimmelo. Io intanto mi riposo: 4 anni, capisci?", b: [["Ciao, Matteofino", null]] },
+      { t: "Oggi te n'ho già data una! Le carte costano, eh. Torna domani, che devo ricomprarle.", b: [["Va bene", 3]] },
+      { t: "Ma hai la collezione completa! Non ho più niente da darti, sei il re delle carte! Anzi: il Re dei Corvi sarai tu?", b: [["Chissà", 3]] }
+    ],
+    frasi: ["Quattro anni, eh.", "Vuoi una carta? Tieni... domani.", "Che bello non toccare più il cemento."]
+  };
+
+  // Visco Visconti, in fondo al cimitero: costruisce la lapide del custode.
+  const visco = {
+    nome: "Visco Visconti", ruolo: "Motociclista",
+    chiamata: "Ehi... vieni.",
+    lapide: ["LUIGINOV", "MARINOVSKIJ"],
+    passi: [
+      { t: "Ciao. Mi chiamo Visco Visconti. Sono venuto in moto da lontano per fare la lapide a Luiginov.", b: [["Il custode?", 1], ["Che bella moto", 4]] },
+      { t: "Sì, lui. Mi apriva il cancello a ogni ora, anche alle tre di notte, senza chiedere niente. Se pioveva mi teneva pure l'ombrello. Mi manca.", b: [["Mi dispiace", 3], ["Cosa scrivi sulla lapide?", 2]] },
+      { t: "Qui giace Luiginov Marinovskij. Apriva i cancelli. Ora apre quelli del cielo. E sotto: \"Privet, tovarišč\".", b: [["Bellissima", 3]] },
+      { t: "Se lo vedi svolazzare di notte, salutalo da parte mia. E se vedi chi gli ha sparato... dimmelo prima di dirlo alla detective.", b: [["Lo farò", null]] },
+      { t: "Grazie. Mi accompagna dappertutto, la moto. Ma lui mi apriva il cancello meglio.", b: [["Il custode?", 1]] }
+    ],
+    frasi: ["Mi manca, il vecchio.", "Scalpello, martello, e un po' di cuore.", "Privet, Luiginov."]
+  };
+
+  // Le carte collezionabili che regala Matteofino (mostriciattoli tutti inventati).
+  // tipo: Ombra Fango Fulmine Fuoco Lacrima Caffe Corvo Fantasma Treno Celeste
+  const carte = [
+    { id: "corvaccio", nome: "Corvaccio Re", tipo: "Corvo", rarita: "leggendaria", pv: 120, att: [["Becco Reale", 60], ["Pioggia di Piume", 40]], testo: "Porta la corona. Nessuno sa chi sia davvero.", seed: 7 },
+    { id: "giuleppino", nome: "Giuleppino", tipo: "Ombra", rarita: "comune", pv: 40, att: [["Messaggio Letto", 10], ["Gruppo Silenziato", 20]], testo: "È uscito dal gruppo. Ma lo senti ancora.", seed: 21 },
+    { id: "lumino", nome: "Lumino Triste", tipo: "Fuoco", rarita: "comune", pv: 30, att: [["Fiammella", 10], ["Singhiozzo", 10]], testo: "Brilla poco, ma ha tanti sentimenti.", seed: 33 },
+    { id: "tombalotto", nome: "Tombalotto", tipo: "Fango", rarita: "comune", pv: 60, att: [["Lapidata", 20], ["Riposo Eterno", 30]], testo: "Pesa tre quintali. Dice di no.", seed: 45 },
+    { id: "piovasco", nome: "Piovasco", tipo: "Lacrima", rarita: "comune", pv: 50, att: [["Goccia", 10], ["Temporale", 40]], testo: "Dove passa lui, piove. Sempre.", seed: 58 },
+    { id: "hotdoggo", nome: "Hot Doggo Carditese", tipo: "Fuoco", rarita: "rara", pv: 70, att: [["Senape", 20], ["Mi Scoccio", 50]], testo: "Te lo dà una volta su dieci.", seed: 64 },
+    { id: "caffettiello", nome: "Caffettiello", tipo: "Caffe", rarita: "comune", pv: 45, att: [["Schizzo Bollente", 20], ["Doppia Dose", 30]], testo: "Dal Re dei Corvi lo fanno sempre troppo forte.", seed: 77 },
+    { id: "zombiello", nome: "Zombiello Matto", tipo: "Fulmine", rarita: "rara", pv: 80, att: [["Scossa", 30], ["Tuono Putrido", 50]], testo: "Risorto due volte. Tre, se conti la domenica.", seed: 89 },
+    { id: "cancelletto", nome: "Cancelletto", tipo: "Ombra", rarita: "comune", pv: 35, att: [["Cigolio", 10], ["Chiusura", 20]], testo: "Si apre da solo. Non è una bella cosa.", seed: 101 },
+    { id: "fantasmino", nome: "Fantasmino Russo", tipo: "Fantasma", rarita: "rara", pv: 65, att: [["Uuuh", 20], ["Tovarišč", 45]], testo: "Vola ogni tanto. Gli manca il cancello.", seed: 113 },
+    { id: "afragolon", nome: "Afragolon", tipo: "Treno", rarita: "rara", pv: 90, att: [["Alta Velocità", 50], ["Ritardo Cronico", 30]], testo: "Si ferma dove non si ferma nessuno.", seed: 127 },
+    { id: "angiolino", nome: "Angiolino Azzurro", tipo: "Celeste", rarita: "comune", pv: 55, att: [["Coro da Stadio", 30], ["Dieci!", 40]], testo: "Tifa anche quando non si deve.", seed: 139 }
+  ];
 
   // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
   const jediego = [
@@ -219,5 +326,5 @@
   }
   const scegli = (lista, oggi, sale) => lista[mod(giorni(oggi) * 31 + (sale || 0), lista.length)];
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
