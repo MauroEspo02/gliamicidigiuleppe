@@ -185,6 +185,14 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 @keyframes neon{0%,91%,95%{opacity:1}92%,94%{opacity:.35}}
 #corvo-re{position:absolute;right:-6px;top:calc(var(--cp,4px)*-12 + 3px);width:calc(var(--cp,4px)*12);height:calc(var(--cp,4px)*12);image-rendering:pixelated}
 #risali{left:14px;top:calc(env(safe-area-inset-top,0px) + 14px)}
+.visco .v-anima{position:absolute;left:calc(var(--px)*104);bottom:calc(var(--px)*14);width:calc(var(--px)*28);height:calc(var(--px)*40);image-rendering:pixelated;pointer-events:none;opacity:.8;animation:animaSale 5s ease-in-out infinite}
+@keyframes animaSale{0%{transform:translateY(calc(var(--px)*6));opacity:0}25%{opacity:.8}70%{opacity:.7}100%{transform:translateY(calc(var(--px)*-26));opacity:0}}
+.visco .v-rip{position:absolute;left:calc(var(--px)*66);bottom:calc(var(--px)*70);font-family:var(--f-pixel);font-weight:700;font-size:calc(var(--px)*5);color:#c8d4ff;text-shadow:0 0 8px rgba(150,180,255,.8),0 2px 0 #000;letter-spacing:.1em;pointer-events:none;animation:fiamma 3s steps(1) infinite}
+.visco .v-mosche{position:absolute;left:calc(var(--px)*108);bottom:calc(var(--px)*30);width:calc(var(--px)*24);height:calc(var(--px)*14);pointer-events:none}
+.visco .v-mosche i{position:absolute;width:calc(var(--px)*1);height:calc(var(--px)*1);background:#050507;box-shadow:0 0 0 1px rgba(200,210,240,.35);animation:mosca 1.6s linear infinite}
+.visco .v-mosche i:nth-child(2){animation-duration:2.1s;animation-delay:-.7s}.visco .v-mosche i:nth-child(3){animation-duration:1.3s;animation-delay:-1s}
+@keyframes mosca{0%{transform:translate(0,50%)}25%{transform:translate(calc(var(--px)*20),0)}50%{transform:translate(calc(var(--px)*12),calc(var(--px)*12))}75%{transform:translate(calc(var(--px)*2),calc(var(--px)*6))}100%{transform:translate(0,50%)}}
+@media (prefers-reduced-motion:reduce){.visco .v-anima,.visco .v-mosche i{animation:none}}
 .visco .v-p,.visco .v-libro,.visco .v-nota{position:absolute;padding:0;border:0;background:none;cursor:pointer}
 .visco .v-p{left:calc(var(--px)*94);bottom:calc(var(--px)*2);width:calc(var(--px)*42);height:calc(var(--px)*34)}
 .visco .v-libro{left:calc(var(--px)*52);bottom:0;width:calc(var(--px)*22);height:calc(var(--px)*10)}
@@ -245,6 +253,7 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 #massimino,#cristina,#minni{position:absolute;display:block;padding:0;border:0;background:none;cursor:pointer;z-index:4}
 #massimino canvas,#cristina canvas,#minni canvas,#armadietto canvas,#minni-r canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
 #cristina canvas{transform:scaleX(-1)}
+#minni canvas,#minni-r canvas{filter:drop-shadow(1px 0 0 #f4ead0) drop-shadow(-1px 0 0 #f4ead0) drop-shadow(0 1px 0 #f4ead0) drop-shadow(0 -1px 0 #f4ead0)}
 #massimino .fum-wrap,#cristina .fum-wrap,#minni .fum-wrap,#minni-r .fum-wrap{left:-200px;right:-200px}
 #massimino:focus-visible,#cristina:focus-visible,#minni:focus-visible,#armadietto:focus-visible,#minni-r:focus-visible{outline:3px dashed var(--osso);outline-offset:4px}
 #cristina.trema,#dlg.pazzo .r-testo{animation:trema .12s steps(2) infinite}
@@ -2238,6 +2247,10 @@ function scenaVisco(){
   R(mx+38,my-27,8,7,'#2e1c12');R(mx+38,my-28,8,3,'#c0392b');R(mx+44,my-27,3,2,'#c0392b');R(mx+46,my-26,1,3,'#c0392b');
   R(mx+39,my-21,2,6,'#2e1c12');R(mx+42,my-21,2,5,'#2e1c12');R(mx+40,my-22,4,2,'#dca27a');p.set(mx+41,my-22,'#050507');p.set(mx+42,my-22,'#050507');
   R(mx+44,my-24,6,2,'#16161c');R(mx+49,my-24,2,2,'#dca27a');
+  p.set(mx+41,my-22,'#2e1c12');p.set(mx+42,my-22,'#2e1c12');
+  // nastro della polizia
+  const ny=H-15;R(46,ny-2,1,15,'#5d6273');R(148,ny-2,1,15,'#5d6273');for(let x=47;x<148;x++){R(x,ny,1,7,'#f2c230');p.set(x,ny,'#111116');p.set(x,ny+6,'#111116')}
+  incidi(p,'NON OLTREPASSARE',66,ny+1,1,'#111116');
   // il libro di Marx e il bigliettino
   const bx=54,by=H-7;R(bx,by,19,7,'#8a1a1a');R(bx,by,19,1,'#b02a2a');R(bx,by,2,7,'#5a0f0f');R(bx+2,by+6,17,1,'#e8e0c8');incidi(p,'MARX',bx+3,by+1,1,'#f2d35a');
   R(74,H-6,9,5,'#f4f1e8');R(74,H-6,9,1,'#ffffff');R(75,H-4,6,1,'#7a7e92');R(75,H-2,4,1,'#7a7e92');p.set(82,H-2,'#cfd4e0');
@@ -2401,7 +2414,7 @@ const Caffe={
       else{c=(x%5===0)?'#2a1609':(bayer(x,y)<(y-rail)/(fy-rail)*.4?'#3b2112':'#5a3519');if(y===rail+2)c='#7a4a28'}
       p.set(x,y,c)}
     // pavimento a scacchi
-    for(let y=fy;y<H;y++)for(let x=0;x<W;x++){const k=y-fy,sc=((Math.floor(k/3)+Math.floor(x/6))&1)===0;let c=sc?'#d6cfbc':'#241f1c';if(bayer(x,y)<(k/(H-fy))*.5)c=sc?'#8a8574':'#141210';if(k===0)c='#6b4426';if(k===1)c='#3a2314';p.set(x,y,c)}
+    for(let y=fy;y<H;y++)for(let x=0;x<W;x++){const k=y-fy,sc=((Math.floor(k/3)+Math.floor(x/6))&1)===0;let c=sc?'#e2d8c0':'#9a3a2a';if(bayer(x,y)<(k/(H-fy))*.4)c=sc?'#b8ae98':'#7a2a1e';if(k===0)c='#6b4426';if(k===1)c='#3a2314';p.set(x,y,c)}
     // luci a sospensione
     const lamp=(lx,ly)=>{for(let y=0;y<ly;y++)p.set(lx,y,'#08080b');
       for(let y=ly+3;y<rail+6;y++){const hw=(y-ly)*.55+2,f=1-(y-ly)/(rail-ly+6);for(let x=Math.round(lx-hw);x<=lx+hw;x++){if(x<0||x>=W)continue;if(bayer(x,y)<(1-Math.abs(x-lx)/hw)*f*.3)p.set(x,y,y<rail?'#4a7a60':'#b08a50')}}
@@ -2654,7 +2667,13 @@ const Foglio={
 $('#fo-chiudi').addEventListener('click',()=>Foglio.chiudi());
 $('#foglio').addEventListener('click',e=>{if(e.target.id==='foglio')Foglio.chiudi()});
 
-/* ---------- Visco Visconti, accasciato sulla moto ---------- */
+/* ---------- Visco Visconti, morto sulla moto ---------- */
+function animaDi(src,W,H){
+  const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(src,0,0);
+  g.globalCompositeOperation='source-atop';g.fillStyle='rgba(170,200,255,.75)';g.fillRect(0,0,W,H);g.globalCompositeOperation='source-over';
+  const id=g.getImageData(0,0,W,H),d=id.data;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=(y*W+x)*4;if(y>H*.55)d[i+3]=Math.round(d[i+3]*Math.max(0,1-(y-H*.55)/(H*.4)));}
+  g.putImageData(id,0,0);g.fillStyle='#f2d35a';g.fillRect(W/2-5,0,10,1);g.fillRect(W/2-6,1,1,1);g.fillRect(W/2+5,1,1,1);return c;
+}
 const Visco={
   el:null,
   crea(){
@@ -2664,6 +2683,9 @@ const Visco={
       '<button type="button" class="v-libro" aria-label="Un libro per terra"></button>'+
       '<button type="button" class="v-nota" aria-label="Un bigliettino per terra"></button>';
     d.querySelector('.v-sf').getContext('2d').drawImage(scenaVisco(),0,0);this.el=d;
+    const an=document.createElement('canvas');an.className='v-anima';an.width=28;an.height=40;an.setAttribute('aria-hidden','true');an.getContext('2d').drawImage(animaDi(VF.giu,28,40),0,0);d.append(an);
+    const ms=document.createElement('span');ms.className='v-mosche';ms.setAttribute('aria-hidden','true');ms.innerHTML='<i></i><i></i><i></i>';d.append(ms);
+    const rip=document.createElement('span');rip.className='v-rip';rip.textContent='R.I.P.';rip.setAttribute('aria-hidden','true');d.append(rip);
     const su=(sel,fn)=>d.querySelector(sel).addEventListener('click',e=>{e.stopPropagation();if(trascinato)return;fn()});
     su('.v-p',()=>avviso(V.accasciato));
     su('.v-libro',()=>Foglio.mostra({titolo:V.libro.titolo,autore:V.libro.autore,testo:V.libro.testo}));

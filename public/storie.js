@@ -220,7 +220,7 @@
     chiamata: "Ehi... vieni.",
     lapide: ["LUIGINOV", "MARINOVSKIJ"],
     // Visco ora è accasciato sulla moto: questi sono i testi della scena.
-    accasciato: "Visco Visconti è accasciato sulla moto. Non risponde. Accanto a lui, per terra, un libro e un bigliettino.",
+    accasciato: "Visco Visconti è morto, accasciato sulla moto. Non respira più. Accanto a lui, per terra, un libro e un bigliettino.",
     libro: { titolo: "Il Manifesto del Partito Comunista", autore: "Karl Marx", testo: "Una pagina ha l'angolo piegato. Sottolineato a matita: \"Proletari di tutto il cimitero, unitevi!\"" },
     biglietto: "Fai del mondo il tuo giocattolo, o il mondo farà di te la sua marionetta.",
     passi: [
