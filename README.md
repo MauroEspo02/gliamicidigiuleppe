@@ -49,8 +49,8 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 
 - **Detective Terry** non fa più animazioni: passeggia per il cimitero e, se la tocchi, dice una frase (`terryPasseggio`). Il **custode** è ora un **fantasma** che ogni tanto attraversa il cielo (`fantasma`).
 - **Angioletto**, tifoso del Napoli con la maglia di Maradona e l'aureola, arriva da destra dopo un po' e ti racconta la storia assurda di Donna Carmela e della bara (`angioletto`).
-- **Visco Visconti**, motociclista, è in fondo a tutto: sta scolpendo la lapide del custode (`visco`; `visco.lapide` sono le due righe incise). Quando arrivi si sente "Ehi... vieni.".
-- **Ragnetto**, il ragno detective (cappellino e lente), appena entri scende dal filo, entra ed esce dall'inquadratura, poi si ferma e dice che è arrivato a risolvere il delitto con la Detective Terry. Dopo resta appeso in alto a destra: toccalo per sentirlo (`ragnetto`).
+- **Visco Visconti**, motociclista, è in fondo a tutto, accanto alla lapide del custode lasciata a metà, accasciato sulla moto. Per terra ci sono un libro di Marx e un bigliettino: toccali per leggerli (`visco.libro`, `visco.biglietto`).
+- **Ragnetto**, il ragno detective, appena entri scende dal filo, entra ed esce dall'inquadratura, saluta e poi tocca terra e diventa **Guido Men**: metà ragazzo col codino e metà ragno. Cammina per il cimitero e ogni tanto lancia una ragnatela e vola (`ragnetto`).
 - **Gigio il veggente**, chiamato da Milano, ha il suo banchetto con la sfera di cristallo tra le tombe (dopo l'ottava, o in fondo se sono meno). Parla metà napoletano e metà milanese e ti legge il futuro (`gigio`, le profezie sono in `gigio.profezie`).
 - Accanto a Gigio c'è **Carmine**, che parla solo tedesco e non serve a niente: toccalo e dice una frase a caso (`carmine`).
 - Nello sfondo, lontano, c'è la **stazione di Afragola**: la grande rampa bianca, l'edificio con le finestre accese e ogni tanto passa un treno.
@@ -62,7 +62,7 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - Al bar c'è anche **Gaia Pappaia**, che ha avuto una storia con il custode Luigi, finita male. Parla in corsivo, stile generazione Z, e il suo testo è proprio in corsivo (`gaia`).
 - Al tavolino del bar sono seduti **Massimino e Cristina**: parlano del caffè del Re dei Corvi, buonissimo ma amaro, "caffè e sangue di traditori". Cristina inizia a dare un indizio (un biglietto del treno) ma impazzisce e ripete solo AFRAGOLA (`tavolino`; ogni passo ha `chi: "m"` o `chi: "c"` per dire chi parla).
 - **Minni**, barboncino toy nero col collare rosso, gira per il bar: toccala, fa "bau bau" e ti porta nel retrobottega davanti a un armadietto con le iniziali L.M. Aprilo: dentro ci sono delle armi, e un gancio vuoto (`minni`).
-- Accanto al bar c'è la porta della **Palestra Fit**: si apre solo se hai almeno 3 carte diverse (`palestra.carteRichieste`). Dentro c'è un sacco da boxe da colpire: i colpi si contano (`giuleppe-colpi`).
+- Accanto al bar c'è la porta della **palestra**: si apre con 3 carte diverse (`palestra.carteRichieste`). Le prime 3 carte che regala Matteofino sono sempre nuove, e la terza è sempre una rara. Dentro sembra un campo da pallavolo, ma è una palestra pokemon: **Vincenzo Artenzo**, il capopalestra, ti sfida a una lotta a turni (LOTTA, CARTE, BORSA, FUGA) con le tue 3 carte migliori contro il suo Artenzone. Vince sempre lui (`vincenzo`: testi, mosse e frasi). Le sconfitte si contano sul tabellone.
 
 ## Struttura
 

@@ -219,6 +219,10 @@
     nome: "Visco Visconti", ruolo: "Motociclista",
     chiamata: "Ehi... vieni.",
     lapide: ["LUIGINOV", "MARINOVSKIJ"],
+    // Visco ora è accasciato sulla moto: questi sono i testi della scena.
+    accasciato: "Visco Visconti è accasciato sulla moto. Non risponde. Accanto a lui, per terra, un libro e un bigliettino.",
+    libro: { titolo: "Il Manifesto del Partito Comunista", autore: "Karl Marx", testo: "Una pagina ha l'angolo piegato. Sottolineato a matita: \"Proletari di tutto il cimitero, unitevi!\"" },
+    biglietto: "Fai del mondo il tuo giocattolo, o il mondo farà di te la sua marionetta.",
     passi: [
       { t: "Ciao. Mi chiamo Visco Visconti. Sono venuto in moto da lontano per fare la lapide a Luiginov.", b: [["Il custode?", 1], ["Che bella moto", 4]] },
       { t: "Sì, lui. Mi apriva il cancello a ogni ora, anche alle tre di notte, senza chiedere niente. Se pioveva mi teneva pure l'ombrello. Mi manca.", b: [["Mi dispiace", 3], ["Cosa scrivi sulla lapide?", 2]] },
@@ -328,9 +332,13 @@
 
   // Ragnetto, il ragno detective che arriva appena entri.
   const ragnetto = {
-    nome: "Ragnetto", ruolo: "Detective a otto zampe",
+    nome: "Guido Men", ruolo: "Metà ragazzo, metà ragno",
     saluto: "Ciao! È arrivato Ragnetto al cimitero, a risolvere il delitto insieme alla Detective Terry!",
+    trasformazione: "Ragnetto tocca terra e... diventa Guido Men, metà ragazzo e metà ragno!",
+    vola: ["Ragnatelaaa!", "Si vola!", "Ci vediamo dall'altra parte!", "Tenetevi forte!"],
     frasi: [
+      "Sono Guido Men. Il codino è vero, le zampe pure.",
+      "Otto zampe e un codino: il detective più stiloso del cimitero.",
       "Ho tessuto una tela su ogni tomba. Niente mi sfugge.",
       "Terry guarda per terra, io guardo dall'alto. Squadra perfetta.",
       "Otto zampe, otto indizi. Me ne mancano sette.",
@@ -390,7 +398,8 @@
     carteRichieste: 3,
     insegna: "FIT",
     chiusa: "Amiooo, è chiusaaa: servono almeno {n} carte diverse e tu ne hai {k}. Chiedile a Matteofino, bestie.",
-    aperta: "Carte controllate. Benvenuto alla Palestra Fit!",
+    aperta: "Carte controllate. Benvenuto in palestra!",
+    insegnaDentro: "PALESTRA POKEMON",
     sacco: ["Pam!", "Bam!", "Ahia!", "Ancora!", "Per Luigi!", "Slay!", "Taac!"],
     traguardi: { 10: "10 colpi! Matteofino sarebbe fiero.", 50: "50 colpi! Gaia ti mette like.", 100: "100 colpi! Sei il Re dei Corvi della palestra." }
   };
@@ -440,5 +449,37 @@
     ]
   };
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  // Vincenzo Artenzo, capopalestra. Nella lotta vince sempre lui.
+  const vincenzo = {
+    nome: "Vincenzo Artenzo", ruolo: "Capopalestra",
+    chiamata: "Ehi tu! Sei qui per lottare?",
+    passi: [
+      { t: "Benvenuto nella mia palestra! Sembra un campo da pallavolo, eh? Sbagliato: questa è una palestra pokemon. Io sono Vincenzo Artenzo, il capopalestra.", b: [["Ti sfido!", 1], ["Che carte hai?", 2], ["Ciao", null]] },
+      { t: "Uno contro uno. Tu hai le tue tre carte, io ne uso una sola. Basta e avanza. Pronto?", b: [["Lottiamo!", "@sfida"], ["Ci ripenso", null]] },
+      { t: "Le mie le ho comprate da un tizio alla stazione di Afragola. Non stanno in nessun album. Sono... fortissime.", b: [["Ti sfido lo stesso!", 1], ["Ciao", null]] }
+    ],
+    carta: { id: "artenzone", nome: "Artenzone", tipo: "Fuoco", seed: 2718, pv: 999, liv: 100,
+      att: [["Schiacciata Finale", 140], ["Muro a Tre", 70], ["Bagher Supremo", 100], ["Battuta Float", 55]] },
+    testi: {
+      sfida: "Il capopalestra Vincenzo Artenzo ti sfida!",
+      manda: "Vincenzo manda in campo {n}!",
+      vai: "Vai! {n}!",
+      usa: "{n} usa {m}!",
+      nemicoUsa: "{n} nemico usa {m}!",
+      pocoEfficace: "Non è molto efficace...",
+      brutto: "Brutto colpo!",
+      resiste: "{n} resiste con 1 PV! Vincenzo ride.",
+      cura: "Vincenzo usa un Hot Dog Carditese! {n} recupera tutti i PV!",
+      esausta: "{n} è esausto!",
+      prossima: "Scegli la prossima carta.",
+      borsa: "Nella borsa hai solo un cornetto del Re dei Corvi. Non è il momento!",
+      fuga: "Non puoi scappare da una sfida col capopalestra!",
+      cambio: "Torna qui, {n}!",
+      finite: "Non hai più carte in grado di lottare!",
+      perso: "Hai perso contro Vincenzo Artenzo!",
+      vince: ["Te l'avevo detto. Torna quando sarai più forte. Cioè mai.", "Bella partita. Per me.", "Ritenta. Io intanto mi alleno a schiacciare."]
+    }
+  };
+
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
