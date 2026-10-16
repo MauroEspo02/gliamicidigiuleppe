@@ -247,7 +247,7 @@
     { id: "cancelletto", nome: "Cancelletto", tipo: "Ombra", rarita: "comune", pv: 35, att: [["Cigolio", 10], ["Chiusura", 20]], testo: "Si apre da solo. Non è una bella cosa.", seed: 101 },
     { id: "fantasmino", nome: "Fantasmino Russo", tipo: "Fantasma", rarita: "rara", pv: 65, att: [["Uuuh", 20], ["Tovarišč", 45]], testo: "Vola ogni tanto. Gli manca il cancello.", seed: 113 },
     { id: "afragolon", nome: "Afragolon", tipo: "Treno", rarita: "rara", pv: 90, att: [["Alta Velocità", 50], ["Ritardo Cronico", 30]], testo: "Si ferma dove non si ferma nessuno.", seed: 127 },
-    { id: "angiolino", nome: "Angiolino Azzurro", tipo: "Celeste", rarita: "comune", pv: 55, att: [["Coro da Stadio", 30], ["Dieci!", 40]], testo: "Tifa anche quando non si deve.", seed: 139 }
+    { id: "angiolino", nome: "Angiolino Azzurro", tipo: "Celeste", rarita: "comune", pv: 55, att: [["Coro da Stadio", 30], ["Diciassette!", 40]], testo: "Tifa anche quando non si deve.", seed: 139 }
   ];
 
   // Jediego, che piange su una tomba a caso. {nome} = la tomba dove piange.
