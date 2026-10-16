@@ -2379,6 +2379,8 @@ $('#matteo').addEventListener('click',()=>Matteo.parla());
 $('#btn-album').addEventListener('click',()=>Carte.album());
 Matteo.disegna('fermo');Carte.aggiornaConta();
 
+// sul telefono le stanze (bar, retro, palestra) si vedono piu' da lontano, cosi' entra tutto
+function cpScena(){return innerWidth<600?Math.max(2,Math.floor(innerWidth/150)):Math.max(S.px,Math.floor(Math.min(innerWidth/150,innerHeight/115)))}
 /* ---------- la fossa e il Caffè dal Re dei Corvi (ora finito) ---------- */
 const Caffe={
   chiedi(){$('#chiedi').hidden=false;$('#c-si').focus({preventScroll:true})},
@@ -2389,9 +2391,9 @@ const Caffe={
   },
   esci(){const nero=$('#nero');nero.classList.add('on');setTimeout(()=>{$('#caffe').hidden=true;nero.classList.remove('on')},ridotto?50:600)},
   disegna(){
-    const cp=Math.max(S.px,Math.floor(Math.min(innerWidth/150,innerHeight/115))),W=Math.ceil(innerWidth/cp),H=Math.ceil(innerHeight/cp),cv=$('#caffe-cv');
+    const cp=cpScena(),W=Math.ceil(innerWidth/cp),H=Math.ceil(innerHeight/cp),cv=$('#caffe-cv');
     cv.width=W;cv.height=H;cv.style.width=W*cp+'px';cv.style.height=H*cp+'px';document.documentElement.style.setProperty('--cp',cp+'px');
-    const p=Pix(W,H),fy=Math.round(H*.8),rail=Math.round(fy*.66),R=(x,y,w,h,c)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,c)};
+    const p=Pix(W,H),fy=Math.round(H*(H>W*1.4?.66:.8)),rail=Math.round(fy*.66),R=(x,y,w,h,c)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,c)};
     // pareti verdi con zoccolo di legno
     for(let y=0;y<fy;y++)for(let x=0;x<W;x++){let c;
       if(y<rail){c=(x%12===0)?'#173029':'#1d3a32';if(bayer(x,y)<(1-y/rail)*.32)c='#12261f';const v=Math.abs(x+.5-W/2)/(W/2);if(bayer(x,y)<v*v*.5)c='#0f1f1a'}
@@ -2869,7 +2871,7 @@ const Palestra={
   },
   esci(){const nero=$('#nero');nero.classList.add('on');setTimeout(()=>{$('#palestra').hidden=true;$('#avviso').style.zIndex='';nero.classList.remove('on')},ridotto?50:550)},
   disegna(){
-    const cp=Math.max(S.px,Math.floor(Math.min(innerWidth/150,innerHeight/115))),W=Math.ceil(innerWidth/cp),H=Math.ceil(innerHeight/cp),cv=$('#palestra-cv');
+    const cp=cpScena(),W=Math.ceil(innerWidth/cp),H=Math.ceil(innerHeight/cp),cv=$('#palestra-cv');
     cv.width=W;cv.height=H;cv.style.width=W*cp+'px';cv.style.height=H*cp+'px';
     const p=Pix(W,H),fy=Math.round(H*.6),R=(x,y,w,h,c)=>{x=Math.round(x);y=Math.round(y);for(let j=0;j<h;j++)for(let i=0;i<w;i++)p.set(x+i,y+j,c)};
     // parete chiara e finestroni
