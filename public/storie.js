@@ -214,7 +214,7 @@
       { t: "Oggi te n'ho già data una! Le carte costano, eh. Torna domani, che devo ricomprarle.", b: [["Va bene", 3]] },
       { t: "Ma hai la collezione completa! Non ho più niente da darti, sei il re delle carte! Anzi: il Re dei Corvi sarai tu?", b: [["Chissà", 3]] },
       { t: "Buaaah! Sono entrato in palestra e Vincenzo Artenzo mi ha distrutto! Quattro anni di muscoli, e lui mi batte con UNA carta sola. Buaaah!", b: [["Povero Matteofino", 10], ["Ci penso io a lui!", 10]] },
-      { t: "Sniff... Vincenzo con le carte normali non lo batti. Mai. Dicono che serva una carta leggendaria... una che non sta nelle bustine. Chiedi a Minni, quella cagnolina sa tutto.", b: [["E la carta di oggi?", 1], ["Ciao Matteofino", null]] }
+      { t: "Sniff... Vincenzo con le carte normali non lo batti. Mai. Dicono che serva una carta leggendaria... una che non sta nelle bustine. Chiedi a Minnie, quella cagnolina sa tutto.", b: [["E la carta di oggi?", 1], ["Ciao Matteofino", null]] }
     ],
     piange: "Buaaah! Vincenzo mi ha distrutto!",
     frasi: ["Quattro anni, eh.", "Vuoi una carta? Tieni... domani.", "Che bello non toccare più il cemento."]
@@ -253,7 +253,7 @@
     { id: "cancelletto", nome: "Cancelletto", tipo: "Ombra", rarita: "comune", pv: 35, att: [["Cigolio", 10], ["Chiusura", 20]], testo: "Si apre da solo. Non è una bella cosa.", seed: 101 },
     { id: "fantasmino", nome: "Fantasmino Russo", tipo: "Fantasma", rarita: "rara", pv: 65, att: [["Uuuh", 20], ["Tovarišč", 45]], testo: "Vola ogni tanto. Gli manca il cancello.", seed: 113 },
     { id: "afragolon", nome: "Afragolon", tipo: "Treno", rarita: "rara", pv: 90, att: [["Alta Velocità", 50], ["Ritardo Cronico", 30]], testo: "Si ferma dove non si ferma nessuno.", seed: 127 },
-    { id: "minni", nome: "Minni", tipo: "Ombra", rarita: "leggendaria", pv: 150, att: [["Bau Bau", 80], ["Morso Leggendario", 999]], testo: "Barboncino toy nero, collare rosso. L'unica che fa paura a Vincenzo Artenzo.", seed: 3, speciale: true },
+    { id: "minni", nome: "Minnie", tipo: "Ombra", rarita: "leggendaria", pv: 150, att: [["Bau Bau", 80], ["Morso Leggendario", 999]], testo: "Barboncino toy nero, collare rosso. L'unica che fa paura a Vincenzo Artenzo.", seed: 3, speciale: true },
     { id: "angiolino", nome: "Angiolino Azzurro", tipo: "Celeste", rarita: "comune", pv: 55, att: [["Coro da Stadio", 30], ["Diciassette!", 40]], testo: "Tifa anche quando non si deve.", seed: 139 }
   ];
 
@@ -430,15 +430,15 @@
     frasiCristina: ["AFRAGOLA!", "Afragola... afragola...", "AFRAGOLA AFRAGOLA!", "Il biglietto... AFRAGOLA!"]
   };
 
-  // Minni, barboncino toy nero col collare rosso. Ti porta all'armadietto.
+  // Minnie, barboncino toy nero col collare rosso. Ti porta all'armadietto.
   const minni = {
-    nome: "Minni",
+    nome: "Minnie",
     bau: ["Bau bau!", "Bau!", "Bau bau bau!", "Wuf!"],
-    porta: "Minni ti tira per i pantaloni verso il retrobottega...",
-    chiuso: "Un vecchio armadietto di metallo, con le iniziali L.M. Minni ci abbaia contro. Toccalo per aprirlo.",
+    porta: "Minnie ti tira per i pantaloni verso il retrobottega...",
+    chiuso: "Un vecchio armadietto di metallo, con le iniziali L.M. Minnie ci abbaia contro. Toccalo per aprirlo.",
     aperto: "Dentro ci sono delle armi: un coltello, una mazza da baseball e una pistola. E un gancio vuoto: ne manca una...",
     etichetta: "L.M.",
-    carta: "Sotto le armi, Minni scava e tira fuori una carta. È la sua: Minni, leggendaria. L'unica arma che può battere Vincenzo Artenzo."
+    carta: "Sotto le armi, Minnie scava e tira fuori una carta. È la sua: Minnie, leggendaria. L'unica arma che può battere Vincenzo Artenzo."
   };
 
   // Carmine, accanto a Gigio: parla solo tedesco.
@@ -452,7 +452,7 @@
       "Entschuldigung, wo kann man hier einen guten Kaffee trinken?",
       "Ich heiße Carmine. Ich komme aus... ach, egal.",
       "Alles klar? Nein? Gut.",
-      "Der Hund heißt Minni? Sehr schön.",
+      "Der Hund heißt Minnie? Sehr schön.",
       "Mein Hovercraft ist voller Aale.",
       "Gigio sagt, ich habe eine große Zukunft. Ich glaube ihm nicht.",
       "Kartoffeln. Ich vermisse Kartoffeln."
@@ -489,7 +489,7 @@
       perso: "Hai perso contro Vincenzo Artenzo!",
       vince: ["Te l'avevo detto. Torna quando sarai più forte. Cioè mai.", "Bella partita. Per me.", "Ritenta. Io intanto mi alleno a schiacciare."],
       minni: "Vincenzo: \"Quella carta... un barboncino?! Dove l'hai presa?!\"",
-      curaFallita: "Vincenzo prova a usare un Hot Dog Carditese... ma Minni se lo mangia!",
+      curaFallita: "Vincenzo prova a usare un Hot Dog Carditese... ma Minnie se lo mangia!",
       esaustoLui: "{n} nemico è esausto!",
       vinto: "Hai battuto {n}!",
       perde: ["Non... non è possibile. Battuto da un barboncino. Vado a piangere con Matteofino.", "Va bene, hai vinto tu. Ma la rivincita la voglio. Senza cani."]

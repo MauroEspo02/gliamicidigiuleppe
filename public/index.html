@@ -620,7 +620,7 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
   <button id="gaia" type="button" aria-label="Gaia Pappaia. Tocca per parlarle"><canvas width="22" height="38" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
   <button id="massimino" type="button" aria-label="Massimino, seduto al tavolino. Tocca per ascoltare"><canvas width="20" height="24" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
   <button id="cristina" type="button" aria-label="Cristina, seduta al tavolino. Tocca per ascoltare"><canvas width="20" height="24" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
-  <button id="minni" type="button" aria-label="Minni, barboncino nero col collare rosso. Tocca per accarezzarla"><canvas width="16" height="13" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
+  <button id="minni" type="button" aria-label="Minnie, barboncino nero col collare rosso. Tocca per accarezzarla"><canvas width="16" height="13" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
   <button id="btn-album" class="btn-px" type="button" aria-label="Apri la collezione di carte"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M3 1h6v10H3zM4 2v8h4V2z"/><path fill="currentColor" d="M5 4h2v2H5z"/></svg><span id="album-n" class="album-n">0/12</span></button>
   <button id="risali" class="btn-px" type="button" aria-label="Risali nel cimitero"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1h1v1h1v1h1v2H8V6H7v4H5V6H4v1H2V5h1V4h1V3h1z"/></svg></button>
 </div>
@@ -650,7 +650,7 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 <div id="retro" hidden>
   <canvas id="retro-cv" aria-hidden="true"></canvas>
   <button id="armadietto" type="button" aria-label="Armadietto chiuso. Tocca per aprirlo"><canvas width="30" height="56" aria-hidden="true"></canvas></button>
-  <button id="minni-r" type="button" aria-label="Minni"><canvas width="16" height="13" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
+  <button id="minni-r" type="button" aria-label="Minnie"><canvas width="16" height="13" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span></button>
   <p id="retro-testo" aria-live="polite" hidden></p>
   <button id="esci-retro" class="btn-px" type="button" aria-label="Torna al bar"><svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M5 2h2v1H6v2h5v2H6v2h1v1H5V9H4V8H3V7H2V5h1V4h1V3h1z"/></svg></button>
 </div>
@@ -3034,7 +3034,7 @@ const Tavolino={
   }
 };
 
-/* ---------- Minni, il barboncino ---------- */
+/* ---------- Minnie, il barboncino ---------- */
 function spriteMinni(st){
   const rows=["..LBL........LB.",".BBBBB......BBBL","BBBBBBL......BB.","BEPBBBBL.....B..","NBBBLBBB....B...",".BBBBBBBL..B....","..RRRRBBBBBBB...","...BBLBBBLBBBL..","...BBBBBBBBBBB..",
     st==='corre'?"...BB......BB...":"....BB....BB....",st==='corre'?"..BB........BB..":"....BB....BB....",st==='corre'?".LBBL......LBBL.":"...LBBL..LBBL...",st==='corre'?".BBBB......BBBB.":"...BBBB..BBBB..."];
