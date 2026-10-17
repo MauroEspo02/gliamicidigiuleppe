@@ -128,22 +128,25 @@
   // Ogni dialogo e' un albero: b = bottoni [testo, dove vai]. Un numero = passo successivo, null = chiudi, "@nome" = azione speciale.
   const teatro = {
     insegna: ["TEATRO COMUNALE", "MAESTRO GIULEPPE"],
-    etichetta: "Il teatro comunale sta andando a fuoco. Davanti alla porta c'è un vigile.",
-    fischio: "Indietro! Non si passa!",
-    psst: "Psst.",
+    inFiamme: false,
+    etichetta: "Il teatro comunale, annerito dal fuoco ormai spento. Davanti c'è Umberto il pompiere.",
+    fischio: "Ehi! Tra la cenere ho trovato delle cose!",
     vigile: {
-      nome: "Vigile Umberto", ruolo: "Polizia locale",
+      nome: "Umberto il pompiere", ruolo: "Vigili del fuoco",
       passi: [
-        { t: "Indietro, indietro! Il teatro sta andando a fuoco, non si entra!", b: [["Ma che è successo?", 1], ["E io posso entrare?", 2], ["Vado via", null]] },
-        { t: "Io ho visto tutto. Una ragazza con il caschetto, qua davanti, con la sigaretta in mano. O forse era una canna... non ho fatto in tempo a sentire l'odore. Sta di fatto che poi: pof. Fuoco.", b: [["E io posso entrare?", 2], ["Capito, grazie", null]] },
-        { t: "NO. Non si entra. Sono pagato per questo. Anzi, non sono pagato. Ma non si entra lo stesso.", b: [["Capito", "@retro"]] }
+        { t: "Il fuoco l'abbiamo spento, finalmente. Mi sono rimesso la divisa da pompiere: Umberto il pompiere, piacere. E tra la cenere ho trovato delle cose strane.", b: [["Cosa hai trovato?", 1], ["Com'è partito il fuoco?", 2], ["Posso entrare?", 5]] },
+        { t: "Primo: un accendino mezzo sciolto, con la scritta AFRAGOLA. Secondo: un biglietto del treno bruciacchiato. Andata e basta, niente ritorno.", b: [["Altro?", 3]] },
+        { t: "Non è stata la sigaretta. Né la canna. Nel camerino c'era una tanica di benzina. Qualcuno l'ha fatto apposta. Il caschetto c'entra, ma forse non da sola.", b: [["Cosa hai trovato?", 1], ["Posso entrare?", 5]] },
+        { t: "Terzo: sotto il palco, una pistola mezza bruciata. Senza proiettili. Sul calcio c'erano due lettere incise: L. M.", b: [["L.M.? Come l'armadietto!", 4]] },
+        { t: "Ah, lo sai pure tu? Allora la pistola che manca dall'armadietto è questa. E sul palco c'erano impronte di scarpe piccole... e di zampette di cane. Ma non dire niente alla Detective, che si agita.", b: [["Posso entrare?", 5], ["Grazie, Umberto", null]] },
+        { t: "Il teatro è chiuso per i controlli. Non si entra. Anzi... io non guardo. Fai tu.", b: [["Capito", "@retro"]] }
       ]
     },
     ombra: {
       nome: "L'Ombra", ruolo: "Chi è? Nessuno lo sa",
       passi: [
-        { t: "Psst. Qua, tu. Il vigile non guarda.\n\nDal retro si entra. Là dentro c'è un indizio.\n\nStai attento a chi è... e a cosa balla.", b: [["Entro dal retro", "@entra"], ["Chi sei?", 1], ["Meglio di no", "@via"]] },
-        { t: "Chi sono io? Uno che sa. Uno che balla pure lui, ma di nascosto.\n\nAdesso vai, prima che il vigile si giri. E guarda bene.", b: [["Entro dal retro", "@entra"], ["Meglio di no", "@via"]] }
+        { t: "Psst. Qua, tu. Il pompiere non guarda.\n\nDal retro si entra. Là dentro c'è un indizio.\n\nStai attento a chi è... e a cosa balla.", b: [["Entro dal retro", "@entra"], ["Chi sei?", 1], ["Meglio di no", "@via"]] },
+        { t: "Chi sono io? Uno che sa. Uno che balla pure lui, ma di nascosto.\n\nAdesso vai, prima che il pompiere si giri. E guarda bene.", b: [["Entro dal retro", "@entra"], ["Meglio di no", "@via"]] }
       ]
     },
     via: "Fai bene ad avere paura. Ma l'indizio resta lì.",
@@ -209,8 +212,11 @@
       { t: "Eh, lo chiedevo a te! Io l'ho solo costruito 'sto posto. Il proprietario non l'ho mai visto. Mi pagava in semi di girasole... e in carte.", b: [["Strano", 6]] },
       { t: "Se lo scopri dimmelo. Io intanto mi riposo: 4 anni, capisci?", b: [["Ciao, Matteofino", null]] },
       { t: "Oggi te n'ho già data una! Le carte costano, eh. Torna domani, che devo ricomprarle.", b: [["Va bene", 3]] },
-      { t: "Ma hai la collezione completa! Non ho più niente da darti, sei il re delle carte! Anzi: il Re dei Corvi sarai tu?", b: [["Chissà", 3]] }
+      { t: "Ma hai la collezione completa! Non ho più niente da darti, sei il re delle carte! Anzi: il Re dei Corvi sarai tu?", b: [["Chissà", 3]] },
+      { t: "Buaaah! Sono entrato in palestra e Vincenzo Artenzo mi ha distrutto! Quattro anni di muscoli, e lui mi batte con UNA carta sola. Buaaah!", b: [["Povero Matteofino", 10], ["Ci penso io a lui!", 10]] },
+      { t: "Sniff... Vincenzo con le carte normali non lo batti. Mai. Dicono che serva una carta leggendaria... una che non sta nelle bustine. Chiedi a Minni, quella cagnolina sa tutto.", b: [["E la carta di oggi?", 1], ["Ciao Matteofino", null]] }
     ],
+    piange: "Buaaah! Vincenzo mi ha distrutto!",
     frasi: ["Quattro anni, eh.", "Vuoi una carta? Tieni... domani.", "Che bello non toccare più il cemento."]
   };
 
@@ -247,6 +253,7 @@
     { id: "cancelletto", nome: "Cancelletto", tipo: "Ombra", rarita: "comune", pv: 35, att: [["Cigolio", 10], ["Chiusura", 20]], testo: "Si apre da solo. Non è una bella cosa.", seed: 101 },
     { id: "fantasmino", nome: "Fantasmino Russo", tipo: "Fantasma", rarita: "rara", pv: 65, att: [["Uuuh", 20], ["Tovarišč", 45]], testo: "Vola ogni tanto. Gli manca il cancello.", seed: 113 },
     { id: "afragolon", nome: "Afragolon", tipo: "Treno", rarita: "rara", pv: 90, att: [["Alta Velocità", 50], ["Ritardo Cronico", 30]], testo: "Si ferma dove non si ferma nessuno.", seed: 127 },
+    { id: "minni", nome: "Minni", tipo: "Ombra", rarita: "leggendaria", pv: 150, att: [["Bau Bau", 80], ["Morso Leggendario", 999]], testo: "Barboncino toy nero, collare rosso. L'unica che fa paura a Vincenzo Artenzo.", seed: 3, speciale: true },
     { id: "angiolino", nome: "Angiolino Azzurro", tipo: "Celeste", rarita: "comune", pv: 55, att: [["Coro da Stadio", 30], ["Diciassette!", 40]], testo: "Tifa anche quando non si deve.", seed: 139 }
   ];
 
@@ -388,7 +395,9 @@
       { t: "Luigiii... cioè raga, il custode. Abbiamo avuto una storia d'amore pazzescaaa, tipo lui mi apriva il cancello alle tre di notte. Red flag però anche green flag, capito amio?", b: [["E poi?", 2]] },
       { t: "E poi niente, è finita malissimooo. Mi ha ghostata, letteralmente: adesso è un fantasma e passa sopra il cimitero senza manco salutarmi. Io sto benissimo eh. Sto. Benissimooo.", b: [["Mi dispiace", 3], ["Cos'è quella porta?", 4]] },
       { t: "Nono tranqui, sono in fase healing. Infatti mi sono iscritta in palestraaa. Vibe da nuova me, bestie.", b: [["Che palestra?", 4]] },
-      { t: "Raga hanno aperto una palestra fitness proprio qua accanto, iconicaaa. Però non si paga: per entrare servono le carte pokemon, almeno {n}. Tu ne hai {k}. Tipo club esclusivo, capito amio? Le regala Matteofino.", b: [["Ok, grazie", null]] }
+      { t: "Raga hanno aperto una palestra fitness proprio qua accanto, iconicaaa. Però non si paga: per entrare servono le carte pokemon, almeno {n}. Tu ne hai {k}. Tipo club esclusivo, capito amio? Le regala Matteofino.", b: [["Ok, grazie", null]] },
+      { t: "Amiooo! Hai visto Matteofino? Vincenzo l'ha fatto piangere, cringe totale. Tieni: due carte rare, regalo mio. Letteralmente le mie preferite.", b: [["Grazie Gaia!", "@rare"]] },
+      { t: "Ora vai in palestra e sfidalo, bestie. Fallo piangere tu, Vincenzo. E se vedi il Vellone... lascialo perdere, parla tanto ma è scarsissimooo.", b: [["Ci vado!", null], ["Conoscevi il custode?", 1]] }
     ],
     frasi: ["Amiooo", "Luigi chi? Mai sentito. Ok, sì.", "No vabbè, la palestra è troppo slay.", "Letteralmente sto morendooo.", "Cringiooo.", "Bestie, ti voglio bene."]
   };
@@ -428,7 +437,8 @@
     porta: "Minni ti tira per i pantaloni verso il retrobottega...",
     chiuso: "Un vecchio armadietto di metallo, con le iniziali L.M. Minni ci abbaia contro. Toccalo per aprirlo.",
     aperto: "Dentro ci sono delle armi: un coltello, una mazza da baseball e una pistola. E un gancio vuoto: ne manca una...",
-    etichetta: "L.M."
+    etichetta: "L.M.",
+    carta: "Sotto le armi, Minni scava e tira fuori una carta. È la sua: Minni, leggendaria. L'unica arma che può battere Vincenzo Artenzo."
   };
 
   // Carmine, accanto a Gigio: parla solo tedesco.
@@ -477,9 +487,50 @@
       cambio: "Torna qui, {n}!",
       finite: "Non hai più carte in grado di lottare!",
       perso: "Hai perso contro Vincenzo Artenzo!",
-      vince: ["Te l'avevo detto. Torna quando sarai più forte. Cioè mai.", "Bella partita. Per me.", "Ritenta. Io intanto mi alleno a schiacciare."]
+      vince: ["Te l'avevo detto. Torna quando sarai più forte. Cioè mai.", "Bella partita. Per me.", "Ritenta. Io intanto mi alleno a schiacciare."],
+      minni: "Vincenzo: \"Quella carta... un barboncino?! Dove l'hai presa?!\"",
+      curaFallita: "Vincenzo prova a usare un Hot Dog Carditese... ma Minni se lo mangia!",
+      esaustoLui: "{n} nemico è esausto!",
+      vinto: "Hai battuto {n}!",
+      perde: ["Non... non è possibile. Battuto da un barboncino. Vado a piangere con Matteofino.", "Va bene, hai vinto tu. Ma la rivincita la voglio. Senza cani."]
     }
   };
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  // Il Vellone: gradasso, filosofo, scarsissimo. Perde sempre.
+  const vellone = {
+    nome: "Il Vellone", ruolo: "Dice di essere il più forte",
+    chiamata: "La vita è una partita, ragazzo. E io non perdo mai.",
+    passi: [
+      { t: "Fermo lì. Io sono il Vellone. La vita è come una carta: o la giochi, o ti gioca. E io gioco sempre.", b: [["Chi sei?", 1], ["Ti sfido!", 2], ["Ciao", null]] },
+      { t: "Sono l'uomo che ha guardato nell'abisso, e l'abisso ha abbassato lo sguardo. Più forte di Vincenzo, più forte di tutti. Il mare non chiede permesso alla scogliera.", b: [["Ti sfido!", 2], ["Ok...", null]] },
+      { t: "Tu sfidi me? La formica sfida la montagna... e la montagna sorride. Avanti, ragazzo. Ti insegno la vita.", b: [["Lottiamo!", "@sfida"], ["Ci ripenso", null]] }
+    ],
+    carta: { id: "vellonauta", nome: "Vellonauta", tipo: "Fango", seed: 4242, pv: 45, liv: 3,
+      att: [["Massima di Vita", 3], ["Sguardo Profondo", 1], ["Metafora Lunga", 4], ["Respiro Zen", 2]] },
+    testi: {
+      sfida: "Il Vellone ti sfida! Dice di essere il più forte di tutti.",
+      manda: "Il Vellone manda in campo {n}! \"Ammira, ragazzo.\"",
+      vai: "Vai! {n}!",
+      usa: "{n} usa {m}!",
+      nemicoUsa: "{n} nemico usa {m}!",
+      pocoEfficace: "Non fa quasi niente...",
+      brutto: "Brutto colpo!",
+      resiste: "{n} resiste!",
+      cura: "",
+      esausta: "{n} è esausto!",
+      prossima: "Scegli la prossima carta.",
+      borsa: "Nella borsa hai solo un cornetto. Il Vellone dice che il cornetto è una metafora.",
+      fuga: "Il Vellone: \"Chi fugge oggi, fugge anche domani.\" Non puoi scappare.",
+      cambio: "Torna qui, {n}!",
+      finite: "Non hai più carte in grado di lottare!",
+      perso: "Hai perso contro il Vellone. Come hai fatto?!",
+      vince: ["La quercia non si vanta. Ma io sì."],
+      esaustoLui: "{n} nemico è esausto!",
+      vinto: "Hai battuto il Vellone! Ci voleva poco.",
+      perde: ["Ho perso... ma anche la sconfitta è una vittoria, se la guardi da Afragola.", "Il bambù si piega, ma non si spezza. Io mi sono spezzato.", "Non ho perso. Ho imparato. Per la decima volta."],
+      frasi: ["Il Vellone: \"La pioggia non chiede scusa alla terra.\"", "Il Vellone: \"Chi semina vento... vince. Credo.\"", "Il Vellone: \"Il leone non si gira quando abbaia il cane.\"", "Il Vellone: \"La vita è un caffè: amaro, ma lo bevi lo stesso.\""]
+    }
+  };
+
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, vellone, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
