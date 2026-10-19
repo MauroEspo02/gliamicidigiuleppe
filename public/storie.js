@@ -535,17 +535,17 @@
   // Cimitero chiuso (temporaneo). Metti attivo: false per riaprire il cancello.
   const chiusura = {
     attivo: true,
-    nome: "'O Guardiano",
-    arriva: "Fermi tutti! Il cimitero è chiuso.",
+    nome: "Kira",
+    arriva: "Bau! Sciopero!",
     frasi: [
-      "Non si può più entrare. Il cancello è chiuso.",
-      "Ho detto chiuso, frate'. Torna un'altra volta.",
-      "Ordini dall'alto. Pure i morti stanno in pausa.",
-      "No, manco se porti un fiore. Chiuso.",
-      "Riapriamo presto. Forse. Intanto, fuori."
+      "Sciopero generale di pullman e trasportatori! Oggi qui non entra nessuno.",
+      "Niente pullman, niente camion, niente cimitero. Bau.",
+      "Lo sciopero l'ho indetto io. Sono Kira, shiba inu bianca, sindacalista.",
+      "Le nostre richieste: più croccantini e meno Afragola.",
+      "Fascia di garanzia? Bau. No. Torna a sciopero finito."
     ],
-    cartello: "CHIUSO",
-    bottone: "Cancello chiuso"
+    cartello: "SCIOPERO",
+    bottone: "Sciopero in corso"
   };
 
   window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, vellone, chiusura, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };

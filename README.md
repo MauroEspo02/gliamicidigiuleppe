@@ -67,7 +67,7 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 
 ## Cimitero chiuso
 
-Per ora il cancello è chiuso: arriva 'O Guardiano, cala le sbarre con catena e lucchetto e dice che non si può più entrare. Per riaprire metti `attivo: false` in `chiusura` dentro `public/storie.js`.
+Per ora il cancello è chiuso per lo sciopero di pullman e trasportatori: arriva Kira, shiba inu bianca, cala le sbarre con catena e lucchetto e annuncia lo sciopero. Per riaprire metti `attivo: false` in `chiusura` dentro `public/storie.js`.
 
 ## Struttura
 
