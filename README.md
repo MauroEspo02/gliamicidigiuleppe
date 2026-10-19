@@ -65,6 +65,10 @@ Gira su **Cloudflare Pages** con un database **D1**. Niente build, niente npm.
 - Accanto al bar c'è la porta della **palestra**: si apre con 3 carte diverse (`palestra.carteRichieste`). Le prime 3 carte che regala Matteofino sono sempre nuove, e la terza è sempre una rara. Dentro sembra un campo da pallavolo, ma è una palestra pokemon: **Vincenzo Artenzo**, il capopalestra, ti sfida a una lotta a turni (LOTTA, CARTE, BORSA, FUGA) con le tue 3 carte migliori contro il suo Artenzone. Con le carte normali vince sempre lui. L'unica arma è la carta leggendaria di **Minnie**: la trovi aprendo l'armadietto nel retrobottega, e con lei Vincenzo si può battere (`vincenzo`). Vittorie e sconfitte vanno sul tabellone. In palestra c'è anche **il Vellone**, gradasso con le massime di vita, che ti sfida e perde sempre (`vellone`).
 - **Gaia** ti regala due carte rare e ti manda a sfidare Vincenzo. **Matteofino** esce piangendo dalla palestra: Vincenzo l'ha distrutto.
 
+## Cimitero chiuso
+
+Per ora il cancello è chiuso: arriva 'O Guardiano, cala le sbarre con catena e lucchetto e dice che non si può più entrare. Per riaprire metti `attivo: false` in `chiusura` dentro `public/storie.js`.
+
 ## Struttura
 
 ```

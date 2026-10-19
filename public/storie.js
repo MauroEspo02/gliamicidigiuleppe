@@ -532,5 +532,21 @@
     }
   };
 
-  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, vellone, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
+  // Cimitero chiuso (temporaneo). Metti attivo: false per riaprire il cancello.
+  const chiusura = {
+    attivo: true,
+    nome: "'O Guardiano",
+    arriva: "Fermi tutti! Il cimitero è chiuso.",
+    frasi: [
+      "Non si può più entrare. Il cancello è chiuso.",
+      "Ho detto chiuso, frate'. Torna un'altra volta.",
+      "Ordini dall'alto. Pure i morti stanno in pausa.",
+      "No, manco se porti un fiore. Chiuso.",
+      "Riapriamo presto. Forse. Intanto, fuori."
+    ],
+    cartello: "CHIUSO",
+    bottone: "Cancello chiuso"
+  };
+
+  window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, vellone, chiusura, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
 })();
