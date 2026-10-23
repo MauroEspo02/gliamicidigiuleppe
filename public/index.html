@@ -185,6 +185,20 @@ canvas.scena{position:fixed;left:0;top:0;pointer-events:none;image-rendering:pix
 @keyframes neon{0%,91%,95%{opacity:1}92%,94%{opacity:.35}}
 #corvo-re{position:absolute;right:-6px;top:calc(var(--cp,4px)*-12 + 3px);width:calc(var(--cp,4px)*12);height:calc(var(--cp,4px)*12);image-rendering:pixelated}
 #risali{left:14px;top:calc(env(safe-area-inset-top,0px) + 14px)}
+.intro-testo.imbrattato{position:relative}
+.intro-testo.imbrattato .riga{filter:grayscale(.3) brightness(.85)}
+.intro-testo .graffiti{position:absolute;left:-6%;top:-8%;width:112%;height:116%;pointer-events:none;overflow:visible}
+#scioperanti{position:absolute;left:0;right:0;bottom:calc(var(--terra-intro,12vh) - var(--px)*2);display:flex;justify-content:center;align-items:flex-end;gap:2px;z-index:3;pointer-events:none}
+.scioperante{position:relative;flex:none;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto;animation:marcia .7s steps(2) infinite}
+.scioperante canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
+.scioperante .fum-wrap{left:-160px;right:-160px}
+.cartello-s{position:absolute;left:50%;bottom:calc(100% - 4px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.cartello-s b{display:block;padding:3px 5px;background:#f4ead0;color:#b02a2a;font-family:var(--f-pixel);font-weight:700;font-size:clamp(8px,2.4vw,13px);letter-spacing:.04em;white-space:nowrap;box-shadow:0 0 0 2px #06060b}
+.cartello-s::after{content:"";width:3px;height:14px;background:#6b4426}
+@keyframes marcia{0%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.bidone{position:absolute;bottom:calc(var(--terra-intro,12vh) - var(--px)*1);width:calc(var(--px)*10);height:calc(var(--px)*13);background:linear-gradient(90deg,#3a3e4a,#5d6273 40%,#2a2d38);box-shadow:inset 0 3px 0 #1a1c26,inset 0 -3px 0 #1a1c26;z-index:2}
+.bidone .fiamma{position:absolute;left:-30%;right:-30%;bottom:90%;height:150%;background:radial-gradient(ellipse at 50% 85%,#fff1b8 0 15%,#ffb43a 30%,#e0541a 52%,transparent 70%);animation:fiamma .5s steps(2) infinite;filter:blur(.5px)}
+@media (prefers-reduced-motion:reduce){.scioperante{animation:none}}
 #guardiano{position:absolute;bottom:calc(var(--terra-intro,12vh) - var(--px)*1);width:calc(var(--px)*36);height:calc(var(--px)*30);z-index:2;pointer-events:none}
 #guardiano canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
 #guardiano .fum-wrap{left:-240px;right:-60px}
@@ -1129,7 +1143,12 @@ function disegnaIntro(t,dt){
   g.drawImage(S.cancello,0,0);porte(P.c);
   if(f>.05){g.globalAlpha=f;g.drawImage(S.cancelloR,0,0);porte(P.r);g.globalAlpha=1}
   if(S.sbarre){const u=Math.min(1,(t-S.sbarre)/900),yb=P.top+Math.round((P.suolo-P.top)*u);
-    for(let x=P.xl+1;x<P.xr;x+=4){g.fillStyle='#1a1c26';g.fillRect(x,P.top,2,yb-P.top);g.fillStyle=f>.1?'#c8ceff':'#5a6078';g.fillRect(x,P.top,1,yb-P.top)}
+    let ib=0;for(let x=P.xl+1;x<P.xr;x+=4,ib++){if(S.distrutto&&ib%7===3)continue;const h=yb-P.top,pg=S.distrutto&&ib%5===1;
+      if(pg){const m=Math.round(h*.55);g.fillStyle='#1a1c26';g.fillRect(x,P.top,2,m);for(let j=0;j<h-m;j++)g.fillRect(x+Math.round(j*.25),P.top+m+j,2,1);g.fillStyle=f>.1?'#c8ceff':'#5a6078';g.fillRect(x,P.top,1,m)}
+      else{g.fillStyle='#1a1c26';g.fillRect(x,P.top,2,h);g.fillStyle=f>.1?'#c8ceff':'#5a6078';g.fillRect(x,P.top,1,h)}}
+    if(S.distrutto&&u>=1){if(!S.graff){const r=rng(77),L=[];const C=['#e0302a','#2fe07a','#ff4fd8','#f2d35a'];for(let k=0;k<14;k++){const cx=P.xl+r()*(P.xr-P.xl),cy=P.top+r()*(P.suolo-P.top)*.9,c=C[k%4],n=18+Math.floor(r()*30),dx=(r()-.5)*2,dy=(r()-.5)*.8;for(let i=0;i<n;i++)L.push([Math.round(cx+i*dx+(r()-.5)*2),Math.round(cy+i*dy+(r()-.5)*2),c])}
+        for(let k=0;k<60;k++)L.push([Math.round(P.xl-20+r()*(P.xr-P.xl+40)),P.suolo-1-Math.floor(r()*3),r()<.5?'#3a3e4a':'#5d6273'],[Math.round(P.xl-20+r()*(P.xr-P.xl+40)),P.suolo-Math.floor(r()*2),'#7a5a3a']);S.graff=L}
+      for(const[x,y,c]of S.graff){g.fillStyle=c;g.fillRect(x,y,1,1)}}
     if(u>=1){g.fillStyle='#2a2d3a';for(const fy of[.3,.62])g.fillRect(P.xl,Math.round(P.top+(P.suolo-P.top)*fy),P.xr-P.xl,2);
       const cy=Math.round(P.top+(P.suolo-P.top)*.5);for(let i=-14;i<=14;i++){g.fillStyle=(i&1)?'#9aa0ad':'#5d6273';g.fillRect(P.cx+i,cy+Math.round(Math.abs(i)*.35),1,2)}
       g.fillStyle='#c9a24a';g.fillRect(P.cx-3,cy+2,7,6);g.fillStyle='#f2d35a';g.fillRect(P.cx-3,cy+2,7,1);g.fillStyle='#5a3a1e';g.fillRect(P.cx,cy+4,1,2);g.strokeStyle='#9aa0ad';g.fillStyle='#9aa0ad';g.fillRect(P.cx-2,cy-1,1,3);g.fillRect(P.cx+2,cy-1,1,3);g.fillRect(P.cx-2,cy-1,5,1)}}
@@ -1164,6 +1183,41 @@ function spriteKira(st){
   return p.fine();
 }
 const KRF={fermo:spriteKira('fermo'),passo:spriteKira('passo'),bau:spriteKira('bau')};
+const Sciopero={
+  SP:()=>({kira:[KRF.fermo,24,20],matteofino:[MF.piange,28,40],gaia:[GAF.fermo,22,38],angioletto:[AGF.fermo,22,32],carmine:[CMF.fermo,20,32],vellone:[VLF.fermo,22,40],vincenzo:[VZF.fermo,22,40],nonna:[NF.fermo,22,32],terry:[TF.fermo,22,34]}),
+  inizia(){
+    const C=NONNA.chiusura,intro=$('#intro');S.distrutto=true;S.sbarre=performance.now()-2000;
+    $('#entra').textContent=C.bottone;$('#entra-muto').hidden=true;$('.bottoni-intro').style.visibility='hidden';
+    const c=document.createElement('div');c.className='cartello-chiuso';c.textContent=C.cartello;c.style.top=Math.max(8,S.porte.top*S.px-56)+'px';intro.append(c);
+    // il nome imbrattato con le bombolette
+    const t=$('.intro-testo');t.classList.add('imbrattato');const w=C.scritte||[];
+    t.insertAdjacentHTML('beforeend',`<svg class="graffiti" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="spray"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter></defs>
+      <g filter="url(#spray)" fill="none" stroke-linecap="round"><path d="M70 120 L330 92" stroke="#e0302a" stroke-width="12"/><path d="M60 98 C140 140 260 70 340 128" stroke="#2fe07a" stroke-width="7"/><path d="M40 210 L370 170 M40 170 L370 215" stroke="#e0302a" stroke-width="9" opacity=".85"/>
+      <path d="M90 40 q20 -30 40 0 t40 0" stroke="#ff4fd8" stroke-width="6"/><path d="M300 30 l10 40 M320 26 l4 44" stroke="#f2d35a" stroke-width="5"/></g>
+      <g filter="url(#spray)" font-family="Caveat,cursive" font-weight="600"><text x="200" y="200" text-anchor="middle" font-size="96" fill="#e0302a" transform="rotate(-8 200 200)">${w[0]||''}</text>
+      <text x="205" y="80" text-anchor="middle" font-size="58" fill="#2fe07a" transform="rotate(6 205 80)">${w[1]||''}</text><text x="70" y="250" font-size="40" fill="#ff4fd8" transform="rotate(-4 70 250)">${w[2]||''}</text></g>
+      <g fill="#e0302a" opacity=".9"><rect x="150" y="212" width="3" height="22"/><rect x="236" y="204" width="3" height="30"/><rect x="190" y="208" width="2" height="16"/></g></svg>`);
+    // bidone che brucia
+    const bd=document.createElement('div');bd.className='bidone';bd.innerHTML='<i class="fiamma"></i>';bd.style.left=Math.max(6,S.porte.xl*S.px-S.px*18)+'px';intro.append(bd);
+    // gli scioperanti
+    const box=document.createElement('div');box.id='scioperanti';intro.append(box);const SP=this.SP(),u=S.px*(innerWidth<600?.56:1);
+    this.el=C.scioperanti.filter(x=>SP[x.chi]).map((x,i)=>{const[src,w,h]=SP[x.chi];const d=document.createElement('button');d.type='button';d.className='scioperante';d.setAttribute('aria-label','Scioperante');
+      d.style.width=w*u+'px';d.style.height=h*u+'px';d.style.animationDelay=(-i*.17)+'s';
+      d.innerHTML=`<span class="cartello-s"><b></b></span><canvas width="${w}" height="${h}"></canvas><span class="fum-wrap" style="bottom:calc(100% + ${Math.round(u*14)}px)"><span class="fumetto" hidden><span class="ft"></span></span></span>`;
+      d.querySelector('b').textContent=x.cartello||'SCIOPERO';d.querySelector('canvas').getContext('2d').drawImage(src,0,0);
+      d.addEventListener('click',e=>{e.stopPropagation();this.dice(i)});box.append(d);return{d,x}});
+    if(!ridotto)box.animate([{transform:'translateY(40%)',opacity:0},{transform:'none',opacity:1}],{duration:900,easing:'steps(6)'});
+    let k=0;const giro=()=>{this.dice(k%this.el.length);k++};setTimeout(giro,ridotto?300:1200);this.ti=setInterval(giro,ridotto?5000:2600);
+  },
+  dice(i){
+    const C=NONNA.chiusura,o=this.el[i];if(!o)return;const f=o.d.querySelector('.fumetto');
+    const t=o.x.dice&&Math.random()<.6?o.x.dice:C.slogan[Math.floor(Math.random()*C.slogan.length)];
+    this.el.forEach(e=>{if(e!==o)e.d.querySelector('.fumetto').hidden=true});
+    f.querySelector('.ft').textContent=t;f.hidden=false;f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop');
+    try{o.x.chi==='kira'?Audio.bau():Audio.blip(.8+Math.random()*.6)}catch(e){}clearTimeout(this.ft);this.ft=setTimeout(()=>{f.hidden=true},2400);
+  },
+  tocca(){this.dice(Math.floor(Math.random()*this.el.length))}
+};
 const Chiusura={
   k:0,
   disegna(st){const c=$('#guardiano canvas');if(!c)return;const g=c.getContext('2d');g.clearRect(0,0,24,20);g.drawImage(KRF[st]||KRF.fermo,0,0)},
@@ -1172,6 +1226,7 @@ const Chiusura={
     try{Audio.bau()}catch(e){}clearTimeout(this.ft);this.ft=setTimeout(()=>{f.hidden=true},ms)},
   arriva(){
     if(this.fatto)return;this.fatto=true;const C=NONNA.chiusura,intro=$('#intro');
+    if(C.distrutto&&C.scioperanti){Sciopero.inizia();return}
     const b=document.createElement('div');b.id='guardiano';b.innerHTML='<canvas width="24" height="20" aria-hidden="true"></canvas><span class="fum-wrap" style="bottom:100%"><span class="fumetto" hidden><span class="ft"></span></span></span>';
     intro.append(b);this.disegna('fermo');
     const fine=Math.min(innerWidth-S.px*36,S.porte.cx*S.px+S.px*22),da=innerWidth+S.px*30;b.style.left=fine+'px';
@@ -1181,7 +1236,7 @@ const Chiusura={
     this.dice(C.arriva,1800);let k=0;const tw=setInterval(()=>{k^=1;this.disegna(k?'passo':'fermo')},160);
     b.animate([{transform:`translateX(${da-fine}px)`},{transform:'none'}],{duration:1700,easing:'ease-out'}).onfinish=()=>{clearInterval(tw);this.disegna('fermo');setTimeout(chiudi,300)};
   },
-  tocca(){const C=NONNA.chiusura;if(!this.fatto)return;this.k=(this.k%(C.frasi.length-1))+1;this.dice(C.frasi[this.k],3400)}
+  tocca(){const C=NONNA.chiusura;if(!this.fatto)return;if(C.distrutto&&Sciopero.el)return Sciopero.tocca();this.k=(this.k%(C.frasi.length-1))+1;this.dice(C.frasi[this.k],3400)}
 };
 let entrato=false;
 function entra(conAudio){

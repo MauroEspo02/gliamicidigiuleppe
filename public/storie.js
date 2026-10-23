@@ -545,7 +545,26 @@
       "Fascia di garanzia? Bau. No. Torna a sciopero finito."
     ],
     cartello: "SCIOPERO",
-    bottone: "Sciopero in corso"
+    bottone: "Sciopero in corso",
+    // Distruzione e scioperanti davanti al cancello. Metti distrutto: false per tornare alla sola Kira.
+    distrutto: true,
+    scritte: ["INFAME", "VERGOGNA", "NO AMICI"],
+    slogan: [
+      "Vergogna!",
+      "Vergogna! Vergogna!",
+      "Io voglio essere del cimitero, ma non degli amici di questo infame!",
+      "Del cimitero sì, degli amici no!",
+      "Sciopero! Sciopero!"
+    ],
+    scioperanti: [
+      { chi: "vellone", cartello: "VERGOGNA" },
+      { chi: "gaia", cartello: "NO AMICI" },
+      { chi: "angioletto", cartello: "INFAME" },
+      { chi: "kira", cartello: "SCIOPERO", dice: "Bau! Vergogna!" },
+      { chi: "matteofino", cartello: "BASTA!" },
+      { chi: "nonna", cartello: "VERGOGNA" },
+      { chi: "carmine", cartello: "SCHANDE!", dice: "Schande! Schande!" }
+    ]
   };
 
   window.NONNA = { storie, saluti, risposte, custode, terry, angelo, risorto, narciso, teatro, terryPasseggio, fantasma, angioletto, matteofino, visco, carte, ragnetto, gigio, gaia, palestra, tavolino, minni, carmine, vincenzo, vellone, chiusura, jediego, gigirish, storiaDelGiorno, riempi, oggiRoma, dataBella, scegli, giorni };
